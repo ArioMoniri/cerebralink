@@ -33,6 +33,12 @@ class Settings:
     openai_api_key: str = field(default_factory=lambda: _env("OPENAI_API_KEY"))
     redis_url: str = field(default_factory=lambda: _env("REDIS_URL", "redis://localhost:6379/0"))
     medical_mcp_url: str = field(default_factory=lambda: _env("MEDICAL_MCP_URL", "http://localhost:3001"))
+    healthcare_mcp_url: str = field(default_factory=lambda: _env("HEALTHCARE_MCP_URL", "http://localhost:3002"))
+    food_data_mcp_url: str = field(default_factory=lambda: _env("FOOD_DATA_MCP_URL", "http://localhost:3003"))
+    medical_knowledge_mcp_url: str = field(default_factory=lambda: _env("MEDICAL_KNOWLEDGE_MCP_URL", "http://localhost:3004"))
+    omophub_mcp_url: str = field(default_factory=lambda: _env("OMOPHUB_MCP_URL", "http://localhost:3005"))
+    omophub_api_key: str = field(default_factory=lambda: _env("OMOPHUB_API_KEY"))
+    fdc_api_key: str = field(default_factory=lambda: _env("FDC_API_KEY"))
     models: ModelConfig = field(default_factory=ModelConfig)
     max_context_tokens: int = 100_000
     cerebral_host: str = field(default_factory=lambda: _env("CEREBRAL_HOST", "cerebralplustr.acibadem.com.tr"))

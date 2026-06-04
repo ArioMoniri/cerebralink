@@ -1,23 +1,35 @@
 /**
- * HTTP bridge for medical-mcp stdio server.
- * Spawns medical-mcp as a child process via MCP SDK's StdioClientTransport,
+ * Generic HTTP bridge for stdio MCP servers.
+ * Spawns any MCP server as a child process via MCP SDK's StdioClientTransport,
  * then exposes an HTTP server so the Python backend can call tools via JSON-RPC.
+ *
+ * Configure via environment variables:
+ *   MCP_COMMAND  — the command to run (default: "node")
+ *   MCP_ARGS     — JSON array of args (default: ["node_modules/medical-mcp/build/index.js"])
+ *   MCP_NAME     — human-readable name for logging (default: "mcp-server")
+ *   PORT         — HTTP port (default: 3001)
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { createServer } from "node:http";
 
 const PORT = parseInt(process.env.PORT || "3001");
+const MCP_COMMAND = process.env.MCP_COMMAND || "node";
+const MCP_ARGS = process.env.MCP_ARGS
+  ? JSON.parse(process.env.MCP_ARGS)
+  : ["node_modules/medical-mcp/build/index.js"];
+const MCP_NAME = process.env.MCP_NAME || "mcp-server";
 
 async function main() {
   const transport = new StdioClientTransport({
-    command: "node",
-    args: ["node_modules/medical-mcp/build/index.js"],
+    command: MCP_COMMAND,
+    args: MCP_ARGS,
+    env: { ...process.env },
   });
 
   const client = new Client({ name: "mcp-bridge", version: "1.0.0" });
   await client.connect(transport);
-  console.log("Connected to medical-mcp via stdio");
+  console.log(`Connected to ${MCP_NAME} via stdio (${MCP_COMMAND} ${MCP_ARGS.join(" ")})`);
 
   const server = createServer(async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

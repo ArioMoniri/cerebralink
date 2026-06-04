@@ -26,10 +26,10 @@ services:
       - neo4j-data:/data
     healthcheck:
       test: ["CMD", "neo4j", "status"]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 15s
       retries: 10
-      start_period: 30s
+      start_period: 60s
 
   medical-mcp:
     build:
@@ -41,8 +41,8 @@ services:
       - PORT=3001
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3001/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 15s
       retries: 5
       start_period: 30s
 
@@ -64,6 +64,8 @@ services:
       - FOOD_DATA_MCP_URL=http://food-data-mcp:3003
       - MEDICAL_KNOWLEDGE_MCP_URL=http://medical-knowledge-mcp:3004
       - OMOPHUB_MCP_URL=http://omophub-mcp:3005
+      - OMOPHUB_API_KEY=${OMOPHUB_API_KEY}
+      - FDC_API_KEY=${FDC_API_KEY}
     volumes:
       - ./cookies:/app/cookies:ro
       - ./scripts:/app/scripts:ro
@@ -74,76 +76,122 @@ services:
       neo4j:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-sf", "--max-time", "10", "http://localhost:8000/health"]
+      test: ["CMD-SHELL", "python3 -c \"import socket; s=socket.socket(); s.settimeout(5); s.connect(('127.0.0.1',8000)); s.close()\""]
       interval: 30s
-      timeout: 15s
+      timeout: 10s
       retries: 5
       start_period: 20s
 
-  # Healthcare MCP - Clinical decision support, drug interactions, lab interpretation
+  # Healthcare MCP - FDA drugs, PubMed, clinical trials, ICD-10, medRxiv
+  # https://github.com/Cicatriiz/healthcare-mcp-public
   healthcare-mcp:
-    image: node:20-alpine
+    image: node:20-slim
     working_dir: /app
-    command: sh -c "npm install healthcare-mcp-server && npx healthcare-mcp-server"
+    command: >
+      sh -c "npm init -y &&
+             npm install healthcare-mcp @modelcontextprotocol/sdk dicom-parser &&
+             cp /bridge/mcp-http-bridge.mjs bridge.mjs &&
+             node bridge.mjs"
     ports:
       - "3102:3002"
     environment:
       - PORT=3002
+      - MCP_COMMAND=node
+      - MCP_ARGS=["node_modules/healthcare-mcp/server/index.js"]
+      - MCP_NAME=healthcare-mcp
+    volumes:
+      - ./scripts:/bridge:ro
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3002/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3002/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 120s
 
   # Food Data Central MCP - USDA nutritional data
+  # https://github.com/jlfwong/food-data-central-mcp-server (not on npm — cloned from git)
   food-data-mcp:
-    image: node:20-alpine
+    image: node:20-slim
     working_dir: /app
-    command: sh -c "npm install food-data-central-mcp-server && npx food-data-central-mcp-server"
+    command: >
+      sh -c "apt-get update && apt-get install -y --no-install-recommends git ca-certificates &&
+             git clone --depth 1 https://github.com/jlfwong/food-data-central-mcp-server.git /app/fdc &&
+             cd /app/fdc && npm install --legacy-peer-deps && npm run build &&
+             cd /app && npm init -y &&
+             npm install @modelcontextprotocol/sdk &&
+             cp /bridge/mcp-http-bridge.mjs bridge.mjs &&
+             node bridge.mjs"
     ports:
       - "3103:3003"
     environment:
       - PORT=3003
-      - FDC_API_KEY=${FDC_API_KEY}
+      - USDA_API_KEY=${FDC_API_KEY}
+      - MCP_COMMAND=node
+      - MCP_ARGS=["/app/fdc/dist/index.js"]
+      - MCP_NAME=food-data-central
+    volumes:
+      - ./scripts:/bridge:ro
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3003/health"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3003/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
       interval: 15s
       timeout: 5s
-      retries: 3
-      start_period: 30s
+      retries: 5
+      start_period: 180s
 
-  # Medical MCP (thrownlemon) - Medical knowledge, symptoms, conditions
+  # Medical Knowledge MCP - FDA, WHO, PubMed, RxNorm, Google Scholar, pediatric
+  # https://github.com/JamesANZ/medical-mcp
   medical-knowledge-mcp:
-    image: node:20-alpine
+    image: node:20-slim
     working_dir: /app
-    command: sh -c "npm install @thrownlemon/medical-mcp && npx @thrownlemon/medical-mcp"
+    command: >
+      sh -c "apt-get update && apt-get install -y --no-install-recommends chromium fonts-liberation &&
+             npm init -y &&
+             npm install medical-mcp @modelcontextprotocol/sdk &&
+             cp /bridge/mcp-http-bridge.mjs bridge.mjs &&
+             node bridge.mjs"
     ports:
       - "3104:3004"
     environment:
       - PORT=3004
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+      - MCP_COMMAND=node
+      - MCP_ARGS=["node_modules/medical-mcp/build/index.js"]
+      - MCP_NAME=medical-knowledge-mcp
+    volumes:
+      - ./scripts:/bridge:ro
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3004/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3004/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 180s
 
-  # OMOP Hub MCP - OMOP CDM terminology, concept mapping
+  # OMOP Hub MCP - OMOP CDM terminology, concept/vocabulary mapping (SNOMED, ICD-10, RxNorm, LOINC)
+  # https://github.com/omophub/omophub-mcp
   omophub-mcp:
-    image: node:20-alpine
+    image: node:20-slim
     working_dir: /app
-    command: sh -c "npm install omophub-mcp && npx omophub-mcp"
+    command: >
+      sh -c "npm init -y &&
+             npm install @omophub/omophub-mcp @modelcontextprotocol/sdk &&
+             cp /bridge/mcp-http-bridge.mjs bridge.mjs &&
+             node bridge.mjs"
     ports:
       - "3105:3005"
     environment:
       - PORT=3005
+      - OMOPHUB_API_KEY=${OMOPHUB_API_KEY}
+      - MCP_COMMAND=node
+      - MCP_ARGS=["node_modules/@omophub/omophub-mcp/dist/index.js"]
+      - MCP_NAME=omophub-mcp
+    volumes:
+      - ./scripts:/bridge:ro
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3005/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3005/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 120s
 
   frontend:
     build:

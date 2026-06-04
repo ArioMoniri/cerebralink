@@ -5,9 +5,12 @@ from __future__ import annotations
 import json
 from typing import Any
 
+import asyncio
+
 from src.backend.agents.base import BaseAgent
 from src.backend.core.config import settings
 from src.backend.tools.medical_mcp import MedicalMCPClient
+from src.backend.tools.healthcare_mcp import HealthcareMCPClient
 
 
 class DrugAgent(BaseAgent):
@@ -95,9 +98,17 @@ REFERENCES: [list each guideline cited with full name, year, and country]"""
     def __init__(self):
         super().__init__()
         self.medical_mcp = MedicalMCPClient()
+        self.healthcare_mcp = HealthcareMCPClient()
 
     async def analyze(self, query: str, patient_context: dict[str, Any] | None = None, priority_country: str | None = None) -> dict[str, Any]:
-        drug_data = await self.medical_mcp.search_drugs(query)
+        # Parallel search: both MCP servers
+        mcp_task = asyncio.create_task(self.medical_mcp.search_drugs(query))
+        fda_task = asyncio.create_task(self.healthcare_mcp.fda_drug_lookup(query))
+        drug_data, fda_data = await asyncio.gather(mcp_task, fda_task, return_exceptions=True)
+        if isinstance(drug_data, Exception):
+            drug_data = None
+        if isinstance(fda_data, Exception):
+            fda_data = None
 
         parts = [f"DOCTOR'S QUESTION: {query}"]
 
@@ -105,9 +116,12 @@ REFERENCES: [list each guideline cited with full name, year, and country]"""
             parts.append(f"\nPRIORITY COUNTRY: {priority_country}")
             parts.append("Cite guidelines from this country FIRST when recommending doses.")
 
-        if drug_data:
-            parts.append(f"\nFDA DRUG DATA (via MCP):\n{json.dumps(drug_data, ensure_ascii=False, indent=2)[:4000]}")
+        if drug_data and not (isinstance(drug_data, dict) and "error" in drug_data):
+            parts.append(f"\nFDA DRUG DATA (via Medical MCP):\n{json.dumps(drug_data, ensure_ascii=False, indent=2)[:4000]}")
             parts.append("NOTE: The above data is from the FDA MCP database. If you use any dosing from it, cite as 'Source: FDA via MCP'.")
+
+        if fda_data and not (isinstance(fda_data, dict) and "error" in fda_data):
+            parts.append(f"\nFDA DRUG DATA (via Healthcare MCP):\n{json.dumps(fda_data, ensure_ascii=False, indent=2)[:3000]}")
 
         if patient_context:
             allergy = patient_context.get("allergy", {})

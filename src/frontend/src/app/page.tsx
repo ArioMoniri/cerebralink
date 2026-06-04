@@ -1113,6 +1113,12 @@ export default function Home() {
 
   // Restore a previous session from history
   const handleRestoreSession = useCallback(async (entry: HistoryEntry) => {
+    // Cancel any in-flight SSE stream first
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
     setShowHistory(false);
     setSessionId(entry.sessionId);
     setMessages([]);

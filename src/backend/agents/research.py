@@ -12,6 +12,7 @@ from typing import Any
 from src.backend.agents.base import BaseAgent
 from src.backend.core.config import settings
 from src.backend.tools.medical_mcp import MedicalMCPClient
+from src.backend.tools.healthcare_mcp import HealthcareMCPClient
 from src.backend.tools.exa import ExaClient
 
 
@@ -60,19 +61,35 @@ Respond with structured JSON:
     def __init__(self):
         super().__init__()
         self.medical_mcp = MedicalMCPClient()
+        self.healthcare_mcp = HealthcareMCPClient()
         self.exa = ExaClient()
 
     async def search(self, query: str, countries: list[str] | None = None) -> dict[str, Any]:
         countries = countries or ["USA", "Europe", "UK"]
 
-        # Parallel search: Medical MCP + Exa
-        mcp_results = await self.medical_mcp.search_guidelines(query)
-        exa_results = await self.exa.search_medical(query, countries)
+        # Parallel search: Medical MCP + Healthcare MCP + Exa
+        import asyncio
+        mcp_task = asyncio.create_task(self.medical_mcp.search_guidelines(query))
+        healthcare_task = asyncio.create_task(self.healthcare_mcp.pubmed_search(query, max_results=5))
+        exa_task = asyncio.create_task(self.exa.search_medical(query, countries))
+
+        mcp_results, healthcare_results, exa_results = await asyncio.gather(
+            mcp_task, healthcare_task, exa_task, return_exceptions=True,
+        )
+        # Convert exceptions to empty results
+        if isinstance(mcp_results, Exception):
+            mcp_results = None
+        if isinstance(healthcare_results, Exception):
+            healthcare_results = None
+        if isinstance(exa_results, Exception):
+            exa_results = None
 
         # Combine search results for the LLM to synthesize
         search_context = []
-        if mcp_results:
+        if mcp_results and not isinstance(mcp_results, dict) or (isinstance(mcp_results, dict) and "error" not in mcp_results):
             search_context.append(f"MEDICAL DATABASE RESULTS:\n{json.dumps(mcp_results, ensure_ascii=False, indent=2)}")
+        if healthcare_results and not (isinstance(healthcare_results, dict) and "error" in healthcare_results):
+            search_context.append(f"HEALTHCARE MCP (PubMed/FDA) RESULTS:\n{json.dumps(healthcare_results, ensure_ascii=False, indent=2)}")
         if exa_results:
             search_context.append(f"EXA SEARCH RESULTS:\n{json.dumps(exa_results, ensure_ascii=False, indent=2)}")
 

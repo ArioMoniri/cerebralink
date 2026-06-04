@@ -604,10 +604,24 @@ class Orchestrator:
                 "message": AGENT_LABELS.get(name, f"{name} working..."), "phase": "council",
             })
 
+        # Per-agent timeout: 90s for council agents, prevents pipeline stall
+        _AGENT_TIMEOUT = 90
+
         async def _timed_agent(name, agent_obj, fn, args):
             t0 = time.monotonic()
             agent_mem = AgentMemory(session_id, name)
-            output = await fn(*args)
+            try:
+                output = await asyncio.wait_for(fn(*args), timeout=_AGENT_TIMEOUT)
+            except asyncio.TimeoutError:
+                elapsed = int((time.monotonic() - t0) * 1000)
+                logging.getLogger("cerebralink.orchestrator").error(
+                    "Agent %s timed out after %ds", name, _AGENT_TIMEOUT,
+                )
+                await self._emit(on_status, {
+                    "agent": name, "status": "error", "time_ms": elapsed,
+                    "message": f"{name} timed out",
+                })
+                raise
             elapsed = int((time.monotonic() - t0) * 1000)
             usage = agent_obj.last_usage
             await agent_mem.put("last_output", output)
@@ -633,8 +647,10 @@ class Orchestrator:
                     agent=name, time_ms=elapsed,
                     input_tokens=usage["input_tokens"], output_tokens=usage["output_tokens"],
                 ))
-            except Exception:
-                pass
+            except Exception as exc:
+                logging.getLogger("cerebralink.orchestrator").warning(
+                    "Agent failed in council: %s", exc,
+                )
 
         # ── 3b. Prescription agent (runs after drug results are available) ──
         if route.needs_drug and "drug" in agent_outputs:

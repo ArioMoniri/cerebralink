@@ -1,0 +1,11 @@
+node_modules
+.git
+.next
+__pycache__
+*.pyc
+.env
+.env.*
+patient_data
+docs
+*.md
+.DS_Store

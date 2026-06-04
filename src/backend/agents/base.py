@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
+import logging
 from typing import Any
 
 import anthropic
@@ -10,12 +12,20 @@ import anthropic
 from src.backend.core.config import settings
 
 _client: anthropic.AsyncAnthropic | None = None
+_log = logging.getLogger("cerebralink.agent")
+
+# Default timeout for LLM API calls (seconds). Individual agents
+# can override via the class attribute `api_timeout`.
+_DEFAULT_API_TIMEOUT = 120
 
 
 def get_client() -> anthropic.AsyncAnthropic:
     global _client
     if _client is None:
-        _client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+        _client = anthropic.AsyncAnthropic(
+            api_key=settings.anthropic_api_key,
+            timeout=_DEFAULT_API_TIMEOUT,
+        )
     return _client
 
 
@@ -25,6 +35,7 @@ class BaseAgent:
     model: str = "claude-sonnet-4-6"
     system_prompt: str = "You are a helpful assistant."
     max_tokens: int = 4096
+    api_timeout: int = _DEFAULT_API_TIMEOUT  # per-agent override
 
     def __init__(self):
         self.last_usage = {"input_tokens": 0, "output_tokens": 0}
@@ -36,13 +47,24 @@ class BaseAgent:
         response_format: str | None = None,
     ) -> str:
         client = get_client()
-        msg = await client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            temperature=temperature,
-            system=self.system_prompt,
-            messages=[{"role": "user", "content": user_message}],
-        )
+        try:
+            msg = await asyncio.wait_for(
+                client.messages.create(
+                    model=self.model,
+                    max_tokens=self.max_tokens,
+                    temperature=temperature,
+                    system=self.system_prompt,
+                    messages=[{"role": "user", "content": user_message}],
+                ),
+                timeout=self.api_timeout,
+            )
+        except asyncio.TimeoutError:
+            _log.error(
+                "[%s] LLM API call timed out after %ds",
+                self.__class__.__name__, self.api_timeout,
+            )
+            self.last_usage = {"input_tokens": 0, "output_tokens": 0}
+            raise
         self.last_usage = {
             "input_tokens": msg.usage.input_tokens,
             "output_tokens": msg.usage.output_tokens,

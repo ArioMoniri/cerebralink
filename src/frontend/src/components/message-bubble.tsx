@@ -736,6 +736,112 @@ function extractRxBlock(text: string): { rxText: string; beforeRx: string; after
 }
 
 /** Prescription card with highlighted styling, brand chips, and copy button */
+/** Searchable brand dropdown for a single ingredient */
+function BrandDropdown({ ingredient, brands, atc, selected, onSelect }: {
+  ingredient: string;
+  brands: string[];
+  atc: string;
+  selected: string;
+  onSelect: (brand: string) => void;
+}) {
+  const [open, setOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  // Deduplicate brands (case-insensitive)
+  const uniqueBrands = React.useMemo(() => {
+    const seen = new Set<string>();
+    return brands.filter((b) => {
+      const key = b.toLowerCase().trim();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [brands]);
+
+  const filtered = React.useMemo(() => {
+    if (!search.trim()) return uniqueBrands;
+    const q = search.toLowerCase();
+    return uniqueBrands.filter((b) => b.toLowerCase().includes(q));
+  }, [uniqueBrands, search]);
+
+  // Close on outside click
+  React.useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="text-xs font-semibold text-gray-300">{ingredient}</span>
+        {atc && (
+          <span className="text-[9px] px-1 py-0.5 rounded bg-gray-700/50 text-gray-500 font-mono">{atc}</span>
+        )}
+      </div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-left transition-all"
+        style={{
+          background: selected ? "rgba(34,197,94,0.15)" : "rgba(107,114,128,0.1)",
+          color: selected ? "#4ade80" : "#9ca3af",
+          border: `1.5px solid ${selected ? "rgba(34,197,94,0.4)" : "rgba(107,114,128,0.25)"}`,
+        }}
+      >
+        <span className="truncate font-semibold">{selected || "Select brand..."}</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`}><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      {open && (
+        <div className="absolute z-50 mt-1 w-full max-h-48 rounded-lg overflow-hidden shadow-lg" style={{
+          background: "#1e1e2e",
+          border: "1px solid rgba(34,197,94,0.3)",
+        }}>
+          <div className="sticky top-0 p-1.5" style={{ background: "#1e1e2e", borderBottom: "1px solid rgba(107,114,128,0.2)" }}>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search brands..."
+              className="w-full px-2 py-1 rounded text-xs bg-transparent text-gray-200 placeholder:text-gray-500 border border-border/30 focus:outline-none focus:border-emerald-500/50"
+              autoFocus
+            />
+          </div>
+          <div className="overflow-y-auto max-h-36">
+            {filtered.map((brand) => {
+              const isActive = selected === brand;
+              return (
+                <button
+                  key={brand}
+                  onClick={() => { onSelect(brand); setOpen(false); setSearch(""); }}
+                  className="w-full text-left px-3 py-1.5 text-xs transition-colors flex items-center gap-1.5"
+                  style={{
+                    background: isActive ? "rgba(34,197,94,0.2)" : "transparent",
+                    color: isActive ? "#4ade80" : "#d1d5db",
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.background = "rgba(107,114,128,0.15)"; }}
+                  onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                >
+                  {isActive && (
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  )}
+                  <span className="truncate">{brand}</span>
+                </button>
+              );
+            })}
+            {filtered.length === 0 && (
+              <div className="px-3 py-2 text-[10px] text-gray-500 italic">No brands match "{search}"</div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citations, onOpenReferences, onOpenKgFocus, patientEntities, onOpenReportType, onOpenTrendForTest }: {
   rxText: string;
   prescriptionData?: PrescriptionData;
@@ -751,7 +857,7 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
   const [selectedBrands, setSelectedBrands] = React.useState<Record<string, string>>({});
 
   const handleCopyRx = async () => {
-    // Build copy text: clean markdown, replace "Choose one:" sections with selected brand if any
+    // Build copy text: clean markdown, replace brand selections
     let copyText = rxText
       .replace(/#{1,6}\s?/g, "")
       .replace(/\*{1,3}(.*?)\*{1,3}/g, "$1")
@@ -760,14 +866,13 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
       .trim();
 
-    // Replace "Choose one: ..." lines with the selected brand
+    // Replace "Choose one: ..." lines with selected brand
     for (const [ingredient, brand] of Object.entries(selectedBrands)) {
-      const choosePattern = new RegExp(
-        `Choose one:.*?(?=\\n\\d|\\n\\n|$)`,
-        "gis"
+      // Replace "Choose one:" near this ingredient with the selected brand
+      const ingRegex = new RegExp(
+        `(${ingredient.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^\\n]*?)Choose one:[^\\n]*`,
+        "gi"
       );
-      // Only replace if the brand is near the ingredient mention
-      const ingRegex = new RegExp(`(${ingredient.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^\\n]*?)Choose one:[^\\n]*`, "gi");
       copyText = copyText.replace(ingRegex, `$1→ ${brand}`);
     }
 
@@ -789,7 +894,7 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
     }
   };
 
-  const toggleBrand = (ingredient: string, brand: string) => {
+  const handleSelectBrand = (ingredient: string, brand: string) => {
     setSelectedBrands((prev) => {
       if (prev[ingredient] === brand) {
         const next = { ...prev };
@@ -800,7 +905,24 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
     });
   };
 
-  const brandOptions = prescriptionData?.brand_options || [];
+  // Deduplicate brand options at ingredient level
+  const brandOptions = React.useMemo(() => {
+    const raw = prescriptionData?.brand_options || [];
+    const seen = new Map<string, BrandOption>();
+    for (const bo of raw) {
+      const key = bo.ingredient.toLowerCase().trim();
+      if (seen.has(key)) {
+        // Merge brands
+        const existing = seen.get(key)!;
+        const allBrands = existing.brands.concat(bo.brands);
+        const uniqueBrands = Array.from(new Set(allBrands.map((b) => b.trim())));
+        seen.set(key, { ...existing, brands: uniqueBrands });
+      } else {
+        seen.set(key, { ...bo, brands: Array.from(new Set(bo.brands.map((b) => b.trim()))) });
+      }
+    }
+    return Array.from(seen.values());
+  }, [prescriptionData?.brand_options]);
 
   return (
     <div className="my-3 rounded-xl overflow-hidden" style={{
@@ -837,7 +959,7 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
             color: rxCopied ? "#4ade80" : "#86efac",
             border: `1px solid ${rxCopied ? "rgba(34,197,94,0.5)" : "rgba(34,197,94,0.3)"}`,
           }}
-          title="Copy prescription"
+          title="Copy prescription with selected brands"
         >
           {rxCopied ? (
             <>
@@ -853,53 +975,22 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
         </button>
       </div>
 
-      {/* Brand selection chips */}
+      {/* Brand selection with searchable dropdowns */}
       {brandOptions.length > 0 && (
         <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(34,197,94,0.15)" }}>
           <div className="text-[11px] font-semibold text-emerald-400/70 mb-2 uppercase tracking-wider">
             Select Brand Names
           </div>
-          <div className="space-y-2.5">
+          <div className="grid grid-cols-1 gap-3">
             {brandOptions.map((bo) => (
-              <div key={bo.ingredient}>
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-xs font-semibold text-gray-300">{bo.ingredient}</span>
-                  {bo.atc && (
-                    <span className="text-[9px] px-1 py-0.5 rounded bg-gray-700/50 text-gray-500 font-mono">
-                      {bo.atc}
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {bo.brands.slice(0, 8).map((brand) => {
-                    const isSelected = selectedBrands[bo.ingredient] === brand;
-                    return (
-                      <button
-                        key={brand}
-                        onClick={() => toggleBrand(bo.ingredient, brand)}
-                        className="px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all"
-                        style={{
-                          background: isSelected
-                            ? "rgba(34,197,94,0.3)"
-                            : "rgba(107,114,128,0.15)",
-                          color: isSelected ? "#4ade80" : "#d1d5db",
-                          border: `1.5px solid ${isSelected ? "rgba(34,197,94,0.6)" : "rgba(107,114,128,0.25)"}`,
-                          boxShadow: isSelected ? "0 0 8px rgba(34,197,94,0.2)" : "none",
-                        }}
-                        title={`Select ${brand} for ${bo.ingredient}`}
-                      >
-                        {isSelected && (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="inline mr-1"><polyline points="20 6 9 17 4 12"/></svg>
-                        )}
-                        {brand}
-                      </button>
-                    );
-                  })}
-                  {bo.brands.length > 8 && (
-                    <span className="text-[10px] text-gray-500 self-center">+{bo.brands.length - 8} more</span>
-                  )}
-                </div>
-              </div>
+              <BrandDropdown
+                key={bo.ingredient}
+                ingredient={bo.ingredient}
+                brands={bo.brands}
+                atc={bo.atc}
+                selected={selectedBrands[bo.ingredient] || ""}
+                onSelect={(brand) => handleSelectBrand(bo.ingredient, brand)}
+              />
             ))}
           </div>
         </div>
@@ -926,11 +1017,19 @@ function PrescriptionCard({ rxText, prescriptionData, onOpenReferenceUrl, citati
  *  These come from the LLM as plain text but need monospace rendering. */
 function wrapAsciiArtBlocks(text: string): string {
   // Pattern: lines containing box-drawing chars (│├└─►▼▲●), timeline markers (──●──),
-  // ASCII bar charts (███░), or alignment pipes (│ ... │) used as visual charts
-  const ASCII_ART_RE = /[│├└┌┐┘┬┴┼─═║╔╗╚╝╠╣╦╩╬►▼▲●█░▒▓]/;
+  // ASCII bar charts (███░), alignment pipes (│ ... │), or aligned column separators
+  const ASCII_ART_RE = /[│├└┌┐┘┬┴┼─═║╔╗╚╝╠╣╦╩╬►▼▲●█░▒▓⚠️⬆⬇→←↑↓]/;
   const TIMELINE_RE = /\d{4}\s*──/;
   const BAR_CHART_RE = /[█░▒▓]{3,}/;
   const PIPE_CHART_RE = /│.*│.*│/;
+  // Aligned columns: 3+ spaces or tabs separating values (lab reports, tables)
+  const ALIGNED_COLS_RE = /\S\s{3,}\S.*\S\s{3,}\S/;
+  // Lab result patterns: "Test  Value  Ref  Unit" style
+  const LAB_RESULT_RE = /^\s{2,}[\w\s()%]+\s{2,}\d+[.,]?\d*\s{2,}/;
+  // Ruler lines: +---+---+ or ===== or -----
+  const RULER_RE = /^[\s]*[+\-=]{4,}[\s]*$/;
+  // Arrow diagrams: -->  ==>  --->
+  const ARROW_RE = /[-=]{2,}>|<[-=]{2,}/;
 
   const lines = text.split("\n");
   const result: string[] = [];
@@ -938,7 +1037,7 @@ function wrapAsciiArtBlocks(text: string): string {
   let blockLines: string[] = [];
 
   const flushBlock = () => {
-    if (blockLines.length > 0) {
+    if (blockLines.length >= 1) {
       result.push("```");
       result.push(...blockLines);
       result.push("```");
@@ -948,17 +1047,35 @@ function wrapAsciiArtBlocks(text: string): string {
   };
 
   for (const line of lines) {
-    const isAscii = ASCII_ART_RE.test(line) || TIMELINE_RE.test(line) || BAR_CHART_RE.test(line) || PIPE_CHART_RE.test(line);
-    // Don't wrap table rows (|...|...|) — markdown tables use pipes too
-    const isTable = /^\s*\|.*\|.*\|/.test(line) && !BAR_CHART_RE.test(line);
+    // Skip lines already inside code fences
+    if (/^```/.test(line.trim())) {
+      if (inAsciiBlock) flushBlock();
+      result.push(line);
+      continue;
+    }
 
-    if (isAscii && !isTable) {
+    const isAscii =
+      ASCII_ART_RE.test(line) ||
+      TIMELINE_RE.test(line) ||
+      BAR_CHART_RE.test(line) ||
+      PIPE_CHART_RE.test(line) ||
+      ALIGNED_COLS_RE.test(line) ||
+      LAB_RESULT_RE.test(line) ||
+      RULER_RE.test(line) ||
+      ARROW_RE.test(line);
+
+    // Don't wrap markdown table rows (|...|...|) — they render natively
+    const isTable = /^\s*\|.*\|.*\|/.test(line) && !BAR_CHART_RE.test(line);
+    // Don't wrap markdown headings or bullet points
+    const isMdStructure = /^\s*(#{1,6}\s|[-*+]\s|\d+\.\s|>)/.test(line);
+
+    if (isAscii && !isTable && !isMdStructure) {
       if (!inAsciiBlock) inAsciiBlock = true;
       blockLines.push(line);
     } else {
       if (inAsciiBlock) {
-        // Allow blank lines or short continuation lines inside the block
-        if (line.trim() === "" && blockLines.length > 0) {
+        // Allow blank lines or short continuation lines (labels, legends) inside the block
+        if ((line.trim() === "" || line.trim().length < 40) && blockLines.length > 0) {
           blockLines.push(line);
         } else {
           flushBlock();
@@ -1300,12 +1417,21 @@ function markdownComponents(
         </button>
       );
     },
+    // Override <pre> to prevent double-wrapping: react-markdown wraps code blocks
+    // in <pre><code>...</code></pre>. Our code override returns its own <pre> for
+    // block code, so the outer <pre> must pass through children without extra styling.
+    pre: ({ children, ...props }: React.ComponentPropsWithoutRef<"pre">) => {
+      // Just pass through — our code component handles block styling
+      return <>{children}</>;
+    },
     code: ({ children, className, ...props }: React.ComponentPropsWithoutRef<"code"> & { className?: string }) => {
-      const isBlock = className?.startsWith("language-");
+      // Detect block code: either has language class OR contains newlines (ASCII art blocks use bare ```)
+      const childStr = String(children || "");
+      const isBlock = className?.startsWith("language-") || childStr.includes("\n");
       if (isBlock) {
         return (
-          <pre className="bg-[#1a1a2e] border border-border/30 rounded-lg p-3 my-2 overflow-x-auto">
-            <code className="text-sm text-accent font-mono" {...props}>{children}</code>
+          <pre className="bg-[#1a1a2e] border border-border/30 rounded-lg p-3 my-2 overflow-x-auto whitespace-pre font-mono text-sm leading-snug">
+            <code className="text-accent" {...props}>{children}</code>
           </pre>
         );
       }

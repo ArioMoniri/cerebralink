@@ -56,18 +56,27 @@ def _load_ilac_db() -> None:
 
 
 def search_turkish_brands(active_ingredient: str) -> list[dict]:
-    """Find all Turkish brand names for an active ingredient."""
+    """Find all Turkish brand names for an active ingredient (deduplicated)."""
     _load_ilac_db()
     key = active_ingredient.strip().lower()
     # Exact match first
     if key in _ILAC_DB:
-        return _ILAC_DB[key]
-    # Partial match fallback
-    matches: list[dict] = []
-    for k, v in _ILAC_DB.items():
-        if key in k or k in key:
-            matches.extend(v)
-    return matches[:20]  # Limit results
+        results = _ILAC_DB[key]
+    else:
+        # Partial match fallback
+        results = []
+        for k, v in _ILAC_DB.items():
+            if key in k or k in key:
+                results.extend(v)
+    # Deduplicate by product_name (case-insensitive)
+    seen: set[str] = set()
+    deduped: list[dict] = []
+    for item in results:
+        pname = (item.get("product_name") or "").strip().lower()
+        if pname and pname not in seen:
+            seen.add(pname)
+            deduped.append(item)
+    return deduped[:20]  # Limit results
 
 
 # ---------------------------------------------------------------------------

@@ -2,7 +2,9 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl fonts-dejavu-core fonts-inter && rm -rf /var/lib/apt/lists/*
+# curl + fonts installed at runtime if network available; skip if offline
+RUN apt-get update && apt-get install -y --no-install-recommends curl fonts-dejavu-core && rm -rf /var/lib/apt/lists/* \
+    || echo "apt install skipped (offline build)"
 
 COPY src/backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -15,4 +17,4 @@ COPY fonts/ ./fonts/
 ENV PYTHONPATH=/app
 EXPOSE 8000
 
-CMD ["uvicorn", "src.backend.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--timeout-keep-alive", "120"]
+CMD ["uvicorn", "src.backend.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--timeout-keep-alive", "300"]

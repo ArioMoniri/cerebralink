@@ -79,6 +79,28 @@ _REF_RANGE_PATTERN = re.compile(
 _REF_LESS_THAN = re.compile(r"^[<]\s*(\d+\.?\d*)$")
 _REF_GREATER_THAN = re.compile(r"^[>]\s*(\d+\.?\d*)$")
 
+# Combined textual+numeric RESULT: "NEGATİF, 0.24" or "POZİTİF,  2612.00"
+# Must NOT have > or < before the number (those are reference values)
+_COMBINED_RESULT_RE = re.compile(
+    r"^(NEGATİF|POZİTİF|NEGATIVE|POSITIVE|REAKTİF|NON-REAKTİF|REACTIVE|NON-REACTIVE)"
+    r"[,;]?\s+(\d+[.,]?\d*)\s*$",
+    re.IGNORECASE,
+)
+
+# Combined textual+numeric REFERENCE: "POZİTİF, >10.0" or "NEGATİF, <1.0"
+_COMBINED_REF_RE = re.compile(
+    r"^(NEGATİF|POZİTİF|NEGATIVE|POSITIVE|REAKTİF|NON-REAKTİF|REACTIVE|NON-REACTIVE"
+    r"|SINIR\s*DEĞER|BORDERLINE)"
+    r"[,;]?\s*([<>]=?|=>|=<)\s*(\d+[.,]?\d*)\s*$",
+    re.IGNORECASE,
+)
+
+# Cutoff reference: "=>1.0" or ">=150" or "<=0.5" or "<1.0" or ">1.6"
+_CUTOFF_RE = re.compile(r"^([<>]=?|=>|=<)\s*(\d+[.,]?\d*)\s*$")
+
+# Numeric accreditation IDs to skip: "925125", "12642" (pure digits, 5-6 chars)
+_ACCRED_ID_RE = re.compile(r"^\d{4,6}$")
+
 
 @dataclass
 class LabValue:
@@ -247,9 +269,10 @@ _SKIP_LINES = {
 def parse_lab_report(text: str, report_date: str) -> list[LabValue]:
     """Parse a single lab report TXT file into structured LabValue entries.
 
-    Handles two formats:
+    Handles three formats:
     1. Horizontal (tab/space-separated columns on one line)
     2. Vertical (Acıbadem format where each field is on its own line)
+    3. Serology (combined textual+numeric results like "NEGATİF, 0.24")
 
     Args:
         text: Raw text content of the lab report.
@@ -262,17 +285,19 @@ def parse_lab_report(text: str, report_date: str) -> list[LabValue]:
         return []
 
     lines = text.split("\n")
-    results: list[LabValue] = []
-    current_section = "UNKNOWN"
-    historical_dates: list[str] = []
 
     # First try: horizontal parsing (original logic)
     horizontal_results = _parse_horizontal(lines, report_date)
     if horizontal_results:
         return horizontal_results
 
-    # Fallback: vertical parsing for Acıbadem format
-    return _parse_vertical(lines, report_date)
+    # Second: vertical parsing for Acıbadem format
+    vertical_results = _parse_vertical(lines, report_date)
+    if vertical_results:
+        return vertical_results
+
+    # Third: serology / combined format parser
+    return _parse_serology(lines, report_date)
 
 
 def _parse_horizontal(lines: list[str], report_date: str) -> list[LabValue]:
@@ -527,6 +552,194 @@ def _parse_vertical(lines: list[str], report_date: str) -> list[LabValue]:
                     ))
 
     log.debug("Vertical parse: %d values from report dated %s", len(results), report_date)
+    return results
+
+
+def _parse_serology(lines: list[str], report_date: str) -> list[LabValue]:
+    """Parse serology / combined format where results are 'NEGATİF, 0.24' style.
+
+    Handles Acıbadem serology reports where:
+      - Results combine textual + numeric: "NEGATİF, 0.24" or "POZİTİF, 2612.00"
+      - Reference values: "POZİTİF, >10.0" or "NEGATİF, <1.0" (with < or >)
+      - Reference ranges with SINIR DEĞER (borderline):
+            NEGATİF <0.9
+            SINIR DEĞER 0.9 - 1.1
+            POZİTİF >1.1
+      - Accreditation IDs: "925125", "12642" (pure digits, skip)
+      - Methods: "CLİA", "CMİA", "ELİSA" (skip)
+      - ODS tag (skip)
+    """
+    results: list[LabValue] = []
+    current_section = "UNKNOWN"
+    test_counter = 0
+
+    # Known method names to skip
+    methods = {"CLİA", "CLIA", "CMİA", "CMIA", "ELİSA", "ELISA", "ECLIA",
+               "NEFELOMETRI", "TÜRBİDİMETRİK", "KEMILÜMINESANS",
+               "ELEKTROKEMILUMINESANS", "IMMUNOTURBIDIMETRIK",
+               "ODS", "LATEKS", "LATEX"}
+
+    # Noise lines specific to serology reports
+    skip_headers = {"Sonuç", "Referans Değer", "Birim/Yöntem", "Test Adı",
+                    "Test Ad", "Tıbbi Laboratuvar Raporu", "Ruhsat Numarası"}
+
+    i = 0
+    while i < len(lines):
+        stripped = lines[i].strip()
+        i += 1
+
+        if not stripped or stripped.startswith("#") or stripped.startswith("="):
+            continue
+
+        # Detect section headers
+        section = _is_section_header(stripped)
+        if section:
+            current_section = section
+            test_counter = 0
+            continue
+
+        # Skip noise
+        if stripped in _SKIP_LINES or stripped.upper() in _SKIP_LINES:
+            continue
+        if stripped.upper() in methods:
+            continue
+        if stripped in skip_headers:
+            continue
+        # Skip accreditation IDs (pure 4-6 digit numbers)
+        if _ACCRED_ID_RE.match(stripped):
+            continue
+
+        # Skip combined REFERENCE lines (these follow a result, handled below)
+        if _COMBINED_REF_RE.match(stripped):
+            continue
+
+        # Check for combined RESULT: "NEGATİF, 0.24" or "POZİTİF, 2612.00"
+        combined = _COMBINED_RESULT_RE.match(stripped)
+        if not combined:
+            continue
+
+        textual_part = combined.group(1).upper()
+        numeric_part = combined.group(2)
+        value = _parse_float(numeric_part)
+        raw_value = stripped
+        unit = ""
+        ref_min: float | None = None
+        ref_max: float | None = None
+
+        test_counter += 1
+
+        # Consume next lines: combined ref, unit, method, cutoffs
+        while i < len(lines):
+            next_stripped = lines[i].strip()
+
+            if not next_stripped:
+                i += 1
+                continue
+
+            # Another combined RESULT → end of this entry
+            if _COMBINED_RESULT_RE.match(next_stripped):
+                break
+
+            # Section header → end of this entry
+            if _is_section_header(next_stripped):
+                break
+
+            # Method name → skip
+            if next_stripped.upper() in methods:
+                i += 1
+                continue
+
+            # Accreditation ID → skip
+            if _ACCRED_ID_RE.match(next_stripped):
+                i += 1
+                continue
+
+            # Combined REFERENCE: "POZİTİF, >10.0" or "NEGATİF, <1.0"
+            ref_match = _COMBINED_REF_RE.match(next_stripped)
+            if ref_match:
+                ref_label = ref_match.group(1).upper()
+                ref_op = ref_match.group(2)
+                ref_val = _parse_float(ref_match.group(3))
+                if ref_val is not None:
+                    if "POZİTİF" in ref_label or "POSITIVE" in ref_label:
+                        # Positive cutoff → values >= this are positive
+                        ref_max = ref_val
+                    elif "NEGATİF" in ref_label or "NEGATIVE" in ref_label:
+                        if "<" in ref_op:
+                            # Negative if < X → cutoff is X
+                            ref_max = ref_val
+                i += 1
+                continue
+
+            # Qualitative reference labels alone: NEGATİF / POZİTİF / SINIR DEĞER
+            upper = next_stripped.upper()
+            if upper in ("NEGATİF", "POZİTİF", "NEGATIVE", "POSITIVE",
+                         "REAKTİF", "NON-REAKTİF", "REACTIVE", "NON-REACTIVE"):
+                i += 1
+                continue
+            if upper.startswith("SINIR") or upper == "BORDERLINE":
+                i += 1
+                continue
+
+            # Cutoff: "<1.0" or ">1.6" or "=>1.0" or ">=150"
+            cutoff = _CUTOFF_RE.match(next_stripped)
+            if cutoff:
+                op = cutoff.group(1)
+                cutoff_val = _parse_float(cutoff.group(2))
+                if cutoff_val is not None:
+                    # We use the FIRST < cutoff as ref_max (negative threshold)
+                    if "<" in op and ref_max is None:
+                        ref_max = cutoff_val
+                    elif (">" in op or "=>" in op) and ref_max is None:
+                        ref_max = cutoff_val
+                i += 1
+                continue
+
+            # Reference range: "0.9 - 1.1" (borderline range)
+            if _is_ref_range_line(next_stripped):
+                # Borderline range — skip (we use the cutoffs instead)
+                i += 1
+                continue
+
+            # Unit line: "İndeks", "U/mL", "mIU/mL", "AU/mL", "IU/mL"
+            if _is_unit_line(next_stripped) and not unit:
+                unit = next_stripped
+                i += 1
+                continue
+
+            # Short alphabetic token could be a unit like "İndeks"
+            if not unit and len(next_stripped) < 20 and any(c.isalpha() for c in next_stripped):
+                if not _parse_float(next_stripped):
+                    unit = next_stripped
+                    i += 1
+                    continue
+
+            # Unknown line — stop consuming
+            break
+
+        # Determine test name
+        test_name = f"{current_section} Test {test_counter}"
+
+        # Determine abnormality from textual result
+        is_textual = True
+        textual_result = textual_part
+        is_abnormal = textual_part in ("POZİTİF", "POSITIVE", "REAKTİF", "REACTIVE")
+
+        # Also check numerically if we have ref_max
+        if value is not None and ref_max is not None:
+            is_abnormal = value >= ref_max
+
+        is_critical = _check_critical(test_name, value)
+
+        results.append(LabValue(
+            test_name=test_name, value=value, unit=unit,
+            ref_min=ref_min, ref_max=ref_max, date=report_date,
+            section=current_section, is_abnormal=is_abnormal,
+            raw_value=raw_value, is_critical=is_critical,
+            is_textual=is_textual, textual_result=textual_result,
+        ))
+
+    log.debug("Serology parse: %d values from report dated %s", len(results), report_date)
     return results
 
 

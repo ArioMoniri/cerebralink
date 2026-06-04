@@ -457,7 +457,7 @@ export function ChatInput({
 }: ChatInputProps) {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const maxHeight = 200; // ~8-10 lines before scrolling
+  const maxHeight = 400; // ~16-20 lines before scrolling — grows with content
 
   const handleVoiceTranscript = useCallback((text: string) => {
     setValue((prev) => (prev ? prev + " " + text : text));
@@ -468,10 +468,13 @@ export function ChatInput({
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    el.style.height = "auto";
-    const h = Math.min(el.scrollHeight, maxHeight);
+    // Reset to auto so scrollHeight reflects actual content
+    el.style.height = "0px";
+    const scrollH = el.scrollHeight;
+    const minH = 44;
+    const h = Math.max(minH, Math.min(scrollH, maxHeight));
     el.style.height = `${h}px`;
-    el.style.overflowY = h >= maxHeight ? "auto" : "hidden";
+    el.style.overflowY = scrollH > maxHeight ? "auto" : "hidden";
   }, [value, maxHeight]);
 
   const handleSubmit = () => {
@@ -584,7 +587,7 @@ export function ChatInput({
               "text-[16px] text-gray-100 placeholder:text-gray-400",
               "focus-visible:outline-none focus-visible:ring-0",
               "disabled:cursor-not-allowed disabled:opacity-50",
-              "min-h-[44px] resize-none",
+              "resize-none",
               voice.isListening && "placeholder:text-purple-400/60"
             )}
           />

@@ -124,7 +124,7 @@ def _build_context(
 class FastComposer(BaseAgent):
     """Generates the fast answer only — optimized for speed."""
     model = settings.models.composer
-    max_tokens = 2048
+    max_tokens = 3072
     system_prompt = r"""You are a medical response composer. Generate a FAST clinical answer (80-150 words).
 
 RULES:
