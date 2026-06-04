@@ -34,20 +34,45 @@ get a fast answer in ~2 seconds, then a deep, cited, trust-scored analysis. 🧠
 
 ## 📑 Table of Contents
 
+<table>
+<tr>
+<td valign="top">
+
+**Get started**
 - [💡 What It Solves](#-what-it-solves)
 - [🎬 Screenshots](#-screenshots)
+- [🚀 How to Set Up](#-how-to-set-up)
+- [⚙️ Configuration](#️-configuration)
+
+</td>
+<td valign="top">
+
+**Under the hood**
 - [🧠 Agentic Architecture](#-agentic-architecture)
 - [🌊 The Streaming Pipeline](#-the-streaming-pipeline)
-- [🎨 Animated Assets — Lottie](#-animated-assets--lottie)
-- [🚀 Quick Start](#-quick-start)
-- [⚙️ Configuration](#️-configuration)
+- [📊 Anatomy of a Query](#-anatomy-of-a-query)
+- [🎨 Animated Assets](#-animated-assets)
+
+</td>
+<td valign="top">
+
+**Integrate & extend**
 - [🗂️ Data Sources & Retrieval](#️-data-sources--retrieval)
 - [🔌 EHR Integration](#-ehr-integration)
 - [🧩 Project Structure](#-project-structure)
 - [🛠️ Tech Stack](#️-tech-stack)
+
+</td>
+<td valign="top">
+
+**Community**
 - [🤝 Contributing](#-contributing)
 - [🗺️ Roadmap](#️-roadmap)
 - [📜 License](#-license)
+
+</td>
+</tr>
+</table>
 
 ## 💡 What It Solves
 
@@ -119,6 +144,11 @@ inside each phase:
 ⑤ SCORE      → ⚖️ Trust Scorer: evidence · alignment · safety · recency
 ```
 
+<details open>
+<summary><b>🔬 The full agent roster</b> — click to collapse</summary>
+
+<br/>
+
 | Agent | Model Tier | Does |
 |-------|:---------:|------|
 | 🧭 Router | 🟦 Haiku | Classifies the query & picks which agents to run |
@@ -127,9 +157,19 @@ inside each phase:
 | 💊 Drug | 🟪 Sonnet | Interactions, contraindications, dosing |
 | 🩺 Clinical | 🟣 Opus | Deep reasoning grounded in patient context |
 | 📝 Prescription | 🟪 Sonnet | ATC mapping + country brand options |
+| 🏥 Episodes | 🟪 Sonnet | Reasons over admission/episode RAG |
+| 📈 İzlem | 🟪 Sonnet | Reasons over monitoring/vitals RAG |
 | ⚡ Fast Composer | 🟪 Sonnet | The instant partial answer (`max_tokens=3072`) |
 | 📚 Full Composer | 🟪 Sonnet | The deep, cited answer (`max_tokens=8192`) |
 | ⚖️ Trust Scorer | 🟦 Haiku | Six-dimension confidence scoring |
+| 🌳 Decision Tree | 🟪 Sonnet | Builds the visual reasoning tree |
+
+</details>
+
+> [!NOTE]
+> Agents within a phase run **concurrently** via `asyncio` with a 90 s per-agent
+> timeout. A slow agent never blocks the others — results are collected as they
+> complete (`asyncio.as_completed`).
 
 📖 **Full deep-dive:** [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
 
@@ -153,43 +193,81 @@ A Next.js route handler proxies the stream and injects `:keepalive` comments eve
 15 s so reverse proxies / tunnels never drop the idle connection during long
 reasoning.
 
-## 🎨 Animated Assets — Lottie
+## 📊 Anatomy of a Query
+
+<div align="center">
+<img src="docs/assets/metrics.svg" alt="Per-agent timings and token usage" width="100%"/>
+</div>
+
+A look inside one representative request — how long each agent takes and where the
+tokens go.
+
+> [!TIP]
+> The bars show **per-agent** processing time, but phases ② and ③ run
+> **concurrently** — so the wall-clock time is far less than the sum. The clinician
+> sees a `fast_answer` in about **2 seconds** while the deep analysis keeps composing.
+
+<details>
+<summary><b>📈 What the numbers mean</b></summary>
+
+<br/>
+
+| Metric | Typical | Notes |
+|--------|:------:|-------|
+| ⏱️ Time to `fast_answer` | **~2 s** | First useful answer streamed to the UI |
+| ⏱️ Time to full `result` | **1–3 min** | Deep, cited analysis + trust scores |
+| 🎟️ Tokens / query | **≈26k** | ~18.5k input · ~7.7k output (varies with patient context) |
+| 🧠 Agents / query | **3–9** | The Router decides which agents are needed |
+| 💸 Cost lever | model tiers | Haiku for cheap/structured work, Sonnet/Opus for reasoning |
+
+Numbers are illustrative (captured from a real drug-dosing query) and depend on the
+question, patient-context size, and which agents the Router activates.
+
+</details>
+
+## 🎨 Animated Assets
 
 CerebraLink ships **two kinds** of motion graphics:
 
-1. **Animated SVGs** (`docs/assets/*.svg`) — the diagrams above. They animate
-   **directly in this README** (GitHub runs the embedded CSS keyframes) with zero
-   dependencies. Use these for docs & GitHub.
-2. **Lottie JSON** (`docs/assets/lottie/*.json`) — vector animations for the
-   **running app** (a thinking-loader and an animated agent-council). Lottie can't
-   run inside a GitHub README, so use it in the web app / docs site.
+> **① Animated SVGs** render **directly on GitHub** (CSS keyframes + SMIL motion,
+> zero dependencies) · **② Lottie JSON** drives richer animations inside the
+> running app.
+
+#### 🎞️ Animated SVGs — `docs/assets/*.svg`
+
+| File | Shows |
+|------|-------|
+| 🦸 `hero.svg` | Animated wordmark with a sweeping gradient + a flowing neural network |
+| 🧠 `architecture.svg` | The agent council with live signal dots traveling the pipeline |
+| 🌊 `pipeline.svg` | The SSE event timeline with packets flowing left → right |
+| 📊 `metrics.svg` | Per-agent latency bars + a token donut that draw in on load |
+
+#### 🪄 Lottie JSON — `docs/assets/lottie/*.json`
 
 | File | Use it as |
 |------|-----------|
-| 🌀 `docs/assets/lottie/neural-pulse.json` | A "thinking…" loader while agents work |
-| 🕸️ `docs/assets/lottie/agent-council.json` | A hero/explainer of the multi-agent council |
+| 🌀 `neural-pulse.json` | A "thinking…" loader while agents work |
+| 🕸️ `agent-council.json` | A hero/explainer of the multi-agent council |
 
-### ▶️ How to use Lottie — in any HTML page (CDN, no build)
+<details>
+<summary><b>▶️ Embed Lottie — plain HTML (CDN, no build)</b></summary>
 
 ```html
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-<lottie-player
-  src="docs/assets/lottie/neural-pulse.json"
-  background="transparent"
-  speed="1"
-  style="width: 240px; height: 240px;"
-  loop autoplay>
+<lottie-player src="docs/assets/lottie/neural-pulse.json"
+  background="transparent" speed="1" loop autoplay
+  style="width: 240px; height: 240px;">
 </lottie-player>
 ```
+</details>
 
-### ⚛️ How to use Lottie — in the Next.js frontend
+<details>
+<summary><b>⚛️ Embed Lottie — Next.js / React</b></summary>
 
 ```bash
-cd src/frontend
-npm install lottie-react
+cd src/frontend && npm install lottie-react
 ```
-
 ```tsx
 // src/frontend/src/components/ThinkingLoader.tsx
 "use client";
@@ -197,77 +275,134 @@ import Lottie from "lottie-react";
 import neuralPulse from "../../../docs/assets/lottie/neural-pulse.json";
 
 export function ThinkingLoader() {
-  return (
-    <Lottie
-      animationData={neuralPulse}
-      loop
-      autoplay
-      style={{ width: 120, height: 120 }}
-    />
-  );
+  return <Lottie animationData={neuralPulse} loop autoplay style={{ width: 120, height: 120 }} />;
 }
+// …then render it while the SSE pipeline runs:  {isLoading && <ThinkingLoader />}
 ```
+</details>
 
-```tsx
-// Use it anywhere — e.g. while the SSE pipeline is running:
-{isLoading && <ThinkingLoader />}
-```
+<details>
+<summary><b>🎛️ Customize colors &amp; timing</b></summary>
 
-> [!TIP]
-> 🎛️ **Customize the animation:** the Lottie files are hand-authored Bodymovin
-> JSON. Edit colors via each layer's fill/stroke `c` (RGBA 0–1 arrays:
-> teal `[0.369,0.918,0.831,1]`, indigo `[0.506,0.549,0.973,1]`, violet
-> `[0.753,0.518,0.988,1]`), retime via keyframe `t` values (30 fps, 90-frame loop),
-> or open them in [LottieFiles Editor](https://lottiefiles.com/) / After Effects +
-> Bodymovin. The animated SVGs are editable in any text editor or vector tool.
+<br/>
 
-## 🚀 Quick Start
+Everything is hand-authored and editable in a text editor:
 
-> **Prerequisites:** Docker + Docker Compose, and an
-> [Anthropic API key](https://console.anthropic.com/). An
-> [Exa key](https://exa.ai/) is recommended for guideline search.
+- **Lottie** — edit each layer's fill/stroke `c` (RGBA 0–1 arrays): teal
+  `[0.369,0.918,0.831,1]`, indigo `[0.506,0.549,0.973,1]`, violet
+  `[0.753,0.518,0.988,1]`. Retime via keyframe `t` values (30 fps, 90-frame loop),
+  or open in the [LottieFiles Editor](https://lottiefiles.com/).
+- **SVG** — edit the `<linearGradient>` stops and the `<style>` `@keyframes` /
+  `<animate>` `dur` values in any vector tool or text editor.
+
+</details>
+
+## 🚀 How to Set Up
+
+Up and running in **four steps** (~3 min + image build). 🐳
+
+#### ✅ Prerequisites
+
+| Need | Why | Get it |
+|------|-----|--------|
+| 🐳 **Docker + Compose** | Runs the whole stack | [docker.com](https://www.docker.com/products/docker-desktop/) |
+| 🔑 **Anthropic API key** | All agent reasoning (**required**) | [console.anthropic.com](https://console.anthropic.com/) |
+| 🔎 **Exa API key** | Latest-guideline search (recommended) | [exa.ai](https://exa.ai/) |
+
+#### 🧭 Steps
 
 ```bash
 # 1️⃣  Clone
-git clone https://github.com/ArioMoniri/cerebralink.git
-cd cerebralink
+git clone https://github.com/ArioMoniri/cerebralink.git && cd cerebralink
 
-# 2️⃣  Configure
+# 2️⃣  Configure — copy the template, then add your keys
 cp .env.example .env
-#    → set ANTHROPIC_API_KEY (required), EXA_API_KEY (recommended)
+#    edit .env → ANTHROPIC_API_KEY=sk-ant-...   (EXA_API_KEY=... recommended)
 
-# 3️⃣  Launch the full stack 🚀
+# 3️⃣  Launch the full stack 🚀  (frontend + backend + Redis + Neo4j + MCP sidecars)
 docker compose up -d --build
 
 # 4️⃣  Open the app
-open http://localhost:3100
+open http://localhost:3100        # or just visit it in your browser
 ```
 
-That's it — frontend (`:3100`), backend (`:8100`), Redis, Neo4j, and the MCP
-sidecars all boot together. MCP sidecars install packages on first run, so give
-them a couple of minutes to become healthy.
+> [!IMPORTANT]
+> On first boot, the **MCP sidecars install npm packages** — they can take a
+> couple of minutes to report healthy. That's expected. Watch with
+> `docker compose ps`.
+
+<details>
+<summary><b>🔍 Verify it's working</b></summary>
+
+<br/>
 
 ```bash
-docker compose ps          # watch health
-docker compose logs -f backend
+docker compose ps                                   # all services → "healthy"
+curl -s localhost:8100/health                       # → {"status":"ok","service":"cerebralink"}
+curl -s localhost:3100/api/chat \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"what is the adult dose of paracetamol?"}' | head -c 200
 ```
+Then open <http://localhost:3100> and ask a clinical question — you should see the
+**Fast / Full / Highlights** tabs stream in.
 
-🖥️ Prefer running natively (no Docker)? See
-[`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md#-local-development-without-docker).
+</details>
+
+<details>
+<summary><b>🖥️ Run natively (without Docker)</b></summary>
+
+<br/>
+
+```bash
+# Backend
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -r src/backend/requirements.txt
+export $(grep -v '^#' .env | xargs)
+PYTHONPATH=. uvicorn src.backend.api.app:app --reload --port 8000
+
+# Frontend (new terminal)
+cd src/frontend && npm install
+BACKEND_URL=http://localhost:8000 npm run dev        # → http://localhost:3000
+```
+You'll still want Redis + Neo4j: `docker compose up -d redis neo4j`.
+Full guide: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md#-local-development-without-docker).
+
+</details>
+
+<details>
+<summary><b>🩹 Troubleshooting</b></summary>
+
+<br/>
+
+| Symptom | Fix |
+|---------|-----|
+| ⏳ A sidecar stays "unhealthy" for >3 min | It's still `npm install`-ing — check `docker compose logs <service>` |
+| 🔌 `Backend connection failed` in the UI | `docker compose restart frontend` (re-resolves the backend DNS after a rebuild) |
+| 🧱 Neo4j won't start | `docker compose restart neo4j` then `docker compose up -d` |
+| 🔑 Empty / 401 answers | Check `ANTHROPIC_API_KEY` in `.env`, then `docker compose up -d backend` |
+| 🐌 Slow first response | Cold start + guideline search — subsequent queries are faster |
+
+</details>
 
 ## ⚙️ Configuration
 
 All settings live in `.env` (template: `.env.example`) and resolve through
-`src/backend/core/config.py`.
+`src/backend/core/config.py`. **The only thing you must set is your API key:**
 
 ```bash
-# ── Required ──
-ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=sk-ant-...         # required — all agent reasoning
+EXA_API_KEY=...                      # recommended — latest-guideline search
+```
 
-# ── Recommended ──
-EXA_API_KEY=...                      # latest-guideline search
+> [!CAUTION]
+> Never commit your `.env`, cookies, or any patient data. They're already in
+> `.gitignore` — keep them there.
 
-# ── Model tiers (override any agent's model) ──
+<details>
+<summary><b>⚙️ Full environment reference (model tiers, infra, MCP)</b></summary>
+
+```bash
+# ── Model tiers — override any agent's model ──
 MODEL_ROUTER=claude-haiku-4-5-20251001
 MODEL_CLINICAL=claude-opus-4-6
 MODEL_RESEARCH=claude-sonnet-4-6
@@ -275,7 +410,7 @@ MODEL_DRUG=claude-sonnet-4-6
 MODEL_COMPOSER=claude-sonnet-4-6
 MODEL_TRUST=claude-haiku-4-5-20251001
 
-# ── Infra (defaults work with docker-compose) ──
+# ── Infra (defaults work out-of-the-box with docker-compose) ──
 REDIS_URL=redis://redis:6379/0
 NEO4J_URI=bolt://neo4j:7687
 NEO4J_AUTH=neo4j/cerebralink2024
@@ -287,6 +422,14 @@ OMOPHUB_MCP_URL=http://omophub-mcp:3005
 OMOPHUB_API_KEY=...
 FDC_API_KEY=...                      # USDA FoodData Central (optional)
 ```
+
+| Tier | Default model | Agents | Why |
+|:----:|---------------|--------|-----|
+| 🟦 1 | `claude-haiku-4-5` | Router, PHI Masker, Trust | cheap · fast · structured |
+| 🟪 2 | `claude-sonnet-4-6` | Research, Drug, Composers, Rx | balanced reasoning |
+| 🟣 3 | `claude-opus-4-6` | Clinical | deepest clinical reasoning |
+
+</details>
 
 ## 🗂️ Data Sources & Retrieval
 
@@ -336,6 +479,9 @@ how lab parsing works:
 
 ## 🧩 Project Structure
 
+<details>
+<summary><b>📂 Expand the repository tree</b></summary>
+
 ```
 cerebralink/
 ├── 📂 src/
@@ -359,6 +505,8 @@ cerebralink/
 ├── 🤝 CONTRIBUTING.md / CODE_OF_CONDUCT.md
 └── 📄 .env.example
 ```
+
+</details>
 
 ## 🛠️ Tech Stack
 
