@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" width="640" height="440" role="img" aria-label="Trust gauges and references preview">
+  <defs>
+    <linearGradient id="tbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b0f2a"/><stop offset="100%" stop-color="#11082b"/></linearGradient>
+    <linearGradient id="tcard" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161b3a"/><stop offset="100%" stop-color="#12152e"/></linearGradient>
+    <style>text{font-family:Segoe UI,Helvetica,Arial,sans-serif}</style>
+  </defs>
+  <rect width="640" height="440" rx="16" fill="url(#tbg)"/>
+  <text x="28" y="40" fill="#e2e8f0" font-size="18" font-weight="800">⚖️ Trust &amp; Evidence</text>
+
+  <!-- gauges card -->
+  <g transform="translate(28,60)">
+    <rect width="300" height="350" rx="14" fill="url(#tcard)" stroke="#2a3568"/>
+    <text x="20" y="30" fill="#94a3b8" font-size="12" font-weight="700">CONFIDENCE</text>
+    <!-- bars -->
+    <g transform="translate(20,52)" font-size="12">
+      <g><text y="10" fill="#cbd5e1">Evidence quality</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="228" height="10" rx="5" fill="#5eead4"/><text x="266" y="27" fill="#5eead4" font-weight="700">88</text></g>
+      <g transform="translate(0,42)"><text y="10" fill="#cbd5e1">Guideline alignment</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="242" height="10" rx="5" fill="#818cf8"/><text x="266" y="27" fill="#a5b4fc" font-weight="700">93</text></g>
+      <g transform="translate(0,84)"><text y="10" fill="#cbd5e1">Clinical relevance</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="218" height="10" rx="5" fill="#c084fc"/><text x="266" y="27" fill="#d8b4fe" font-weight="700">84</text></g>
+      <g transform="translate(0,126)"><text y="10" fill="#cbd5e1">Safety check</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="250" height="10" rx="5" fill="#5eead4"/><text x="266" y="27" fill="#5eead4" font-weight="700">96</text></g>
+      <g transform="translate(0,168)"><text y="10" fill="#cbd5e1">Source recency</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="208" height="10" rx="5" fill="#818cf8"/><text x="266" y="27" fill="#a5b4fc" font-weight="700">80</text></g>
+      <g transform="translate(0,210)"><text y="10" fill="#cbd5e1">Completeness</text><rect y="18" width="260" height="10" rx="5" fill="#1e293b"/><rect y="18" width="232" height="10" rx="5" fill="#c084fc"/><text x="266" y="27" fill="#d8b4fe" font-weight="700">89</text></g>
+    </g>
+    <g transform="translate(150,318)"><circle r="0" /><text text-anchor="middle" fill="#5eead4" font-size="13" font-weight="700">Overall: High confidence ✓</text></g>
+  </g>
+
+  <!-- references card -->
+  <g transform="translate(344,60)">
+    <rect width="268" height="350" rx="14" fill="url(#tcard)" stroke="#2a3568"/>
+    <text x="20" y="30" fill="#94a3b8" font-size="12" font-weight="700">VERIFIED REFERENCES 🔗</text>
+    <g transform="translate(16,48)" font-size="11.5">
+      <g><rect width="236" height="58" rx="10" fill="#0f172a" stroke="#334155"/><text x="12" y="20" fill="#a5b4fc" font-weight="700">[1] NHS Scotland — Paracetamol</text><text x="12" y="38" fill="#94a3b8">Dose advice, Adult · 2025 · 🟢 link OK</text></g>
+      <g transform="translate(0,68)"><rect width="236" height="58" rx="10" fill="#0f172a" stroke="#334155"/><text x="12" y="20" fill="#a5b4fc" font-weight="700">[2] EASL Clinical Guideline</text><text x="12" y="38" fill="#94a3b8">Liver disease · 2024 · 🟢 link OK</text></g>
+      <g transform="translate(0,136)"><rect width="236" height="58" rx="10" fill="#0f172a" stroke="#334155"/><text x="12" y="20" fill="#a5b4fc" font-weight="700">[3] FDA Drug Label — APAP</text><text x="12" y="38" fill="#94a3b8">Hepatotoxicity · 🟢 link OK</text></g>
+      <g transform="translate(0,204)"><rect width="236" height="44" rx="10" fill="#0d9488" fill-opacity=".12" stroke="#0d9488" stroke-opacity=".4"/><text x="12" y="27" fill="#5eead4">✓ 3/3 citation URLs resolve</text></g>
+    </g>
+  </g>
+</svg>

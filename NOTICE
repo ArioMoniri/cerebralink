@@ -1,0 +1,46 @@
+CerebraLink
+Copyright 2026 Ariorad Moniri
+
+This product includes software developed by Ariorad Moniri and the
+CerebraLink open-source contributors.
+
+Licensed under the Apache License, Version 2.0 (the "License").
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+────────────────────────────────────────────────────────────────────────
+MEDICAL DISCLAIMER
+────────────────────────────────────────────────────────────────────────
+CerebraLink is a clinical *decision-support* and research tool. It is NOT a
+medical device and is NOT a substitute for professional medical judgment,
+diagnosis, or treatment. All outputs — including drug dosing, prescriptions,
+guideline citations, and trust scores — are informational and must be
+independently verified by a licensed clinician before any clinical use.
+The authors and contributors accept no liability for clinical decisions
+made with this software. See the "Limitation of Liability" and "Disclaimer
+of Warranty" sections of the Apache 2.0 License.
+
+────────────────────────────────────────────────────────────────────────
+EXCLUDED COMPONENTS (NOT distributed with this repository)
+────────────────────────────────────────────────────────────────────────
+The institution-specific Electronic Health Record (EHR/HBYS) scraping and
+ingestion scripts (scripts/cerebral_*.py), authentication cookies, the
+Turkish drug database (ilac.json), and any cached patient data are
+intentionally excluded from this distribution and remain local-only.
+See docs/EHR_ADAPTER.md for how to build a compliant adapter for your own
+EHR system.
+
+────────────────────────────────────────────────────────────────────────
+THIRD-PARTY DATA SOURCES & SERVICES
+────────────────────────────────────────────────────────────────────────
+This software can query the following third-party services. Each is
+governed by its own terms of use and licensing:
+
+  - Anthropic Claude API .......... https://www.anthropic.com/legal
+  - Exa.ai Search API ............. https://exa.ai/terms
+  - PubMed / NCBI E-utilities ..... https://www.ncbi.nlm.nih.gov/home/about/policies/
+  - ClinicalTrials.gov (NIH/NLM) .. https://clinicaltrials.gov/about-site/terms-conditions
+  - openFDA ....................... https://open.fda.gov/terms/
+  - RxNorm / UMLS (NLM) ........... https://www.nlm.nih.gov/research/umls/
+  - OMOP CDM / OHDSI .............. https://www.ohdsi.org/data-standardization/
+  - USDA FoodData Central ......... https://fdc.nal.usda.gov/api-guide.html
+  - bioRxiv / medRxiv ............. https://www.biorxiv.org/about/FAQ

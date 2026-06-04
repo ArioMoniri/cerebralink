@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-label="CerebraLink SSE streaming timeline">
+  <defs>
+    <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b0f2a"/><stop offset="100%" stop-color="#11082b"/></linearGradient>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0e7490"/><stop offset="45%" stop-color="#4f46e5"/><stop offset="75%" stop-color="#9333ea"/><stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <style>
+      @keyframes sweep { 0%{stroke-dashoffset:1100} 100%{stroke-dashoffset:0} }
+      @keyframes pop   { 0%,15%{transform:scale(.6);opacity:.2} 30%,100%{transform:scale(1);opacity:1} }
+      @keyframes pktA  { 0%{offset-distance:0%;opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{offset-distance:100%;opacity:0} }
+      .rail   { stroke:url(#rail); stroke-width:6; stroke-linecap:round; stroke-dasharray:1100; animation: sweep 4s ease-out infinite; }
+      .ev     { animation: pop 4s ease-out infinite; transform-origin:center; transform-box:fill-box; }
+      .e1{animation-delay:.2s}.e2{animation-delay:.7s}.e3{animation-delay:1.2s}.e4{animation-delay:1.9s}.e5{animation-delay:2.6s}.e6{animation-delay:3.2s}
+      .pkt    { offset-path: path('M70,150 H1130'); animation: pktA 4s linear infinite; }
+      text    { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .ttl    { font-weight:800; fill:#e2e8f0 } .tag{ fill:#94a3b8; font-size:12px } .lbl{ font-size:13px; font-weight:700 }
+    </style>
+  </defs>
+
+  <rect width="1200" height="380" rx="20" fill="url(#pbg)"/>
+  <text x="40" y="46" class="ttl" font-size="24">⚡ One Question → A Live Stream of Events</text>
+  <text x="40" y="72" class="tag" font-size="14">The browser opens a single POST to <tspan fill="#7dd3fc">/api/chat/stream</tspan> and receives Server-Sent Events as each agent finishes.</text>
+
+  <!-- rail -->
+  <line x1="70" y1="150" x2="1130" y2="150" stroke="#1e293b" stroke-width="6" stroke-linecap="round"/>
+  <line class="rail" x1="70" y1="150" x2="1130" y2="150"/>
+  <circle class="pkt" r="6" fill="#5eead4"/>
+
+  <!-- event markers -->
+  <g>
+    <g class="ev e1" transform="translate(70,150)">
+      <circle r="11" fill="#0e7490"/><circle r="4" fill="#a5f3fc"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#67e8f9">status</text>
+      <text x="0" y="42" text-anchor="middle" class="tag">router</text>
+    </g>
+    <g class="ev e2" transform="translate(280,150)">
+      <circle r="11" fill="#0e7490"/><circle r="4" fill="#a5f3fc"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#67e8f9">status ×N</text>
+      <text x="0" y="42" text-anchor="middle" class="tag">fetch + council</text>
+    </g>
+    <g class="ev e3" transform="translate(520,150)">
+      <circle r="14" fill="#4f46e5"/><circle r="5" fill="#c7d2fe"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#a5b4fc">fast_answer</text>
+      <text x="0" y="46" text-anchor="middle" class="tag">~1–2 s · partial</text>
+    </g>
+    <g class="ev e4" transform="translate(740,150)">
+      <circle r="11" fill="#4f46e5"/><circle r="4" fill="#c7d2fe"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#a5b4fc">status</text>
+      <text x="0" y="42" text-anchor="middle" class="tag">full composer</text>
+    </g>
+    <g class="ev e5" transform="translate(960,150)">
+      <circle r="14" fill="#9333ea"/><circle r="5" fill="#e9d5ff"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#d8b4fe">result</text>
+      <text x="0" y="46" text-anchor="middle" class="tag">full + trust + citations</text>
+    </g>
+    <g class="ev e6" transform="translate(1130,150)">
+      <circle r="11" fill="#0d9488"/><circle r="4" fill="#99f6e4"/>
+      <text x="0" y="-26" text-anchor="middle" class="lbl" fill="#5eead4">done</text>
+      <text x="0" y="42" text-anchor="middle" class="tag">close</text>
+    </g>
+  </g>
+
+  <!-- keepalive note -->
+  <g transform="translate(40,250)">
+    <rect width="1120" height="92" rx="14" fill="#0f172a" stroke="#334155"/>
+    <text x="20" y="30" class="tag" fill="#7dd3fc" font-weight="700">WHY STREAM?</text>
+    <text x="20" y="54" class="tag" font-size="13">• The full multi-agent pipeline can take 1–3 minutes — but the <tspan fill="#a5b4fc">fast_answer</tspan> reaches the clinician in ~1–2 seconds.</text>
+    <text x="20" y="74" class="tag" font-size="13">• A Next.js route handler proxies the stream and injects <tspan fill="#5eead4">:keepalive</tspan> comments every 15 s so reverse proxies / tunnels don't drop the idle connection.</text>
+  </g>
+</svg>

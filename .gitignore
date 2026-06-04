@@ -19,4 +19,16 @@ ilac.json
 .DS_Store
 redis-data/
 .claude/
+.claude-flow/
 src/frontend/tsconfig.tsbuildinfo
+
+# ── Proprietary EHR / HBYS integration (KEPT LOCAL — NOT distributed) ──
+# These scripts contain institution-specific Acıbadem CerebralPlus scraping
+# logic (endpoints, selectors, auth cookie handling). They must never be
+# committed. See docs/EHR_ADAPTER.md for how to write your own adapter.
+scripts/cerebral_*.py
+scripts/cerebral_*.mjs
+scripts/ingest_patient.py
+patient_data/
+*.cookies.json
+cerebral_*.json

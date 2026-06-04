@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/ArioMoniri/cerebralink/discussions
+    about: Ask questions, share EHR adapters, and propose larger designs here.
+  - name: 🩺 Clinical-safety concern
+    url: mailto:moniriario@gmail.com
+    about: Report dangerous dosing/interaction/citation issues responsibly.
