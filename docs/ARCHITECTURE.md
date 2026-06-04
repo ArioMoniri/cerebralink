@@ -82,7 +82,7 @@ which wraps the Anthropic SDK and tracks token usage.
 | 🩺 **Clinical** | `clinical.py` | Opus | Deep clinical reasoning with patient context |
 | 📝 **Prescription** | `prescription.py` | Sonnet | ATC mapping + brand options (per country) |
 | 🏥 **Episodes** | `episodes.py` | Sonnet | Reason over admission/episode RAG |
-| 📈 **İzlem** | `izlem.py` | Sonnet | Reason over monitoring/vitals RAG |
+| 📈 **Monitoring** | `izlem.py` | Sonnet | Reason over monitoring/vitals (flowsheet) RAG |
 | ⚡ **Fast Composer** | `composer.py` | Sonnet | Compose a partial answer that streams in ~1–2 s (`max_tokens=3072`) |
 | 📚 **Full Composer** | `composer.py` | Sonnet | Compose the deep, cited answer (`max_tokens=8192`) |
 | ⚖️ **Trust Scorer** | `trust.py` | Haiku | Score evidence quality, guideline alignment, safety, recency |
@@ -153,7 +153,7 @@ splitting + entity extraction for labs, dates, ICD codes):
 |-------|--------|--------|
 | 📄 Reports RAG | Lab / radiology / pathology reports | `tools/reports_rag.py` |
 | 🏥 Episodes RAG | Admission / discharge episodes | `tools/episodes_rag.py` |
-| 📈 İzlem RAG | Physician/nurse monitoring, vitals, drug administration | `tools/izlem_rag.py` |
+| 📈 Monitoring RAG | Physician/nurse flowsheets, vitals, drug administration | `tools/izlem_rag.py` |
 
 The **Neo4j graph** (`tools/graph.py`) links patients → episodes → reports →
 drugs, powering the interactive graph views in the UI.

@@ -17,6 +17,12 @@ _How to connect CerebraLink to **your** Electronic Health Record system._
 > (FHIR, Epic, Cerner, OpenEMR, a CSV export, a research data warehouse…) without
 > ever needing them.
 
+This adapter layer is what makes CerebraLink **FHIR R4 and HL7 v2 compatible**: map
+FHIR resources (`Patient`, `Encounter`, `DiagnosticReport`, …) or HL7 v2 segments
+(`PID`, `PV1`, `OBX`, …) into the normalized patient dict shown below, and every
+downstream component — PHI masking, RAG, the graph, the agents — works unchanged.
+Compatibility lives entirely in this one function; you map your source once.
+
 ## 📑 Contents
 
 - [🧠 How CerebraLink consumes patient data](#-how-cerebralink-consumes-patient-data)
@@ -127,7 +133,7 @@ more the agents can do — but only a few keys are needed to get value. Minimal:
 | `patient` | UI banner, clinical agent | name is masked before LLM |
 | `episodes[]` | Episodes RAG, Neo4j graph | `examination_text` is chunked & retrieved |
 | `reports[]` | Reports RAG, `lab_parser`, trends | `text` is parsed for lab values |
-| `izlem[]` _(optional)_ | İzlem RAG | monitoring/vitals/drug-administration rows |
+| `izlem[]` _(optional)_ | Monitoring RAG | vitals / flowsheet / drug-administration rows |
 
 > [!TIP]
 > Extra keys are harmless — they're ignored unless an agent looks for them.

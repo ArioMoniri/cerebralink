@@ -19,14 +19,14 @@
       <!-- searchable dropdown -->
       <g transform="translate(0,32)">
         <rect width="320" height="34" rx="9" fill="#0f172a" stroke="#4f46e5"/>
-        <text x="12" y="22" fill="#e2e8f0" font-size="12.5">🔎 tylen</text>
+        <text x="12" y="22" fill="#e2e8f0" font-size="12.5">🔎 para</text>
         <text x="300" y="22" fill="#818cf8" font-size="12">▾</text>
       </g>
       <g transform="translate(0,70)" font-size="12">
         <rect width="320" height="92" rx="10" fill="#0d1230" stroke="#2a3568"/>
         <rect x="6" y="6" width="308" height="26" rx="7" fill="#4f46e5" fill-opacity=".25"/><text x="14" y="24" fill="#c7d2fe" font-weight="700">Tylenol 500 mg ✓</text>
-        <text x="14" y="52" fill="#94a3b8">Parol 500 mg</text>
-        <text x="14" y="76" fill="#94a3b8">Tamol 500 mg</text>
+        <text x="14" y="52" fill="#94a3b8">Panadol 500 mg</text>
+        <text x="14" y="76" fill="#94a3b8">Calpol 500 mg</text>
       </g>
     </g>
 
@@ -36,7 +36,7 @@
       <text y="20" fill="#94a3b8" font-size="12">40 mg PO once daily · GI protection</text>
       <g transform="translate(0,32)">
         <rect width="234" height="34" rx="9" fill="#0f172a" stroke="#334155"/>
-        <text x="12" y="22" fill="#e2e8f0" font-size="12.5">Pantpas 40 mg</text>
+        <text x="12" y="22" fill="#e2e8f0" font-size="12.5">Protonix 40 mg</text>
         <text x="214" y="22" fill="#818cf8" font-size="12">▾</text>
       </g>
     </g>

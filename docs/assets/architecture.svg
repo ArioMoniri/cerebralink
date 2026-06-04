@@ -79,10 +79,10 @@
 
   <!-- fetch -->
   <g transform="translate(410,150)">
-    <g class="box"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">🗂️ Patient Record</text><text x="80" y="38" text-anchor="middle" class="tag">EHR adapter</text></g>
+    <g class="box"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">🗂️ Patient Record</text><text x="80" y="38" text-anchor="middle" class="tag">FHIR R4 · HL7 v2 adapter</text></g>
     <g class="box b2" transform="translate(0,58)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">📄 Reports (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">labs · radiology</text></g>
     <g class="box b3" transform="translate(0,116)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">🏥 Episodes (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">admissions</text></g>
-    <g class="box b4" transform="translate(0,174)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">📈 İzlem (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">monitoring/vitals</text></g>
+    <g class="box b4" transform="translate(0,174)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">📈 Monitoring (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">vitals · flowsheets</text></g>
   </g>
 
   <!-- PHI masker -->
@@ -119,10 +119,11 @@
   <!-- trust -->
   <g class="box" transform="translate(1090,332)">
     <rect width="120" height="100" rx="14" fill="url(#haiku)"/>
-    <text x="60" y="30" text-anchor="middle" class="ttl" font-size="14">⚖️ Trust</text>
-    <text x="60" y="50" text-anchor="middle" class="tag" fill="#a5f3fc">evidence</text>
-    <text x="60" y="66" text-anchor="middle" class="tag" fill="#a5f3fc">alignment</text>
-    <text x="60" y="82" text-anchor="middle" class="tag" fill="#a5f3fc">safety · recency</text>
+    <text x="60" y="28" text-anchor="middle" class="ttl" font-size="14">⚖️ Trust</text>
+    <text x="60" y="46" text-anchor="middle" class="tag" fill="#a5f3fc">6-axis score:</text>
+    <text x="60" y="62" text-anchor="middle" class="tag" fill="#a5f3fc">evidence · align</text>
+    <text x="60" y="76" text-anchor="middle" class="tag" fill="#a5f3fc">relevance · safety</text>
+    <text x="60" y="90" text-anchor="middle" class="tag" fill="#a5f3fc">recency · complete</text>
   </g>
 
   <!-- output -->
