@@ -159,6 +159,7 @@ concurrently.
 | Prescription | Sonnet | ATC mapping and per-country brand options |
 | Episodes | Sonnet | Reasons over admission/episode RAG |
 | Monitoring | Sonnet | Reasons over vitals/flowsheet RAG |
+| Reports | Sonnet | Reasons over lab/radiology/pathology RAG; generates the patient brief |
 | Fast Composer | Sonnet | The partial answer (`max_tokens=3072`) |
 | Full Composer | Sonnet | The full, cited answer (`max_tokens=8192`) |
 | Trust Scorer | Haiku | Six-axis confidence scoring |
@@ -180,9 +181,10 @@ Deep dive: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
 ## Clinical Reasoning Tree
 
-The Clinical and Drug agents derive a recommendation as an explicit branch graph,
-returned in the `decision_tree` field and rendered as an interactive React Flow
-diagram in the UI. Branches and thresholds are produced per query, not hard-coded.
+A dedicated Decision Tree agent (Opus) derives the recommendation as an explicit
+branch graph, returned in the `decision_tree` field and rendered as an interactive
+React Flow diagram in the UI. Branches and thresholds are produced per query, not
+hard-coded.
 
 <div align="center">
 <img src="docs/assets/decision-tree.svg" alt="Clinical reasoning decision tree" width="100%"/>
@@ -222,6 +224,23 @@ one-line rationale per axis are returned in `trust_scores` / `trust_reasons`.
 > [!CAUTION]
 > Trust scores are **LLM-generated confidence heuristics**, not externally
 > validated reliability measures. Treat them as hints, not guarantees.
+
+<details>
+<summary>How the scores are produced</summary>
+
+<br/>
+
+A single Trust agent (Haiku, `max_tokens=1024`, `temperature=0.1`) reads the
+question, both answers, and the list of contributing agents, then returns one JSON
+object: a 0–100 score and a one-line rationale per axis, plus a self-reported
+`scorer_confidence`. Scores are clamped to `[0, 100]`. A keyword pre-pass detects
+patient-record questions and applies a data-retrieval rubric (so it does not
+down-score for lacking external RCTs/guidelines). If the response fails to parse,
+all axes fall back to 0 with `scorer_confidence = 0`. The scorer judges the
+already-composed answer; it does not re-run the council, so it shares any upstream
+errors.
+
+</details>
 
 ## Anatomy of a Query
 
@@ -268,8 +287,38 @@ Request body (both endpoints):
 | `agents_used` / `agent_timings` | array | which agents ran and their timings/tokens |
 | `total_time_ms` / `total_input_tokens` / `total_output_tokens` | number | run totals |
 | `language` / `priority_country` | string | detected query language / formulary country |
+| `patient_context` | object \| null | PHI-masked patient dict echoed back when an identifier resolved (drives the banner, graph, trends); null otherwise |
+| `izlem_brief_pdf` | string \| null | server path to a generated monitoring PDF brief, when one was produced |
 
 </details>
+
+Beyond chat, the backend exposes patient-data, RAG, transcription, reader, and
+graph routes.
+
+<details>
+<summary>Other endpoints</summary>
+
+```
+GET  /health                                   liveness: {status, service}
+POST /api/patient/ingest                       ingest + PHI-mask a patient from cookies JSON
+POST /api/patient/clear                        clear the session's patient context
+GET  /api/session/{id}[/messages]             session info / conversation history
+POST /api/transcribe                           voice to text (needs GROQ_API_KEY or OPENAI_API_KEY)
+POST /api/reports/fetch/{pid}                  fetch + index a patient's reports
+GET  /api/reports/{pid}/manifest|trends|brief  reports manifest / lab trends / brief
+POST /api/reports/{pid}/search                 RAG over reports
+GET  /api/reader?url=...                        reader-mode content extraction for a link
+POST /api/episodes/fetch/{pid}                 fetch + index admission episodes
+GET  /api/episodes/{pid}/manifest|summary      episodes manifest / summary
+POST /api/izlem/{pid}/brief                     generate a monitoring PDF brief
+GET  /api/graph/{pid}/patient|reports|full     Neo4j knowledge-graph views
+```
+</details>
+
+**Errors.** JSON endpoints return standard HTTP status codes via FastAPI: 400 (bad
+request), 403 (path traversal on file routes), 404 (no data / missing file), 413
+(audio over 25 MB), 500 (PDF/PACS generation), 502 (upstream EHR/MCP failure). The
+stream surfaces failures as an `error` event, then closes.
 
 ## Animated Assets
 
@@ -363,7 +412,7 @@ PYTHONPATH=. uvicorn src.backend.api.app:app --reload --port 8000
 
 # Frontend (new terminal)
 cd src/frontend && npm install
-BACKEND_URL=http://localhost:8000 npm run dev        # http://localhost:3000
+BACKEND_URL=http://localhost:8000 npm run dev        # http://localhost:3100 (next dev -p 3100)
 ```
 Redis + Neo4j are still needed: `docker compose up -d redis neo4j`.
 </details>
@@ -404,6 +453,12 @@ MODEL_RESEARCH=claude-sonnet-4-6
 MODEL_DRUG=claude-sonnet-4-6
 MODEL_COMPOSER=claude-sonnet-4-6
 MODEL_TRUST=claude-haiku-4-5-20251001
+MODEL_BRIEFER=claude-sonnet-4-6      # Reports, Episodes, Monitoring (RAG briefers)
+MODEL_PHI_MASKER=claude-haiku-4-5-20251001   # reserved; PHI masking is regex-only by default
+
+# Optional
+GROQ_API_KEY=...                     # or OPENAI_API_KEY — enables voice transcription (/api/transcribe)
+PATIENT_DATA_DIR=/app/patient_data   # where the EHR adapter caches fetched data
 
 # Infra (defaults work with docker-compose)
 REDIS_URL=redis://redis:6379/0
@@ -421,8 +476,12 @@ FDC_API_KEY=...                      # USDA FoodData Central (optional)
 | Tier | Default | Agents |
 |------|---------|--------|
 | 1 | `claude-haiku-4-5` | Router, Trust |
-| 2 | `claude-sonnet-4-6` | Research, Drug, Composers, Prescription, Episodes, Monitoring |
+| 2 | `claude-sonnet-4-6` | Research, Drug, Composers, Prescription, Episodes, Monitoring, Reports |
 | 3 | `claude-opus-4-6` | Clinical, Decision Tree |
+
+All Tier-2 agents share the `claude-sonnet-4-6` default but resolve from different
+variables: Research=`MODEL_RESEARCH`, Drug + Prescription=`MODEL_DRUG`,
+Composers=`MODEL_COMPOSER`, Reports/Episodes/Monitoring=`MODEL_BRIEFER`.
 
 </details>
 
@@ -442,6 +501,10 @@ CerebraLink combines live APIs, MCP sidecars, file-based RAG, and a graph databa
 | Episodes RAG | `tools/episodes_rag.py` | Admission/discharge retrieval |
 | Monitoring RAG | `tools/izlem_rag.py` | Vitals/flowsheet retrieval |
 | Neo4j graph | `tools/graph.py` | Patient ↔ report ↔ episode ↔ drug relations |
+
+Ports shown are host-published (e.g. `localhost:3102`); inside the Compose network,
+services reach each other on the container port via the `*_MCP_URL` env vars (e.g.
+`http://healthcare-mcp:3002`). A legacy general drug sidecar also runs at host `:3101`.
 
 Documents are chunked with paragraph/sentence-aware splitting and entity
 extraction (labs, dates, ICD codes). Lab text is parsed by `tools/lab_parser.py`
@@ -571,12 +634,20 @@ work.
 
 ## Roadmap
 
-- Automated tests (backend pipeline + lab parsers with synthetic fixtures)
-- Community library of EHR adapters (FHIR R4, HL7 v2, OpenEMR)
-- Automated citation link-liveness checking
-- UI internationalization
-- Configurable trust-scoring rubrics
-- Optional self-hosted / local model backends
+<div align="center">
+<img src="docs/assets/roadmap-board.svg" alt="CerebraLink roadmap board" width="100%"/>
+</div>
+
+The board reflects intent, not delivery dates. The **Researching / Coming** column
+is early-stage R&D — see [Limitations](#status-limitations--known-gaps).
+
+| Shipped | In Progress | Next | Researching · Coming |
+|---------|-------------|------|----------------------|
+| Multi-agent SSE pipeline | HL7 v2 segment mapping | EHR adapter library (Epic/Cerner/OpenEMR) | **TurboQuant** (codename) — quantized model serving (INT8 / 4-bit, e.g. vLLM/llama.cpp) for lower-latency, lower-cost inference |
+| Six-axis trust scoring | Automated test suite | UI internationalization | **Clinical world model** (research) — a learned patient-state model to simulate trajectories and inform agent routing; would augment, not replace, today's orchestration |
+| Lab parser (3 formats) | Citation link-liveness checking | Configurable trust rubrics | On-prem / local LLM backends |
+| FHIR R4 adapter example | | Prompt-cache cost reduction | DICOM / multimodal ingestion |
+| Neo4j knowledge graph | | | Evaluation harness / clinical benchmarks |
 
 ## License
 
