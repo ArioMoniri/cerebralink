@@ -24,7 +24,7 @@
   <!-- eyebrow + title -->
   <text x="40" y="38" class="t" letter-spacing="1.5" style="text-transform:uppercase">Pipeline Metrics</text>
   <text x="40" y="64" class="h sans" font-size="23">Anatomy of One Query</text>
-  <text x="40" y="86" class="t" font-size="13.5">Representative per-agent timings &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan fill="#0E7C86" font-weight="700">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
+  <text x="40" y="86" class="t" font-size="13.5">Representative per-agent timings &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan fill="#1F2328" font-weight="700">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
 
   <!-- ── LEFT: latency bars on ledger rules ── -->
   <g transform="translate(40,104)">
@@ -76,7 +76,7 @@
       <!-- Fast Composer 10 — the ONE accent (recommended fast path) -->
       <g transform="translate(0,192)">
         <text x="74" y="11" text-anchor="end" class="l">Fast Composer</text>
-        <rect class="s" stroke="#0E7C86" stroke-width="2.25" x="80" y="0" width="80" height="16" rx="3" fill="#D8ECEC"/>
+        <rect class="s" style="stroke:#0E7C86" stroke-width="2.25" x="80" y="0" width="80" height="16" rx="3" fill="#D8ECEC"/>
         <text x="170" y="12" class="mono" fill="#0E7C86" font-weight="700">10</text>
       </g>
       <!-- Trust 4 -->
@@ -111,18 +111,18 @@
       <!-- track -->
       <circle class="s" r="54" stroke="#E3DDD0" stroke-width="18"/>
       <!-- input ≈ 18.5k : teal solid arc, the active/recommended path (draw-on, visible at rest) -->
-      <circle class="arc-active" r="54" fill="none" stroke="#0E7C86" stroke-width="18" transform="rotate(-90)"/>
+      <circle class="arc-active" style="stroke:#1F2328" r="54" fill="none" stroke-width="18" transform="rotate(-90)"/>
       <!-- output ≈ 7.7k : hatched ink arc -->
       <circle r="54" fill="none" stroke="url(#hatch)" stroke-width="18" stroke-dasharray="100 339" stroke-dashoffset="0" transform="rotate(164)"/>
       <!-- thin ink outline over hatched arc to keep it crisp -->
       <circle r="54" fill="none" stroke="#1F2328" stroke-width="0" />
-      <text y="-2" text-anchor="middle" class="mono" font-size="22" font-weight="700" fill="#0E7C86">&#8776;26k</text>
+      <text y="-2" text-anchor="middle" class="mono" font-size="22" font-weight="700" fill="#1F2328">&#8776;26k</text>
       <text y="18" text-anchor="middle" class="t">total tokens</text>
     </g>
 
     <!-- legend: input = solid teal swatch; output = hatched ink swatch -->
     <g transform="translate(210,110)" font-size="12">
-      <rect x="0" y="0" width="13" height="13" rx="2" fill="#0E7C86"/>
+      <rect x="0" y="0" width="13" height="13" rx="2" fill="#1F2328"/>
       <text x="20" y="11" class="l">Input <tspan class="mono">&#8776; 18.5k</tspan></text>
       <rect x="0" y="30" width="13" height="13" rx="2" fill="url(#hatch)" stroke="#1F2328" stroke-width="1"/>
       <text x="20" y="41" class="l">Output <tspan class="mono">&#8776; 7.7k</tspan></text>
@@ -130,10 +130,10 @@
 
     <!-- fast-answer stat (sage = confirmed/ok) -->
     <g transform="translate(24,230)">
-      <rect class="s" stroke="#5E7E5A" stroke-width="1.5" width="362" height="58" rx="11" fill="#E0E9DC"/>
+      <rect class="s" style="stroke:#5E7E5A" stroke-width="1.5" width="362" height="58" rx="11" fill="#E0E9DC"/>
       <!-- bespoke single-line "bolt" glyph (replaces emoji) -->
-      <path class="s" stroke="#5E7E5A" stroke-width="2.25" d="M24,12 L17,30 L25,30 L20,46 L33,26 L25,26 L31,12 Z"/>
-      <text x="44" y="32" class="mono h" font-size="19" fill="#0E7C86">~10 s</text>
+      <path class="s" style="stroke:#5E7E5A" stroke-width="2.25" d="M24,12 L17,30 L25,30 L20,46 L33,26 L25,26 L31,12 Z"/>
+      <text x="44" y="32" class="mono h" font-size="19" style="fill:#5E7E5A">~10 s</text>
       <text x="124" y="24" class="l">to first answer · <tspan class="mono" fill="#5E7E5A" font-weight="700">~1 min</tspan> full</text>
       <text x="124" y="44" class="t">first answer streams while the full analysis composes</text>
     </g>

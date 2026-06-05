@@ -63,7 +63,7 @@
       <!-- push-pin -->
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <!-- status: accent dot + ink check -->
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Multi-agent SSE pipeline</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">router &#8594; council &#8594; compose &#8594; score</text>
@@ -71,7 +71,7 @@
     <g transform="translate(185,308) rotate(1.5,0,0)">
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Six-axis trust scoring</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">per-answer confidence + rationale</text>
@@ -79,7 +79,7 @@
     <g transform="translate(185,406) rotate(-1,0,0)">
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Lab parser &#8212; 3 formats</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">horizontal &#183; vertical &#183; serology</text>
@@ -87,7 +87,7 @@
     <g transform="translate(185,504) rotate(2,0,0)">
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">File adapter (default)</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">synthetic JSON &#183; <tspan class="mono">FHIR</tspan> code example</text>
@@ -95,7 +95,7 @@
     <g transform="translate(185,602) rotate(-1.5,0,0)">
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Neo4j knowledge graph</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">patient &#8596; report &#8596; episode &#8596; drug</text>
@@ -108,22 +108,22 @@
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <!-- in-progress: accent dot + half-filled half-circle glyph -->
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
       <g transform="translate(-92,21)">
         <circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/>
-        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#0E7C86"/>
+        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#6B6A66"/>
       </g>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13"><tspan class="mono">HL7 v2</tspan> segment mapping</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10"><tspan class="mono">PID</tspan> / <tspan class="mono">PV1</tspan> / <tspan class="mono">OBX</tspan> &#8594; patient dict</text>
     </g>
     <g transform="translate(459,308) rotate(-2,0,0)">
       <!-- ONE active/recommended card: teal outline + draw-on stroke -->
-      <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" stroke="#0E7C86" stroke-width="2.25" class="s progress"/>
+      <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" stroke="#0E7C86" stroke-width="2.25" class="s progress" style="stroke:#0E7C86"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
       <g transform="translate(-92,21)">
         <circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/>
-        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#0E7C86"/>
+        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#6B6A66"/>
       </g>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Citation link-liveness</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">verify URLs resolve pre-display</text>
@@ -131,10 +131,10 @@
     <g transform="translate(459,406) rotate(1,0,0)">
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <circle cx="-92" cy="-22" r="3.6" fill="#0E7C86"/>
+      <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
       <g transform="translate(-92,21)">
         <circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/>
-        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#0E7C86"/>
+        <path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#6B6A66"/>
       </g>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Docs accuracy &amp; examples</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">runnable demo patient, verified claims</text>
@@ -233,10 +233,10 @@
 
   <!-- legend: status glyphs -->
   <g transform="translate(40,672)">
-    <circle cx="6" cy="-4" r="3.6" fill="#0E7C86"/>
+    <circle cx="6" cy="-4" r="3.6" fill="#5E7E5A"/>
     <path class="s" stroke-width="2.25" d="M16,-4 l3,4 6,-8"/>
     <text x="32" y="0" class="sub sans" font-size="11">shipped</text>
-    <g transform="translate(110,-4)"><circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/><path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#0E7C86"/></g>
+    <g transform="translate(110,-4)"><circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/><path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#6B6A66"/></g>
     <text x="124" y="0" class="sub sans" font-size="11">in progress</text>
     <circle class="s" stroke-width="1.5" stroke-dasharray="2.5 3" cx="205" cy="-4" r="6"/>
     <text x="218" y="0" class="sub sans" font-size="11">todo</text>

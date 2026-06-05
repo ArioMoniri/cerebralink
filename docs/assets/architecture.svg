@@ -104,6 +104,8 @@
 
   <!-- ===== RECOMMENDED PATH (single teal, static-visible draw-on) ===== -->
   <!-- User Query -> Router -> Patient Record/Council -> Fast Composer -> Trust -> Streamed UI -->
+  <path class="s" style="stroke:#0E7C86;stroke-width:2.25"
+    d="M160,395 L204,395 M210,395 C390,360 420,360 624,290 M816,330 C840,340 855,345 874,332 M1050,414 L1084,400 M1150,432 C1150,500 1150,520 1146,554"/>
   <path class="s recommend"
     d="M160,395 L204,395 M210,395 C390,360 420,360 624,290 M816,330 C840,340 855,345 874,332 M1050,414 L1084,400 M1150,432 C1150,500 1150,520 1146,554"/>
 
@@ -225,7 +227,7 @@
       <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
       <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
       <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
-      <text x="85" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono" fill="#0E7C86">~10 s</tspan></text>
+      <text x="85" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono">~10 s</tspan></text>
     </g>
     <!-- Full Composer (Sonnet = double-stroke tier) -->
     <g transform="translate(0,82)">
@@ -243,7 +245,7 @@
     <!-- scales glyph -->
     <g class="s" stroke-width="2.25" transform="translate(60,22)"><path d="M0,-8 L0,8 M-9,-5 L9,-5 M-9,-5 L-12,2 L-6,2 Z M9,-5 L6,2 L12,2 Z M-6,8 L6,8"/></g>
     <text x="60" y="50" text-anchor="middle" class="ttl" font-size="14">Trust</text>
-    <text x="60" y="66" text-anchor="middle" class="tag"><tspan class="mono" fill="#0E7C86">6-axis</tspan> score:</text>
+    <text x="60" y="66" text-anchor="middle" class="tag"><tspan class="mono">6-axis</tspan> score:</text>
     <text x="60" y="80" text-anchor="middle" class="tag">evidence · align</text>
     <text x="60" y="92" text-anchor="middle" class="tag">relevance · safety</text>
     <text x="60" y="104" text-anchor="middle" class="tag">recency · complete</text>
@@ -261,7 +263,7 @@
   <!-- footer -->
   <text x="40" y="730" class="tag" font-size="13">Phases 2-3 run agents concurrently (asyncio); the Fast Composer emits a partial answer before the Full Composer and Trust Scorer finish — all over one <tspan class="mono">SSE</tspan> connection.</text>
   <g transform="translate(40,748)">
-    <line class="s" stroke="#0E7C86" stroke-width="2.25" x1="0" y1="0" x2="20" y2="0"/>
+    <line class="s" style="stroke:#0E7C86" stroke-width="2.25" x1="0" y1="0" x2="20" y2="0"/>
     <text x="28" y="4" class="tag" font-size="13">Teal line = the recommended request path through the pipeline.</text>
   </g>
 </svg>

@@ -8,8 +8,6 @@
       .ttl{font-weight:700;fill:#1F2328}
       .tag{fill:#6B6A66;font-size:12px}
       .lbl{font-size:13px;font-weight:700;fill:#1F2328}
-      @keyframes march{from{stroke-dashoffset:1060}to{stroke-dashoffset:0}}
-      .ekg{stroke-dasharray:1060;stroke-dashoffset:0;animation:march 6s linear infinite}
     </style>
   </defs>
 
@@ -21,7 +19,7 @@
     <path class="s" stroke-width="2.25" d="M6,-12 L-3,2 L3,2 L-2,12 L9,-3 L2,-3 Z"/>
   </g>
   <text x="62" y="48" class="ttl sans" font-size="24">One Question &#8594; A Live Stream of Events</text>
-  <text x="40" y="74" class="tag sans" font-size="14">The browser opens a single POST to <tspan class="mono" fill="#0E7C86">/api/chat/stream</tspan> and receives Server-Sent Events as each agent finishes.</text>
+  <text x="40" y="74" class="tag sans" font-size="14">The browser opens a single POST to <tspan class="mono" fill="#1F2328">/api/chat/stream</tspan> and receives Server-Sent Events as each agent finishes.</text>
 
   <!-- single faint baseline rule under the timeline (kept clear of the event labels) -->
   <line class="s" stroke="#E3DDD0" stroke-width="1" x1="40" y1="206" x2="1160" y2="206"/>
@@ -40,13 +38,9 @@
     <text x="246" y="4" class="tag sans" font-size="11">Opus</text>
   </g>
 
-  <!-- base ink line (visible at rest), then accent "march" overlay drawn on top -->
+  <!-- timeline as a single static-visible ink EKG line -->
   <path class="s" stroke-width="1.5"
     d="M70,150 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
-
-  <!-- accent recommended/progress path: static-visible at rest (dashoffset:0), marches -->
-  <path class="s ekg" stroke="#0E7C86" stroke-width="2.25"
-    d="M70,150 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520"/>
 
   <!-- event markers: ink dots with sans label + mono/sans sublabel -->
   <g transform="translate(70,150)">
@@ -62,7 +56,7 @@
   <!-- fast_answer = the ONE accent: teal node + the ONE key number in mono teal -->
   <g transform="translate(520,150)">
     <circle cx="0" cy="0" r="7" fill="#0E7C86"/>
-    <circle cx="0" cy="0" r="11.5" class="s" stroke="#0E7C86" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="11.5" class="s" style="stroke:#0E7C86" stroke-width="1.5"/>
     <text y="-28" text-anchor="middle" class="lbl sans" fill="#0E7C86">fast_answer</text>
     <text y="48" text-anchor="middle" class="sans" font-size="13"><tspan class="mono" fill="#0E7C86" font-weight="700">~10 s</tspan> <tspan class="tag">&#183; partial</tspan></text>
   </g>
