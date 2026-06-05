@@ -24,7 +24,7 @@
   <text x="40" y="74" class="tag" font-size="14">A specialized multi-agent council streams answers over Server-Sent Events (SSE)</text>
 
   <!-- legend -->
-  <g transform="translate(820,34)" font-size="12">
+  <g transform="translate(720,34)" font-size="12">
     <rect x="0" y="0" width="14" height="14" rx="3" fill="url(#haiku)"/><text x="20" y="11" class="tag">Haiku · fast/cheap</text>
     <rect x="150" y="0" width="14" height="14" rx="3" fill="url(#sonnet)"/><text x="170" y="11" class="tag">Sonnet · reasoning</text>
     <rect x="310" y="0" width="14" height="14" rx="3" fill="url(#opus)"/><text x="330" y="11" class="tag">Opus · deep clinical</text>
