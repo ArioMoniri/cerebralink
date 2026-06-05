@@ -100,4 +100,5 @@
       <text x="62" y="20" text-anchor="middle" fill="#c084fc">Neo4j · Redis · MCP</text>
     </g>
   </g>
+  <text x="503" y="320" font-size="13" fill="#64748b">Standards: FHIR R4 · HL7 v2 · openEHR (on the roadmap) &#160;·&#160; Apache-2.0</text>
 </svg>

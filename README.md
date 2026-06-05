@@ -119,26 +119,34 @@ identifier is provided.
 | Patient data must not leak to LLMs | Regex de-identification runs on ingest, before any reasoning model |
 | Prescriptions need local brand names | ATC mapping plus per-country brand options with a searchable picker |
 
+## Capabilities
+
+- **Three answer modes** — every response is composed as **Fast** (a tight, streamed summary), **Complete** (the full work-up with tables and dosing), and **Highlights** (the key alerts and bottom line). Switch tabs without re-querying.
+- **Typed reference categorization** — each citation is tagged by **effect/impact** (high · moderate · contextual · low), by **priority country**, and **WHO / international**, so you see at a glance which sources actually shaped the answer (see the reference legend in the screenshots).
+- **Anti-sycophancy trust scoring** — the six-axis trust score is cross-checked against the model's **token-level probabilities**, so low-confidence or people-pleasing assertions are scored down rather than rubber-stamped.
+- **Deep links & hyperlinks everywhere** — visit dates, lab values, ICD-10 codes, drugs, and report references are clickable, jumping to the source record, the lab-trend chart, or the code definition.
+- **Embedded resource viewer** — open a cited guideline/article in an in-app browser pane (with EN/TR tabs) without leaving the answer.
+- **Guideline pipelines for triage & escalation** — for emergency or stepwise-treatment questions, it builds a level-by-level decision/treatment pathway from the **latest** guidelines (rendered as an interactive flowchart).
+- **Personalized guideline prioritization** — guidelines are ranked by the **clinician's prior preferences** and by the **language of the question** (e.g. a Turkish query prioritizes Turkish/TR-adapted guidelines), shown as a `Priority: TR guidelines` banner.
+- **Standards-based** — patient data flows through a single adapter, making CerebraLink **FHIR R4 and HL7 v2 compatible** (openEHR on the roadmap).
+
 ## Screenshots
 
-The previews below are UI mockups (they render everywhere). Replace them with real
-captures of your instance when convenient.
+Real captures from a running instance. Patient names, protocol IDs, and clinician
+names are redacted; the app's own PHI masker already replaces names with
+`[PATIENT_NAME]` before any model sees them.
 
-| Chat with Fast / Full / Highlights tabs | Trust scores & source references |
+| Three answer modes · Priority-TR guidelines · 6-axis trust | Patient summary · deep-linked dates & ICD codes · trust |
 |:---:|:---:|
-| <img src="docs/assets/screenshots/chat.svg" alt="Chat view" width="420"/> | <img src="docs/assets/screenshots/trust.svg" alt="Trust gauges" width="420"/> |
-| **Prescription card with searchable brand picker** | **Knowledge graph & lab trends** |
-| <img src="docs/assets/screenshots/prescription.svg" alt="Prescription card" width="420"/> | <img src="docs/assets/screenshots/graph.svg" alt="Knowledge graph" width="420"/> |
-
-<details>
-<summary>How to add real screenshots</summary>
-
-```bash
-docker compose up -d            # boot the stack
-open http://localhost:3100      # ask, e.g. "paracetamol dosing in hepatic impairment"
-# Capture each panel as PNG into docs/assets/screenshots/, then point the <img> tags at your files.
-```
-</details>
+| <img src="docs/assets/screenshots/shot-modes-trust.png" alt="Fast/Complete/Highlights tabs with trust gauges" width="430"/> | <img src="docs/assets/screenshots/shot-summary.png" alt="Patient summary with deep links and trust score" width="430"/> |
+| **Complete mode — mechanism tables, dosing (LaTeX), alternatives** | **Typed reference categorization — impact · country · WHO** |
+| <img src="docs/assets/screenshots/shot-complete.png" alt="Complete answer with tables and dosing" width="430"/> | <img src="docs/assets/screenshots/shot-ref-legend.png" alt="Reference effect-size legend" width="430"/> |
+| **Cited references + embedded resource viewer (EN/TR)** | **Guideline pipeline — step-by-step decision tree** |
+| <img src="docs/assets/screenshots/shot-references.png" alt="References with embedded article viewer" width="430"/> | <img src="docs/assets/screenshots/shot-pipeline.png" alt="Beta-blocker decision flowchart" width="430"/> |
+| **Patient knowledge graph (episodes · departments · diagnoses)** | **Lab value trends with abnormal detection** |
+| <img src="docs/assets/screenshots/shot-graph.png" alt="Patient knowledge graph" width="430"/> | <img src="docs/assets/screenshots/shot-trends.png" alt="Lab value trends" width="430"/> |
+| **Structured assessment with ICD-10 deep links** | |
+| <img src="docs/assets/screenshots/shot-assessment.png" alt="Structured assessment with ICD-10 deep links" width="430"/> | |
 
 ## Agentic Architecture
 
@@ -671,18 +679,29 @@ work.
 The board reflects intent, not delivery dates. The **Researching / Coming** column
 is early-stage R&D — see [Limitations](#status-limitations--known-gaps).
 
-| Shipped | In Progress | Next | Researching · Coming |
-|---------|-------------|------|----------------------|
-| Multi-agent SSE pipeline | HL7 v2 segment mapping | First production EHR adapter (Epic/OpenEMR) | **TurboQuant** (codename) — quantized serving (INT8/4-bit) |
-| Six-axis trust scoring | Citation link-liveness checking | AuthN / RBAC + audit logging | **Clinical world model** (research) — patient-state model to inform routing |
-| Lab parser (3 formats) | Docs accuracy & runnable demo patient | Observability (tracing, cost/latency) | On-prem / local LLM backends |
-| File adapter (default) + FHIR code example | | Data governance (PHI retention/TTL, secure delete) | DICOM / multimodal ingestion |
-| Neo4j knowledge graph | | Test suite + lab-accuracy eval slice | Clinical eval benchmarks |
+> The board shows highlights; the table and list below are the complete view.
 
-> The **Researching · Coming** column is exploratory research, not committed work or
-> dated promises. Also under consideration (not yet on the board): cost & latency controls (prompt caching,
-> token budgets, adaptive model routing), UI internationalization, and configurable
-> trust rubrics.
+| Shipped | In Progress | Next |
+|---------|-------------|------|
+| Multi-agent SSE pipeline | HL7 v2 segment mapping | First production EHR adapter (Epic/OpenEMR) |
+| Six-axis trust scoring | Citation link-liveness checking | AuthN / RBAC + audit logging |
+| Lab parser (3 formats) | Docs accuracy & runnable demo patient | Observability (tracing, cost/latency) |
+| File adapter (default) + FHIR code example | | Data governance (PHI retention/TTL, secure delete) |
+| Neo4j knowledge graph · 3 answer modes | | Test suite + lab-accuracy eval slice |
+
+### 🔬 Researching · Coming
+
+_Exploratory R&D — not committed work or dated promises._
+
+- ⚡ **[TurboQuant](https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/)** — Google Research extreme compression (data-oblivious quantization) for faster, cheaper inference on the routing/scoring path.
+- 🧠 **Clinical world model** — a learned patient-state model to simulate trajectories and inform agent routing (would augment, not replace, today's orchestration).
+- <img src="docs/assets/openehr-logo.svg" alt="openEHR" height="15" valign="middle"/> **openEHR support** — map openEHR compositions / AQL into the patient dict, joining FHIR R4 & HL7 v2 in the adapter layer.
+- 🕸️ **Per-doctor live knowledge graph** — a separate graph per clinician, built in real time and enriched over time to learn preferences (e.g. preferred guidelines, formularies) and personalize answers.
+- 🚀 **Pre-visit graph + vector prefetch** — build each patient's knowledge graph and embeddings from EHR data *ahead* of their appointment for instant responses, then purge after the visit to reduce standing system load and PHI footprint.
+- 🩺 **openEHR / DICOM / multimodal ingestion** — imaging + structured EHR records.
+- 🖥️ **On-prem / local LLM backends** — fully self-hosted deployments.
+- ⚖️ **Regulatory & compliance pathway** — HIPAA · GDPR · EU AI Act alignment and IEC 62304-style software lifecycle documentation.
+- 📊 **Clinical evaluation benchmarks** — measured accuracy/safety on curated cases.
 
 ## License
 
