@@ -64,6 +64,7 @@ HL7 v2 compatible. PHI is de-identified before any reasoning model sees it.
 - [Trust Scoring](#trust--confidence-scoring)
 - [Anatomy of a Query](#anatomy-of-a-query)
 - [API Contract](#api-contract)
+- [Animated Assets](#animated-assets)
 
 </td>
 <td valign="top">
