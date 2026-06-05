@@ -5,82 +5,108 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <title>CerebraLink</title>
     <script src="gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=block" rel="stylesheet" />
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1920px; height: 1080px; overflow: hidden; font-family: "Inter", sans-serif;
-        background:
-          radial-gradient(1000px 640px at 50% 26%, rgba(99,102,241,0.16), transparent 60%),
-          radial-gradient(820px 540px at 82% 80%, rgba(20,184,166,0.12), transparent 60%),
-          linear-gradient(135deg, #0a0b14 0%, #0d1024 60%, #150a2a 100%); }
-      .title { position:absolute; top:120px; left:0; width:1920px; text-align:center; font-size:104px; font-weight:800; letter-spacing:-2px;
-        background:linear-gradient(90deg,#5eead4,#818cf8 48%,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
-      .sub { position:absolute; top:268px; left:0; width:1920px; text-align:center; font-size:38px; font-weight:500; color:#cbd5e1; }
-      .what { position:absolute; top:336px; left:0; width:1920px; text-align:center; font-size:25px; color:#8b93a7; }
-      .rail { position:absolute; top:592px; left:150px; width:1620px; height:4px; border-radius:2px; transform-origin:left center;
-        background:linear-gradient(90deg,#0e7490,#4f46e5 50%,#9333ea); }
-      .card { position:absolute; top:500px; width:300px; height:188px; margin-left:-150px; border-radius:22px;
-        background:linear-gradient(180deg,#141a38,#10142c); border:1px solid #2a3568; padding:26px; color:#e2e8f0; }
-      .card .ph { font-size:21px; font-weight:800; letter-spacing:2px; color:#64748b; }
-      .card .nm { font-size:31px; font-weight:700; margin-top:12px; }
-      .card .ds { font-size:19px; color:#94a3b8; margin-top:12px; line-height:1.35; }
-      .card .tier { position:absolute; bottom:20px; left:26px; font-size:16px; font-weight:700; }
-      .dot { position:absolute; top:586px; width:16px; height:16px; border-radius:50%; }
-      .callout { position:absolute; top:776px; left:0; width:1920px; text-align:center; font-size:48px; font-weight:800; color:#5eead4; }
-      .tagline { position:absolute; top:898px; left:0; width:1920px; text-align:center; font-size:30px; font-weight:600; color:#94a3b8; }
-      .pill { display:inline-block; margin:0 10px; padding:10px 22px; border-radius:24px; border:1px solid rgba(148,163,184,0.35); background:rgba(148,163,184,0.06); }
+      :root{
+        --paper:#FBF8F1; --ink:#1F2328; --muted:#6B6A66;
+        --hair:#E3DDD0; --teal:#0E7C86; --sage:#5E7E5A; --clay:#B5562B;
+        --serif:Georgia,'Times New Roman',serif;
+        --sans:'Segoe UI',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+        --mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+      }
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{width:1920px;height:1080px;overflow:hidden;background:var(--paper);font-family:var(--sans);color:var(--ink)}
+      .wrap{position:absolute;inset:28px;border:1px solid var(--hair);border-radius:26px}
+      .center{position:absolute;left:0;width:1920px;text-align:center}
+      .title{top:120px;font-family:var(--serif);font-weight:700;font-size:104px;letter-spacing:-1px;color:var(--ink)}
+      .tick{position:absolute;top:244px;left:50%;margin-left:-78px;width:156px;height:5px;background:var(--teal);border-radius:3px}
+      .sub{top:284px;font-size:37px;font-weight:600;color:var(--muted)}
+      .what{top:348px;font-size:25px;color:var(--muted)}
+      .mono{font-family:var(--mono)}
+      .teal{color:var(--teal)}
+
+      .card{position:absolute;top:462px;width:296px;height:188px;margin-left:-148px;
+        border:1.5px solid var(--ink);border-radius:16px;background:#FFFFFF;padding:24px 26px}
+      .card .ph{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--muted)}
+      .card .nm{font-size:34px;font-weight:700;margin-top:14px;color:var(--ink);font-family:var(--serif)}
+      .card .ds{font-size:19px;color:var(--muted);margin-top:14px}
+      .card .pin{position:absolute;bottom:20px;left:26px;font-size:15px;font-weight:700;color:var(--muted)}
+
+      .callout{top:806px;font-size:46px;font-weight:700;color:var(--ink);font-family:var(--serif)}
+      .tagline{top:918px}
+      .pill{display:inline-block;margin:0 10px;padding:12px 26px;border-radius:26px;
+        border:1.5px solid var(--ink);font-size:27px;font-weight:600;color:var(--ink)}
+      .foot{top:1006px;font-size:18px;color:var(--muted);letter-spacing:.3px}
     </style>
   </head>
   <body>
-    <div class="title" id="t">CerebraLink</div>
-    <div class="sub" id="s">Multi-Agent Clinical Decision Support</div>
-    <div class="what" id="w">Reads the EHR · calculates guideline doses · writes prescriptions · cites every claim</div>
+    <div class="wrap"></div>
 
-    <div class="rail" id="rail"></div>
-    <div class="card" id="c1" style="left:256px;"><div class="ph">① ROUTE</div><div class="nm">🧭 Router</div><div class="ds">classify · language</div><div class="tier" style="color:#5eead4;">Haiku</div></div>
-    <div class="card" id="c2" style="left:608px;"><div class="ph">② FETCH</div><div class="nm">🗂️ Patient</div><div class="ds">FHIR · HL7 · masked</div><div class="tier" style="color:#7dd3fc;">adapter</div></div>
-    <div class="card" id="c3" style="left:960px;"><div class="ph">③ COUNCIL</div><div class="nm">🔬 Council</div><div class="ds">4 agents · parallel</div><div class="tier" style="color:#a5b4fc;">Sonnet · Opus</div></div>
-    <div class="card" id="c4" style="left:1312px;"><div class="ph">④ COMPOSE</div><div class="nm">⚡ Compose</div><div class="ds">first answer ~10 s</div><div class="tier" style="color:#a5b4fc;">Sonnet</div></div>
-    <div class="card" id="c5" style="left:1664px;"><div class="ph">⑤ SCORE</div><div class="nm">⚖️ Trust</div><div class="ds">evidence · safety</div><div class="tier" style="color:#5eead4;">Haiku</div></div>
+    <div class="center title" id="t">CerebraLink</div>
+    <div class="tick" id="tick"></div>
+    <div class="center sub" id="s">Multi-Agent Clinical Decision Support</div>
+    <div class="center what" id="w">Reads the EHR&nbsp;&nbsp;·&nbsp;&nbsp;calculates guideline doses&nbsp;&nbsp;·&nbsp;&nbsp;writes prescriptions&nbsp;&nbsp;·&nbsp;&nbsp;cites every claim</div>
 
-    <div class="dot" id="d1" style="background:#5eead4;"></div>
-    <div class="dot" id="d2" style="background:#818cf8;"></div>
-    <div class="dot" id="d3" style="background:#c084fc;"></div>
+    <!-- 5 phase cards -->
+    <div class="card" id="c1" style="left:256px;"><div class="ph">① ROUTE</div><div class="nm">Router</div><div class="ds">classify · language</div><div class="pin">Haiku</div></div>
+    <div class="card" id="c2" style="left:608px;"><div class="ph">② FETCH</div><div class="nm">Patient</div><div class="ds"><span class="mono">FHIR · HL7</span> · masked</div><div class="pin">adapter</div></div>
+    <div class="card" id="c3" style="left:960px;"><div class="ph">③ COUNCIL</div><div class="nm">Council</div><div class="ds">4 agents · parallel</div><div class="pin">Sonnet · Opus</div></div>
+    <div class="card" id="c4" style="left:1312px;"><div class="ph">④ COMPOSE</div><div class="nm">Compose</div><div class="ds">first answer <span class="mono teal">~10 s</span></div><div class="pin">Sonnet</div></div>
+    <div class="card" id="c5" style="left:1664px;"><div class="ph">⑤ SCORE</div><div class="nm">Trust</div><div class="ds">evidence · safety</div><div class="pin">Haiku</div></div>
 
-    <div class="callout" id="co">⚡ First answer in ~10 s — full cited analysis in ~1 min</div>
-    <div class="tagline" id="tg">
-      <span class="pill">💊 guideline dosing &amp; Rx</span>
-      <span class="pill">🔬 cited</span>
-      <span class="pill">⚖️ trust-scored</span>
-      <span class="pill">🔌 FHIR · HL7</span>
+    <!-- ECG through-line rail, running BELOW the cards -->
+    <svg width="1920" height="1080" style="position:absolute;inset:0;pointer-events:none" fill="none">
+      <line x1="150" y1="716" x2="1770" y2="716" stroke="#E3DDD0" stroke-width="1.5"/>
+      <path id="ecg"
+        d="M150,716 H244 L250,726 L256,672 L262,740 L268,716
+                   H596 L602,726 L608,672 L614,740 L620,716
+                   H948 L954,726 L960,672 L966,740 L972,716
+                   H1300 L1306,726 L1312,672 L1318,740 L1324,716
+                   H1652 L1658,726 L1664,672 L1670,740 L1676,716 H1770"
+        stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="beats" fill="#0E7C86">
+        <circle cx="256" cy="672" r="0"/><circle cx="608" cy="672" r="0"/><circle cx="960" cy="672" r="0"/>
+        <circle cx="1312" cy="672" r="0"/><circle cx="1664" cy="672" r="0"/>
+      </g>
+    </svg>
+
+    <div class="center callout" id="co">First answer in <span class="mono teal">~10 s</span> — full cited analysis in <span class="mono">~1 min</span></div>
+    <div class="center tagline" id="tg">
+      <span class="pill">guideline dosing &amp; Rx</span>
+      <span class="pill">cited</span>
+      <span class="pill">trust-scored</span>
+      <span class="pill"><span class="mono">FHIR · HL7</span></span>
     </div>
+    <div class="center foot" id="ft">Open source · Apache-2.0 · synthetic demo data</div>
 
     <script>
+      const ecg = document.querySelector("#ecg");
+      const L = ecg.getTotalLength();
+      gsap.set(ecg, { strokeDasharray: L, strokeDashoffset: L });
+      gsap.set("#t", { opacity: 0, y: 18 });
+      gsap.set(["#tick", "#s", "#w"], { opacity: 0 });
+      gsap.set(".card", { opacity: 0, y: 40 });
+      gsap.set(["#co", "#tg", "#ft"], { opacity: 0, y: 16 });
+      const beats = gsap.utils.toArray("#beats circle");
       const cards = ["#c1", "#c2", "#c3", "#c4", "#c5"];
-      gsap.set("#t", { opacity: 0, scale: 0.92, transformOrigin: "50% 50%" });
-      gsap.set(["#s", "#w"], { opacity: 0, y: 14 });
-      gsap.set("#rail", { scaleX: 0 });
-      cards.forEach((c) => gsap.set(c, { opacity: 0, y: 44, scale: 0.9, transformOrigin: "50% 50%" }));
-      gsap.set(["#d1", "#d2", "#d3"], { opacity: 0, left: 256 });
-      gsap.set(["#co", "#tg"], { opacity: 0, y: 18 });
 
-      // auto-play (recorder captures the page in real time)
       const tl = gsap.timeline();
-      tl.to("#t", { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0.2);
-      tl.to("#s", { opacity: 1, y: 0, duration: 0.5 }, 0.7);
-      tl.to("#w", { opacity: 1, y: 0, duration: 0.5 }, 1.0);
-      tl.to("#rail", { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 1.4);
-      cards.forEach((c, i) => tl.to(c, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1.7 + i * 0.34));
-      ["#d1", "#d2", "#d3"].forEach((d, i) => {
-        const st = 3.8 + i * 0.4;
-        tl.to(d, { opacity: 1, duration: 0.2 }, st);
-        tl.fromTo(d, { left: 256 }, { left: 1664, duration: 1.9, ease: "none", repeat: 1 }, st);
-        tl.to(d, { opacity: 0, duration: 0.2 }, st + 4.0);
+      tl.to("#t", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.to("#tick", { opacity: 1, duration: 0.4 }, 0.7);
+      tl.to("#s", { opacity: 1, duration: 0.5 }, 0.9);
+      tl.to("#w", { opacity: 1, duration: 0.5 }, 1.2);
+      // the clinical signal draws across as the single through-line
+      tl.to(ecg, { strokeDashoffset: 0, duration: 5.0, ease: "none" }, 1.8);
+      // each phase card reveals just before the trace reaches its beat
+      cards.forEach((c, i) => tl.to(c, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 2.0 + i * 0.78));
+      // QRS beats pulse as the line passes under each card
+      beats.forEach((b, i) => {
+        tl.to(b, { attr: { r: 14 }, duration: 0.18, ease: "power2.out" }, 2.7 + i * 0.78)
+          .to(b, { attr: { r: 6 }, duration: 0.5, ease: "power2.in" }, ">");
       });
-      tl.to("#co", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.7);
-      tl.to("#tg", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 5.6);
-      tl.to("#t", { filter: "brightness(1.18)", duration: 1.0, yoyo: true, repeat: 1, ease: "sine.inOut" }, 6.6);
-      tl.to({}, { duration: 1.6 }, 8.6);   // hold to ~10s
+      tl.to("#co", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 6.8);
+      tl.to("#tg", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 7.6);
+      tl.to("#ft", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 8.2);
+      tl.to({}, { duration: 1.4 }, 8.8);
 
       window.__timelines = { main: tl };
     </script>
