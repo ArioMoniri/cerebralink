@@ -40,6 +40,7 @@ from src.backend.api.schemas import (
     DecisionTree, DecisionTreeNode, DecisionTreeEdge,
     PrescriptionData, BrandOption,
 )
+from src.backend.core.config import settings
 from src.backend.tools.ehr import auto_fetch_patient  # adapter chosen by EHR_ADAPTER env
 from src.backend.tools.reports import auto_fetch_reports, reports_exist, get_manifest, get_reports_dir
 from src.backend.tools.reports_rag import index_reports, get_report_brief, chunks_indexed
@@ -291,6 +292,8 @@ class Orchestrator:
                     """Fetch reports if not already on disk."""
                     if reports_exist(detected_pid):
                         return get_manifest(detected_pid), str(get_reports_dir(detected_pid))
+                    if settings.ehr_adapter != "cerebral":
+                        return None, None  # only the cerebral adapter scrapes remote reports
                     try:
                         await self._emit(on_status, {
                             "agent": "reports_fetch", "status": "running",
@@ -309,6 +312,8 @@ class Orchestrator:
                     """Fetch episodes if not already on disk."""
                     if episodes_exist(detected_pid):
                         return get_episodes_manifest(detected_pid), str(get_episodes_dir(detected_pid))
+                    if settings.ehr_adapter != "cerebral":
+                        return None, None  # only the cerebral adapter scrapes remote episodes
                     try:
                         await self._emit(on_status, {
                             "agent": "episodes_fetch", "status": "running",
@@ -327,6 +332,8 @@ class Orchestrator:
                     """Fetch izlem (monitoring) data if available."""
                     if izlem_exists(detected_pid):
                         return get_izlem_data(detected_pid)
+                    if settings.ehr_adapter != "cerebral":
+                        return None  # only the cerebral adapter scrapes remote monitoring data
                     try:
                         await self._emit(on_status, {
                             "agent": "izlem_fetch", "status": "running",
