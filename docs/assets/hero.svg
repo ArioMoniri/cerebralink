@@ -1,69 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-label="CerebraLink — Multi-Agent Clinical Decision Support">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0b14"/><stop offset="100%" stop-color="#0e1020"/>
-    </linearGradient>
-    <radialGradient id="halo" cx="50%" cy="38%" r="60%">
-      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.20"/>
-      <stop offset="55%" stop-color="#14b8a6" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="wm" gradientUnits="userSpaceOnUse" x1="430" y1="0" x2="770" y2="0">
-      <stop offset="0%" stop-color="#5eead4"/><stop offset="50%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc"/>
-      <animateTransform attributeName="gradientTransform" type="translate" values="-150 0; 150 0; -150 0" dur="7s" repeatCount="indefinite"/>
-    </linearGradient>
-    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc" stop-opacity="0"/>
-    </linearGradient>
-    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.1" fill="#ffffff" fill-opacity="0.035"/>
-    </pattern>
     <style>
-      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
-      @keyframes drift{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-10px);opacity:1}}
-      @keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
-      @keyframes ruleP{0%,100%{opacity:.5;transform:scaleX(.85)}50%{opacity:1;transform:scaleX(1)}}
-      .d{animation:drift 7s ease-in-out infinite}.d2{animation-delay:1.6s}.d3{animation-delay:3.1s}.d4{animation-delay:4.4s}
-      .halo{animation:glow 8s ease-in-out infinite}
-      .rule{transform-box:fill-box;transform-origin:center;animation:ruleP 6s ease-in-out infinite}
+      text{font-family:Georgia,'Times New Roman',serif}
+      .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .mono{font-family:'SFMono-Regular',ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace}
+      .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      @keyframes draw{from{stroke-dashoffset:760}to{stroke-dashoffset:0}}
+      @keyframes beat{0%,62%,100%{transform:scale(1);opacity:.55}70%{transform:scale(1.5);opacity:1}}
+      .ekg{stroke-dasharray:760;stroke-dashoffset:0;animation:draw 5.5s ease-in-out infinite}
+      .qrs{transform-box:fill-box;transform-origin:center;animation:beat 5.5s ease-in-out infinite}
     </style>
   </defs>
 
-  <rect width="1200" height="360" rx="22" fill="url(#bg)"/>
-  <rect width="1200" height="360" rx="22" fill="url(#dots)"/>
-  <rect class="halo" width="1200" height="360" rx="22" fill="url(#halo)"/>
+  <!-- paper card + hairline -->
+  <rect x="0.5" y="0.5" width="1199" height="359" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
 
-  <!-- minimal drifting accent dots -->
-  <g>
-    <circle class="d"  cx="150" cy="120" r="3" fill="#5eead4"/>
-    <circle class="d d2" cx="1050" cy="150" r="3" fill="#c084fc"/>
-    <circle class="d d3" cx="240" cy="250" r="2.5" fill="#818cf8"/>
-    <circle class="d d4" cx="980" cy="255" r="2.5" fill="#5eead4"/>
+  <!-- brain-as-network mark (single ink contour; gyri double as edges) -->
+  <g transform="translate(600,88)">
+    <!-- outer brain contour, hand-drawn (two faint passes) -->
+    <path class="s" stroke-width="2.25" d="M-34,2 C-40,-22 -20,-36 -2,-33 C7,-44 30,-42 35,-24 C46,-22 47,-2 38,7 C44,18 30,32 14,29 C6,38 -14,38 -22,28 C-38,28 -44,12 -34,2 Z"/>
+    <path class="s" stroke-width="1" stroke-opacity="0.4" d="M-33,4 C-39,-20 -19,-34 -1,-31 C8,-42 31,-40 36,-22 C47,-20 46,0 37,9"/>
+    <!-- inner gyri = graph edges -->
+    <path class="s" stroke-width="1.5" d="M-18,-14 C-6,-20 6,-6 18,-12"/>
+    <path class="s" stroke-width="1.5" d="M-20,6 C-4,2 4,14 20,8"/>
+    <path class="s" stroke-width="1.5" d="M-2,-31 C2,-14 -4,2 2,28"/>
+    <!-- nodes -->
+    <circle cx="-18" cy="-14" r="3.4" fill="#1F2328"/>
+    <circle cx="18" cy="-12" r="3.4" fill="#1F2328"/>
+    <circle cx="-20" cy="6" r="3.4" fill="#1F2328"/>
+    <circle cx="20" cy="8" r="3.4" fill="#1F2328"/>
+    <!-- one accent synapse -->
+    <circle class="qrs" cx="2" cy="-2" r="4.4" fill="#0E7C86"/>
   </g>
 
-  <!-- logo mark: rounded square with a clean pulse node -->
-  <g transform="translate(548,70)">
-    <rect width="104" height="104" rx="26" fill="#11142a" stroke="#2a2f55"/>
-    <circle cx="52" cy="52" r="9" fill="#818cf8"><animate attributeName="r" values="8;11;8" dur="2.8s" repeatCount="indefinite"/></circle>
-    <g stroke="#5eead4" stroke-width="2" fill="none" opacity="0.85">
-      <line x1="52" y1="52" x2="30" y2="32"/><line x1="52" y1="52" x2="76" y2="34"/>
-      <line x1="52" y1="52" x2="28" y2="74"/><line x1="52" y1="52" x2="78" y2="72"/>
-    </g>
-    <g fill="#5eead4">
-      <circle cx="30" cy="32" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
-      <circle cx="76" cy="34" r="4" fill="#c084fc"><animate attributeName="opacity" values=".4;1;.4" dur="3s" begin=".7s" repeatCount="indefinite"/></circle>
-      <circle cx="28" cy="74" r="4" fill="#818cf8"><animate attributeName="opacity" values=".4;1;.4" dur="3s" begin="1.4s" repeatCount="indefinite"/></circle>
-      <circle cx="78" cy="72" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3s" begin="2.1s" repeatCount="indefinite"/></circle>
-    </g>
-  </g>
+  <!-- wordmark (serif ink) -->
+  <text x="600" y="208" text-anchor="middle" font-size="66" font-weight="700" letter-spacing="-0.5" fill="#1F2328">CerebraLink</text>
+  <!-- accent tick under "Link" (only color in the logo) -->
+  <path class="s" stroke="#0E7C86" stroke-width="2.5" d="M656,222 C690,219 726,219 744,222"/>
 
-  <!-- wordmark -->
-  <text x="600" y="232" text-anchor="middle" font-size="74" font-weight="800" letter-spacing="-1" fill="url(#wm)">CerebraLink</text>
-  <rect class="rule" x="500" y="248" width="200" height="3" rx="1.5" fill="url(#rule)"/>
+  <!-- EKG trace draws left→right; teal pulse at the QRS peak -->
+  <path class="s ekg" stroke-width="1.5" d="M360,256 H520 l9,0 l5,-9 6,15 5,-6 H556 l7,0 l5,-30 9,52 6,-40 5,18 H612 q16,-9 30,0 H840"/>
+  <circle class="qrs" cx="571" cy="226" r="3.6" fill="#0E7C86"/>
 
   <!-- subtitle -->
-  <text x="600" y="286" text-anchor="middle" font-size="22" font-weight="500" fill="#cbd5e1">Multi-Agent Clinical Decision Support</text>
+  <text x="600" y="296" text-anchor="middle" class="sans" font-size="21" font-weight="500" fill="#6B6A66">Multi-Agent Clinical Decision Support</text>
 
-  <!-- capability line -->
-  <text x="600" y="320" text-anchor="middle" font-size="15.5" fill="#8b93a7">⚡ ~10 s first answer&#160;&#160;·&#160;&#160;💊 guideline dosing &amp; prescriptions&#160;&#160;·&#160;&#160;🔬 cited&#160;&#160;·&#160;&#160;⚖️ trust-scored&#160;&#160;·&#160;&#160;🔌 FHIR · HL7</text>
+  <!-- capability line: no emoji; latencies/codes in mono -->
+  <text x="600" y="330" text-anchor="middle" class="sans" font-size="15" fill="#6B6A66"><tspan class="mono" fill="#0E7C86">~10 s</tspan> first answer&#160;&#160;·&#160;&#160;guideline dosing &amp; prescriptions&#160;&#160;·&#160;&#160;cited&#160;&#160;·&#160;&#160;trust-scored&#160;&#160;·&#160;&#160;<tspan class="mono">FHIR</tspan> · <tspan class="mono">HL7</tspan></text>
 </svg>
