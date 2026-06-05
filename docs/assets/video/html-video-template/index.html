@@ -5,31 +5,84 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <title>CerebraLink</title>
     <script src="gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=block" rel="stylesheet" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body {
-        width: 1920px; height: 1080px; overflow: hidden;
-        background: #0b0f2a; font-family: "Inter", sans-serif;
-      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; font-family: "Inter", sans-serif;
+        background:
+          radial-gradient(1000px 640px at 50% 26%, rgba(99,102,241,0.16), transparent 60%),
+          radial-gradient(820px 540px at 82% 80%, rgba(20,184,166,0.12), transparent 60%),
+          linear-gradient(135deg, #0a0b14 0%, #0d1024 60%, #150a2a 100%); }
+      .title { position:absolute; top:120px; left:0; width:1920px; text-align:center; font-size:104px; font-weight:800; letter-spacing:-2px;
+        background:linear-gradient(90deg,#5eead4,#818cf8 48%,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+      .sub { position:absolute; top:268px; left:0; width:1920px; text-align:center; font-size:38px; font-weight:500; color:#cbd5e1; }
+      .what { position:absolute; top:336px; left:0; width:1920px; text-align:center; font-size:25px; color:#8b93a7; }
+      .rail { position:absolute; top:592px; left:150px; width:1620px; height:4px; border-radius:2px; transform-origin:left center;
+        background:linear-gradient(90deg,#0e7490,#4f46e5 50%,#9333ea); }
+      .card { position:absolute; top:500px; width:300px; height:188px; margin-left:-150px; border-radius:22px;
+        background:linear-gradient(180deg,#141a38,#10142c); border:1px solid #2a3568; padding:26px; color:#e2e8f0; }
+      .card .ph { font-size:21px; font-weight:800; letter-spacing:2px; color:#64748b; }
+      .card .nm { font-size:31px; font-weight:700; margin-top:12px; }
+      .card .ds { font-size:19px; color:#94a3b8; margin-top:12px; line-height:1.35; }
+      .card .tier { position:absolute; bottom:20px; left:26px; font-size:16px; font-weight:700; }
+      .dot { position:absolute; top:586px; width:16px; height:16px; border-radius:50%; }
+      .callout { position:absolute; top:776px; left:0; width:1920px; text-align:center; font-size:48px; font-weight:800; color:#5eead4; }
+      .tagline { position:absolute; top:898px; left:0; width:1920px; text-align:center; font-size:30px; font-weight:600; color:#94a3b8; }
+      .pill { display:inline-block; margin:0 10px; padding:10px 22px; border-radius:24px; border:1px solid rgba(148,163,184,0.35); background:rgba(148,163,184,0.06); }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=block" rel="stylesheet" />
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
-      <div
-        id="pipeline-comp"
-        data-composition-id="cerebralink-pipeline"
-        data-composition-src="compositions/pipeline.html"
-        data-start="0"
-        data-duration="10"
-        data-track-index="0"
-        data-width="1920"
-        data-height="1080"
-      ></div>
+    <div class="title" id="t">CerebraLink</div>
+    <div class="sub" id="s">Multi-Agent Clinical Decision Support</div>
+    <div class="what" id="w">Reads the EHR · calculates guideline doses · writes prescriptions · cites every claim</div>
+
+    <div class="rail" id="rail"></div>
+    <div class="card" id="c1" style="left:256px;"><div class="ph">① ROUTE</div><div class="nm">🧭 Router</div><div class="ds">classify · language</div><div class="tier" style="color:#5eead4;">Haiku</div></div>
+    <div class="card" id="c2" style="left:608px;"><div class="ph">② FETCH</div><div class="nm">🗂️ Patient</div><div class="ds">FHIR · HL7 · masked</div><div class="tier" style="color:#7dd3fc;">adapter</div></div>
+    <div class="card" id="c3" style="left:960px;"><div class="ph">③ COUNCIL</div><div class="nm">🔬 Council</div><div class="ds">4 agents · parallel</div><div class="tier" style="color:#a5b4fc;">Sonnet · Opus</div></div>
+    <div class="card" id="c4" style="left:1312px;"><div class="ph">④ COMPOSE</div><div class="nm">⚡ Compose</div><div class="ds">first answer ~10 s</div><div class="tier" style="color:#a5b4fc;">Sonnet</div></div>
+    <div class="card" id="c5" style="left:1664px;"><div class="ph">⑤ SCORE</div><div class="nm">⚖️ Trust</div><div class="ds">evidence · safety</div><div class="tier" style="color:#5eead4;">Haiku</div></div>
+
+    <div class="dot" id="d1" style="background:#5eead4;"></div>
+    <div class="dot" id="d2" style="background:#818cf8;"></div>
+    <div class="dot" id="d3" style="background:#c084fc;"></div>
+
+    <div class="callout" id="co">⚡ First answer in ~10 s — full cited analysis in ~1 min</div>
+    <div class="tagline" id="tg">
+      <span class="pill">💊 guideline dosing &amp; Rx</span>
+      <span class="pill">🔬 cited</span>
+      <span class="pill">⚖️ trust-scored</span>
+      <span class="pill">🔌 FHIR · HL7</span>
     </div>
+
     <script>
-      window.__timelines = window.__timelines || {};
-      window.__timelines["main"] = gsap.timeline({ paused: true });
+      const cards = ["#c1", "#c2", "#c3", "#c4", "#c5"];
+      gsap.set("#t", { opacity: 0, scale: 0.92, transformOrigin: "50% 50%" });
+      gsap.set(["#s", "#w"], { opacity: 0, y: 14 });
+      gsap.set("#rail", { scaleX: 0 });
+      cards.forEach((c) => gsap.set(c, { opacity: 0, y: 44, scale: 0.9, transformOrigin: "50% 50%" }));
+      gsap.set(["#d1", "#d2", "#d3"], { opacity: 0, left: 256 });
+      gsap.set(["#co", "#tg"], { opacity: 0, y: 18 });
+
+      // auto-play (recorder captures the page in real time)
+      const tl = gsap.timeline();
+      tl.to("#t", { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.to("#s", { opacity: 1, y: 0, duration: 0.5 }, 0.7);
+      tl.to("#w", { opacity: 1, y: 0, duration: 0.5 }, 1.0);
+      tl.to("#rail", { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 1.4);
+      cards.forEach((c, i) => tl.to(c, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1.7 + i * 0.34));
+      ["#d1", "#d2", "#d3"].forEach((d, i) => {
+        const st = 3.8 + i * 0.4;
+        tl.to(d, { opacity: 1, duration: 0.2 }, st);
+        tl.fromTo(d, { left: 256 }, { left: 1664, duration: 1.9, ease: "none", repeat: 1 }, st);
+        tl.to(d, { opacity: 0, duration: 0.2 }, st + 4.0);
+      });
+      tl.to("#co", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.7);
+      tl.to("#tg", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 5.6);
+      tl.to("#t", { filter: "brightness(1.18)", duration: 1.0, yoyo: true, repeat: 1, ease: "sine.inOut" }, 6.6);
+      tl.to({}, { duration: 1.6 }, 8.6);   // hold to ~10s
+
+      window.__timelines = { main: tl };
     </script>
   </body>
 </html>

@@ -20,11 +20,15 @@ cp -r /path/to/cerebralink/docs/assets/video/html-video-template templates/frame
 
 PID=$(node packages/cli/dist/bin.js project-create --name "CerebraLink" --json | jq -r .project_id)
 node packages/cli/dist/bin.js project-set-template "$PID" --template frame-cerebralink
-node packages/cli/dist/bin.js project-render "$PID" --output cerebralink-tour.mp4
+node packages/cli/dist/bin.js project-render "$PID" --output cerebralink-explainer.mp4
 ```
 
-> [!NOTE]
-> The README's inline tour (`../cerebralink-tour.webp`) is an ffmpeg crossfade
-> montage of the repo's diagram SVGs — it renders inline on GitHub. Use html-video
-> when you want a polished HD MP4 to attach to a release or PR (GitHub does not play
-> a committed MP4 inline in the README).
+This is what produces the README's **Product Tour** animation
+(`../cerebralink-explainer.mp4`); the inline `../cerebralink-explainer.webp` is just
+that MP4 transcoded with ffmpeg so it autoplays on GitHub.
+
+> [!IMPORTANT]
+> The recorder captures the page in **real time** — the GSAP timeline must
+> **auto-play** (`gsap.timeline()`, not `{paused:true}`), and the animation must live
+> directly in `index.html` (the CLI render does **not** inject `data-composition-src`
+> compositions). `gsap.min.js` is vendored locally so the headless render needs no network.

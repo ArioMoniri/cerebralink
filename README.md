@@ -97,10 +97,10 @@ before any reasoning model sees it.
 
 <div align="center">
 
-<img src="docs/assets/video/cerebralink-tour.webp" alt="CerebraLink product tour — architecture, streaming pipeline, query metrics, reasoning tree, and roadmap" width="100%"/>
+<img src="docs/assets/video/cerebralink-explainer.webp" alt="CerebraLink animated explainer — reads the EHR, calculates guideline doses, writes prescriptions, cites every claim; first answer in ~10 s, full analysis in ~1 min" width="100%"/>
 
-<sub>A 14-second tour: agent architecture → streaming pipeline → query metrics → clinical reasoning tree → roadmap.
-**[▶ HD MP4](docs/assets/video/cerebralink-tour.mp4)** (drag into a GitHub release/PR for an inline player).</sub>
+<sub>What it does: reads the EHR → routes to a parallel agent council (Route · Fetch · Council · Compose · Score) → <b>first answer in ~10 s</b>, full cited analysis in <b>~1 min</b> — with guideline dose calculation and prescriptions.
+Rendered with <a href="https://github.com/nexu-io/html-video">html-video</a> · **[▶ HD MP4](docs/assets/video/cerebralink-explainer.mp4)** (drag into a GitHub release/PR for an inline player).</sub>
 
 </div>
 

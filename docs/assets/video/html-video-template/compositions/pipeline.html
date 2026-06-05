@@ -70,7 +70,7 @@
     </div>
     <div class="card" id="cl-c4" style="left: 1312px;">
       <div class="ph">④ COMPOSE</div><div class="nm">⚡ Fast + 📚 Full</div>
-      <div class="ds">streams partial in ~2 s</div>
+      <div class="ds">first answer in ~10 s</div>
       <div class="tier" style="color:#a5b4fc;">Sonnet</div>
     </div>
     <div class="card" id="cl-c5" style="left: 1664px;">
@@ -83,12 +83,12 @@
     <div class="dot" id="cl-d2" style="background:#818cf8;"></div>
     <div class="dot" id="cl-d3" style="background:#c084fc;"></div>
 
-    <div class="callout" id="cl-callout">⚡ Fast answer in ~2 seconds — then deep, cited analysis</div>
+    <div class="callout" id="cl-callout">⚡ First answer in ~10 s — full cited analysis in ~1 min</div>
     <div class="tagline" id="cl-tag">
-      <span class="pill">🔬 cited evidence</span>
+      <span class="pill">💊 guideline dosing &amp; Rx</span>
+      <span class="pill">🔬 cited</span>
       <span class="pill">⚖️ trust-scored</span>
-      <span class="pill">🩺 EHR-aware</span>
-      <span class="pill">🔒 PHI-masked</span>
+      <span class="pill">🔌 FHIR · HL7</span>
     </div>
 
     <script src="gsap.min.js"></script>
@@ -105,7 +105,9 @@
         gsap.set("#cl-callout", { opacity: 0, y: 16 });
         gsap.set("#cl-tag", { opacity: 0, y: 16 });
 
-        const tl = gsap.timeline({ paused: true });
+        // Auto-play: the html-video recorder captures the page in REAL TIME,
+        // so the timeline must play (not be paused) for the animation to record.
+        const tl = gsap.timeline();
 
         // 1. Title + subtitle
         tl.to("#cl-title", { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0.1);
