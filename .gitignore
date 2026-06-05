@@ -15,6 +15,7 @@ cookies/*.json
 patient_*.json
 !examples/patient_*.json
 izlem_*.json
+!examples/izlem_*.json
 ilac.json
 *.log
 .DS_Store

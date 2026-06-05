@@ -60,7 +60,5 @@
       "text": "Heart size normal. Clear lung fields. No acute cardiopulmonary process. No effusion."
     }
   ],
-  "izlem": [
-    {"date": "2026-04-10", "type": "vitals", "bp": "128/78 mmHg", "hr": "64 bpm", "temp": "36.7 C", "spo2": "98%"}
-  ]
+  "_monitoring_note": "Monitoring/izlem data for DEMO lives in examples/izlem_DEMO.json (loaded by the file adapter when a query triggers the monitoring path, e.g. 'DEMO vitals')."
 }

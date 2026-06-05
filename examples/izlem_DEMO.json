@@ -1,0 +1,39 @@
+{
+  "_synthetic": true,
+  "_note": "Fully synthetic monitoring (izlem) data for the DEMO patient — NO real PHI. Loaded by the file EHR adapter when a query triggers the monitoring path (e.g. 'DEMO show the monitoring data' / 'DEMO vitals').",
+  "episodes": [
+    {
+      "episode_info": {
+        "date": "2026-04-10",
+        "serviceText": "Internal Medicine",
+        "facilityText": "Synthetic Demo Hospital"
+      },
+      "data": {
+        "vital_bulgular": [
+          {"datetime": "2026-04-10 08:00", "HR": "64", "BP": "128/78", "SpO2": "98%", "Temp": "36.7 C", "RR": "16"},
+          {"datetime": "2026-04-10 16:00", "HR": "70", "BP": "132/80", "SpO2": "97%", "Temp": "36.9 C", "RR": "17"},
+          {"datetime": "2026-04-11 08:00", "HR": "62", "BP": "126/76", "SpO2": "98%", "Temp": "36.6 C", "RR": "15"}
+        ],
+        "hekim_izlem_notlari": [
+          {"datetime": "2026-04-10 09:00", "author": "Attending", "note": "Stable angina; exertional chest pain improved on atenolol. Hemodynamically stable. Continue current therapy; recheck LFTs given recently started statin."},
+          {"datetime": "2026-04-11 08:30", "author": "Attending", "note": "No chest pain overnight. HR well controlled (60s). Plan outpatient stress test; discharge today if stable."}
+        ],
+        "ilac_izlem": [
+          {"datetime": "2026-04-10 09:00", "drug": "Atenolol 50 mg", "route": "PO", "status": "administered"},
+          {"datetime": "2026-04-10 21:00", "drug": "Atorvastatin 20 mg", "route": "PO", "status": "administered"},
+          {"datetime": "2026-04-11 09:00", "drug": "Atenolol 50 mg", "route": "PO", "status": "administered"}
+        ],
+        "laboratuvar_izlem": [
+          {"datetime": "2026-04-10 07:30", "test": "ALT", "value": "68", "unit": "U/L", "ref": "7-56", "flag": "HIGH"},
+          {"datetime": "2026-04-10 07:30", "test": "AST", "value": "45", "unit": "U/L", "ref": "10-40", "flag": "HIGH"},
+          {"datetime": "2026-04-10 07:30", "test": "Glucose", "value": "102", "unit": "mg/dL", "ref": "70-110", "flag": "normal"},
+          {"datetime": "2026-04-10 07:30", "test": "Creatinine", "value": "0.9", "unit": "mg/dL", "ref": "0.6-1.2", "flag": "normal"}
+        ],
+        "hemsire_izlem_notlari": [
+          {"datetime": "2026-04-10 14:00", "author": "RN", "note": "Patient comfortable, ambulating independently. Denies chest pain at rest. Tolerating oral intake."},
+          {"datetime": "2026-04-11 06:00", "author": "RN", "note": "Slept well. Morning vitals stable. No acute complaints."}
+        ]
+      }
+    }
+  ]
+}

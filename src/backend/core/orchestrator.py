@@ -41,6 +41,7 @@ from src.backend.api.schemas import (
     PrescriptionData, BrandOption,
 )
 from src.backend.core.config import settings
+from src.backend.tools import file_adapter  # synthetic/local monitoring loader for the file adapter
 from src.backend.tools.ehr import auto_fetch_patient  # adapter chosen by EHR_ADAPTER env
 from src.backend.tools.reports import auto_fetch_reports, reports_exist, get_manifest, get_reports_dir
 from src.backend.tools.reports_rag import index_reports, get_report_brief, chunks_indexed
@@ -333,7 +334,7 @@ class Orchestrator:
                     if izlem_exists(detected_pid):
                         return get_izlem_data(detected_pid)
                     if settings.ehr_adapter != "cerebral":
-                        return None  # only the cerebral adapter scrapes remote monitoring data
+                        return file_adapter.load_izlem(detected_pid)  # synthetic/local monitoring data
                     try:
                         await self._emit(on_status, {
                             "agent": "izlem_fetch", "status": "running",

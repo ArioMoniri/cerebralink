@@ -87,6 +87,28 @@ async def fetch_patient(patient_id: str, auth: str = "") -> dict[str, Any]:
     return load_cached_patient(patient_id)
 
 
+def izlem_file_exists(protocol_id: str) -> bool:
+    """True if a synthetic/local izlem_<id>.json (monitoring data) is available."""
+    pid = _normalize_protocol_id(protocol_id)
+    return any((d / f"izlem_{pid}.json").exists() for d in _candidate_dirs())
+
+
+def load_izlem(protocol_id: str) -> dict[str, Any] | None:
+    """Load izlem_<id>.json (monitoring data) in the {episodes:[...]} shape, or None.
+
+    Lets the default file adapter exercise the monitoring path with synthetic data
+    (ships ``examples/izlem_DEMO.json``). Returns None when no file is present, so
+    the orchestrator simply skips the monitoring agent.
+    """
+    pid = _normalize_protocol_id(protocol_id)
+    for d in _candidate_dirs():
+        p = d / f"izlem_{pid}.json"
+        if p.exists():
+            log.info("Loaded izlem %s from %s", pid, p)
+            return json.loads(p.read_text(encoding="utf-8"))
+    return None
+
+
 async def auto_fetch_patient(protocol_id: str) -> dict[str, Any]:
     """Resolve an identifier to the normalized patient dict from a JSON file.
 
