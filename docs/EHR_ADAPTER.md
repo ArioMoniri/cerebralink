@@ -42,7 +42,7 @@ When a clinician's message contains a patient/protocol identifier, the
 orchestrator (`core/orchestrator.py`) calls a single entry point:
 
 ```python
-from src.backend.tools.cerebral import auto_fetch_patient
+from src.backend.tools.ehr import auto_fetch_patient   # adapter chosen by EHR_ADAPTER
 
 raw_patient = await auto_fetch_patient(detected_pid)   # ← your adapter
 masked      = await self.phi_checker.mask_patient_record(raw_patient)  # PHI mask
@@ -58,11 +58,23 @@ your EHR  ──►  auto_fetch_patient(id)  ──►  {patient dict}  ──�
               └────────── adapter ──────────┘
 ```
 
+> [!NOTE]
+> **Which adapter is active** is set by the `EHR_ADAPTER` env var, read in
+> `core/config.py` and dispatched by `tools/ehr.py`:
+> - `file` *(default)* → `tools/file_adapter.py` — loads a synthetic/local
+>   `patient_<id>.json`. **Runs on a fresh clone**; ships with
+>   `examples/patient_DEMO.json` (query the id `DEMO`).
+> - `cerebral` → `tools/cerebral.py` — Acıbadem CerebralPlus. **Does not run on a
+>   fresh clone**: it wraps the git-ignored `scripts/cerebral_*.py` scrapers and
+>   needs `cookies/cookies.json`.
+
 ## 📜 The Adapter Contract
 
-Re-implement these functions in `src/backend/tools/cerebral.py` (or a new module
-you point the orchestrator at). Only `auto_fetch_patient` is strictly required;
-the others enable caching and file import.
+Implement these in your own module — copy `src/backend/tools/file_adapter.py` (the
+shipped default) as a starting point, then select it with `EHR_ADAPTER` (don't edit
+`cerebral.py`; it is the Acıbadem-specific adapter and needs the git-ignored
+scrapers). Only `auto_fetch_patient` is strictly required; the others enable
+caching and file import.
 
 ```python
 async def auto_fetch_patient(protocol_id: str) -> dict[str, Any]:
@@ -143,13 +155,16 @@ more the agents can do — but only a few keys are needed to get value. Minimal:
 
 1. **Create** `src/backend/tools/my_ehr.py`.
 2. **Implement** `auto_fetch_patient(protocol_id)` returning the shape above.
-3. **Point the orchestrator at it.** In `core/orchestrator.py`, change the import:
+3. **Wire it into the selector.** Add a branch in `tools/ehr.py` and select it via
+   the `EHR_ADAPTER` env var (the orchestrator imports `auto_fetch_patient` from
+   `tools/ehr.py`, so no orchestrator edit is needed):
    ```python
-   # from src.backend.tools.cerebral import auto_fetch_patient
-   from src.backend.tools.my_ehr import auto_fetch_patient
+   # tools/ehr.py
+   if settings.ehr_adapter == "my_ehr":
+       from src.backend.tools.my_ehr import auto_fetch_patient
    ```
-   (Or keep `cerebral.py` as a thin shim that re-exports your function.)
-4. **Add config** to `core/config.py` + `.env.example` (base URL, token env var).
+4. **Add config** to `core/config.py` + `.env.example` (your `EHR_ADAPTER` value,
+   base URL, token env var).
 5. **Test with synthetic data** — never real PHI.
 
 ## 🔥 Example A — FHIR R4 adapter
@@ -220,7 +235,10 @@ That's it — PHI masking, RAG, the graph, and all agents now work against FHIR.
 
 ## 📁 Example B — Local file / CSV export
 
-No live API? Export per-patient JSON files and load them:
+No live API? This is the **shipped default** (`EHR_ADAPTER=file`). The bundled
+`tools/file_adapter.py` reads a per-patient JSON file, searching `$PATIENT_DATA_DIR`,
+`patient_data/`, the repo root, and `examples/` (so the checked-in
+`examples/patient_DEMO.json` resolves with no setup). The core idea:
 
 ```python
 import json
@@ -236,8 +254,16 @@ async def auto_fetch_patient(protocol_id: str) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 ```
 
-This is exactly how the reference adapter's **cache** works — it writes
-`patient_<id>.json` after the first fetch so repeat queries skip the EHR entirely.
+**Try it on a fresh clone:** query the id `DEMO` (reads `examples/patient_DEMO.json`),
+or drop your own synthetic `patient_<id>.json` into `patient_data/`:
+
+```bash
+mkdir -p patient_data
+cp examples/patient_DEMO.json patient_data/patient_12345.json   # then query "12345 ..."
+```
+
+The `cerebral` adapter also uses this file layout as its **cache** — it writes
+`patient_<id>.json` after the first scrape so repeat queries skip the EHR.
 
 ## 🔐 Authentication patterns
 

@@ -13,6 +13,7 @@ venv/
 cookies/*.json
 !cookies/.gitkeep
 patient_*.json
+!examples/patient_*.json
 izlem_*.json
 ilac.json
 *.log

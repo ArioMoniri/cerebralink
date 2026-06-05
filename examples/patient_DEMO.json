@@ -1,0 +1,66 @@
+{
+  "_synthetic": true,
+  "_note": "Fully synthetic demo patient — NO real PHI. Used by the default file EHR adapter (EHR_ADAPTER=file). Copy to patient_data/ or query the id 'DEMO'.",
+  "patient": {
+    "full_name": "DEMO, Synthetic Patient",
+    "age": 64,
+    "sex": "F",
+    "mrn": "DEMO-0001",
+    "protocol_id": "DEMO"
+  },
+  "episodes": [
+    {
+      "episode_id": "E-001",
+      "date": "2026-03-01",
+      "service": "Cardiology",
+      "examination_text": "64F with exertional chest pain over 3 weeks, relieved by rest. No dyspnea at rest. ECG: sinus rhythm, no acute ST changes. Working diagnosis: stable angina. Plan: start beta-blocker, lipid panel, outpatient stress test.",
+      "diagnoses": [
+        {"code": "I20.9", "label": "Angina pectoris, unspecified"},
+        {"code": "E78.5", "label": "Hyperlipidemia, unspecified"}
+      ],
+      "drugs": [
+        {"name": "Atenolol", "dose": "50 mg", "route": "PO", "frequency": "once daily"},
+        {"name": "Atorvastatin", "dose": "20 mg", "route": "PO", "frequency": "once at night"}
+      ]
+    },
+    {
+      "episode_id": "E-002",
+      "date": "2026-04-10",
+      "service": "Internal Medicine",
+      "examination_text": "Follow-up. Chest pain improved on atenolol. Reports mild fatigue. BP 128/78, HR 64. Continue current therapy; review LFTs given new statin.",
+      "diagnoses": [
+        {"code": "I20.9", "label": "Angina pectoris, unspecified"}
+      ],
+      "drugs": [
+        {"name": "Atenolol", "dose": "50 mg", "route": "PO", "frequency": "once daily"},
+        {"name": "Atorvastatin", "dose": "20 mg", "route": "PO", "frequency": "once at night"}
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "report_id": "R-101",
+      "date": "2026-04-10",
+      "type": "lab",
+      "title": "Biochemistry panel",
+      "text": "Test            Result   Reference     Unit\nGlucose         102      70-110        mg/dL\nCreatinine      0.9      0.6-1.2       mg/dL\nALT             68       7-56          U/L\nAST             45       10-40         U/L\nTotal Chol.     232      <200          mg/dL\nLDL             158      <130          mg/dL\nHDL             44       >40           mg/dL"
+    },
+    {
+      "report_id": "R-102",
+      "date": "2026-04-10",
+      "type": "lab",
+      "title": "Serology panel",
+      "text": "HBsAg        Negative   0.24    (cutoff < 1.0 index)\nAnti-HCV     Negative   0.10    (cutoff < 1.0 index)\nAnti-HIV     Negative   0.18    (cutoff < 1.0 index)"
+    },
+    {
+      "report_id": "R-103",
+      "date": "2026-03-01",
+      "type": "radiology",
+      "title": "Chest X-ray (PA)",
+      "text": "Heart size normal. Clear lung fields. No acute cardiopulmonary process. No effusion."
+    }
+  ],
+  "izlem": [
+    {"date": "2026-04-10", "type": "vitals", "bp": "128/78 mmHg", "hr": "64 bpm", "temp": "36.7 C", "spo2": "98%"}
+  ]
+}

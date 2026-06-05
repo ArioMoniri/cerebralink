@@ -41,6 +41,10 @@ class Settings:
     fdc_api_key: str = field(default_factory=lambda: _env("FDC_API_KEY"))
     models: ModelConfig = field(default_factory=ModelConfig)
     max_context_tokens: int = 100_000
+    # Which EHR adapter the orchestrator uses to resolve a patient identifier.
+    #   "file"     → src/backend/tools/file_adapter.py (synthetic/local JSON; works on a fresh clone)
+    #   "cerebral" → src/backend/tools/cerebral.py (Acıbadem CerebralPlus; needs the git-ignored scraper scripts)
+    ehr_adapter: str = field(default_factory=lambda: _env("EHR_ADAPTER", "file"))
     cerebral_host: str = field(default_factory=lambda: _env("CEREBRAL_HOST", "cerebralplustr.acibadem.com.tr"))
     neo4j_uri: str = field(default_factory=lambda: _env("NEO4J_URI", "bolt://localhost:7687"))
     neo4j_auth: str = field(default_factory=lambda: _env("NEO4J_AUTH", "neo4j/cerebralink2024"))

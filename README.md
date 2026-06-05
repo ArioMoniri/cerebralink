@@ -101,7 +101,7 @@ identifier is provided.
 |---------|----------------------------|
 | Guidelines, drug data, and patient history live in separate systems | A set of agents queries them in parallel and composes one answer |
 | LLM medical answers are slow and unsourced | A partial answer streams in seconds; the full answer carries source-resolvable citations |
-| Hard to gauge how much to trust an answer | A separate agent scores six dimensions (evidence, alignment, relevance, safety, recency, completeness) |
+| Hard to gauge how much to trust an answer | A separate agent scores six axes (evidence, alignment, relevance, safety, completeness, recency) |
 | Generic chatbots ignore the actual patient | Pluggable EHR adapter + RAG over reports, episodes, and monitoring data |
 | Patient data must not leak to LLMs | Regex de-identification runs on ingest, before any reasoning model |
 | Prescriptions need local brand names | ATC mapping plus per-country brand options with a searchable picker |
@@ -141,7 +141,7 @@ concurrently.
 2. FETCH+MASK   EHR adapter pulls the record; regex PHI masking de-identifies it
 3. COUNCIL      Research / Drug / Clinical / Prescription run in parallel
 4. COMPOSE      Fast Composer (streams first) then Full Composer (deep, cited)
-5. SCORE        Trust agent scores six dimensions
+5. SCORE        Trust agent scores six axes
 ```
 
 <details open>
@@ -233,7 +233,8 @@ one-line rationale per axis are returned in `trust_scores` / `trust_reasons`.
 A single Trust agent (Haiku, `max_tokens=1024`, `temperature=0.1`) reads the
 question, both answers, and the list of contributing agents, then returns one JSON
 object: a 0–100 score and a one-line rationale per axis, plus a self-reported
-`scorer_confidence`. Scores are clamped to `[0, 100]`. A keyword pre-pass detects
+`scorer_confidence`. Each axis score is clamped to `[0, 100]`; any axis the model
+omits or returns in an unexpected shape defaults to 0. A keyword pre-pass detects
 patient-record questions and applies a data-retrieval rubric (so it does not
 down-score for lacking external RCTs/guidelines). If the response fails to parse,
 all axes fall back to 0 with `scorer_confidence = 0`. The scorer judges the
@@ -389,32 +390,37 @@ open http://localhost:3100
 > couple of minutes to report healthy. Watch with `docker compose ps`.
 
 <details>
-<summary>Verify it's working</summary>
+<summary>Verify it's working (Docker)</summary>
 
 ```bash
 docker compose ps                                   # services → healthy
 curl -s localhost:8100/health                       # {"status":"ok","service":"cerebralink"}
 curl -s localhost:3100/api/chat \
   -H 'Content-Type: application/json' \
-  -d '{"message":"what is the adult dose of paracetamol?"}' | head -c 200
+  -d '{"message":"DEMO what is the adult dose of paracetamol?"}' | head -c 200
 ```
+The `DEMO` id loads the synthetic `examples/patient_DEMO.json` via the default file
+adapter, so you can exercise the patient path with no EHR or credentials.
 </details>
 
 <details>
 <summary>Run natively (without Docker)</summary>
 
 ```bash
-# Backend
+# Infra first (the native config defaults to localhost Redis + Neo4j)
+docker compose up -d redis neo4j
+
+# Backend (host :8000)
 python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r src/backend/requirements.txt
-export $(grep -v '^#' .env | xargs)
+set -a; source .env; set +a                          # load .env (handles quoted values)
 PYTHONPATH=. uvicorn src.backend.api.app:app --reload --port 8000
+# verify: curl -s localhost:8000/health  → {"status":"ok","service":"cerebralink"}
 
-# Frontend (new terminal)
+# Frontend (new terminal, host :3100)
 cd src/frontend && npm install
 BACKEND_URL=http://localhost:8000 npm run dev        # http://localhost:3100 (next dev -p 3100)
 ```
-Redis + Neo4j are still needed: `docker compose up -d redis neo4j`.
 </details>
 
 <details>
@@ -457,8 +463,9 @@ MODEL_BRIEFER=claude-sonnet-4-6      # Reports, Episodes, Monitoring (RAG briefe
 MODEL_PHI_MASKER=claude-haiku-4-5-20251001   # reserved; PHI masking is regex-only by default
 
 # Optional
+EHR_ADAPTER=file                     # file (default, synthetic/local JSON; runs on a fresh clone) | cerebral (Acıbadem scrapers, git-ignored)
 GROQ_API_KEY=...                     # or OPENAI_API_KEY — enables voice transcription (/api/transcribe)
-PATIENT_DATA_DIR=/app/patient_data   # where the EHR adapter caches fetched data
+PATIENT_DATA_DIR=/app/patient_data   # where the file/cerebral adapter reads & caches patient JSON
 
 # Infra (defaults work with docker-compose)
 REDIS_URL=redis://redis:6379/0
@@ -475,7 +482,7 @@ FDC_API_KEY=...                      # USDA FoodData Central (optional)
 
 | Tier | Default | Agents |
 |------|---------|--------|
-| 1 | `claude-haiku-4-5` | Router, Trust |
+| 1 | `claude-haiku-4-5-20251001` | Router, Trust, PHI Masker |
 | 2 | `claude-sonnet-4-6` | Research, Drug, Composers, Prescription, Episodes, Monitoring, Reports |
 | 3 | `claude-opus-4-6` | Clinical, Decision Tree |
 
@@ -520,29 +527,38 @@ all agents are EHR-agnostic. Because every EHR is reached through that one adapt
 the system is FHIR R4 and HL7 v2 compatible — you map your source's resources or
 segments to the normalized patient dict once, and the rest works unchanged.
 
+The active adapter is selected by the `EHR_ADAPTER` env var:
+
+| `EHR_ADAPTER` | Module | Runs on a fresh clone? |
+|---------------|--------|------------------------|
+| `file` *(default)* | `tools/file_adapter.py` | **Yes** — reads synthetic JSON; ships with `examples/patient_DEMO.json` |
+| `cerebral` | `tools/cerebral.py` | **No** — Acıbadem CerebralPlus; requires the git-ignored `scripts/cerebral_*.py` scrapers |
+
 > [!IMPORTANT]
-> The institution-specific scraping scripts used during development (Acıbadem
-> CerebralPlus, `scripts/cerebral_*.py`) are not distributed — they are git-ignored
-> along with cookies, the drug database, and any cached patient data. Bring your
-> own EHR by writing an adapter.
+> Out of the box you get the **file adapter** with a synthetic demo patient — query
+> the id `DEMO` (or drop your own synthetic `patient_<id>.json` into `patient_data/`).
+> The `cerebral` adapter is opt-in and **does not run on a fresh clone**: its
+> Acıbadem scraper scripts (`scripts/cerebral_*.py`), cookies, and the drug database
+> are git-ignored and not distributed.
 
 ```python
-# The entire contract:
+# The entire contract (implemented by file_adapter.py and cerebral.py):
 async def auto_fetch_patient(protocol_id: str) -> dict[str, Any]:
     """Resolve an identifier to a normalized patient dict
-       ({patient, episodes[], reports[], ...}). Cache locally, then hit the EHR."""
+       ({patient, episodes[], reports[], ...})."""
 ```
 
-The adapter guide includes a working FHIR R4 example (Epic/Cerner/HAPI/Medplum), a
-local file/CSV adapter, auth patterns (OAuth, session cookie, mTLS, VPN), and how
+The adapter guide covers the default file adapter, a **FHIR R4 code example** and a
+CSV example you copy in, auth patterns (OAuth, session cookie, mTLS, VPN), and how
 lab parsing works: [`docs/EHR_ADAPTER.md`](./docs/EHR_ADAPTER.md).
 
 ## Standards & Interoperability
 
 | Standard | Status | Where |
 |----------|--------|-------|
-| FHIR R4 | Reference adapter example (Patient, Encounter, DiagnosticReport) | [`docs/EHR_ADAPTER.md`](./docs/EHR_ADAPTER.md) |
-| HL7 v2 | Supported via the adapter pattern — map PID / PV1 / OBX segments into the patient dict | [`docs/EHR_ADAPTER.md`](./docs/EHR_ADAPTER.md) |
+| Local file / CSV | **Shipped default** — runnable file adapter + synthetic `patient_DEMO.json` | `tools/file_adapter.py`, `examples/` |
+| FHIR R4 | Documented code example (Patient, Encounter, DiagnosticReport) you copy in | [`docs/EHR_ADAPTER.md`](./docs/EHR_ADAPTER.md) |
+| HL7 v2 | Adapter pattern — map PID / PV1 / OBX segments into the patient dict | [`docs/EHR_ADAPTER.md`](./docs/EHR_ADAPTER.md) |
 | SNOMED CT, ICD-10, RxNorm, LOINC | Looked up through the OMOPHub MCP sidecar (subject to OMOPHub terms) | `tools/omophub_mcp.py` |
 | OMOP CDM | Terminology/vocabulary mapping via OMOPHub | `tools/omophub_mcp.py` |
 | ATC + brand mapping | Generic→brand options; the bundled Turkish drug database (`ilac.json`) is kept local and not distributed | `agents/prescription.py` |
@@ -643,11 +659,16 @@ is early-stage R&D — see [Limitations](#status-limitations--known-gaps).
 
 | Shipped | In Progress | Next | Researching · Coming |
 |---------|-------------|------|----------------------|
-| Multi-agent SSE pipeline | HL7 v2 segment mapping | EHR adapter library (Epic/Cerner/OpenEMR) | **TurboQuant** (codename) — quantized model serving (INT8 / 4-bit, e.g. vLLM/llama.cpp) for lower-latency, lower-cost inference |
-| Six-axis trust scoring | Automated test suite | UI internationalization | **Clinical world model** (research) — a learned patient-state model to simulate trajectories and inform agent routing; would augment, not replace, today's orchestration |
-| Lab parser (3 formats) | Citation link-liveness checking | Configurable trust rubrics | On-prem / local LLM backends |
-| FHIR R4 adapter example | | Prompt-cache cost reduction | DICOM / multimodal ingestion |
-| Neo4j knowledge graph | | | Evaluation harness / clinical benchmarks |
+| Multi-agent SSE pipeline | HL7 v2 segment mapping | First production EHR adapter (Epic/OpenEMR) | **TurboQuant** (codename) — quantized serving (INT8/4-bit) |
+| Six-axis trust scoring | Citation link-liveness checking | AuthN / RBAC + audit logging | **Clinical world model** (research) — patient-state model to inform routing |
+| Lab parser (3 formats) | Docs accuracy & runnable demo patient | Observability (tracing, cost/latency) | On-prem / local LLM backends |
+| File + FHIR adapters (file = default) | | Data governance (PHI retention/TTL, secure delete) | DICOM / multimodal ingestion |
+| Neo4j knowledge graph | | Test suite + lab-accuracy eval slice | Clinical eval benchmarks |
+
+> The **Researching · Coming** column is exploratory research, not committed work or
+> dated promises. Also planned for **Next**: cost & latency controls (prompt caching,
+> token budgets, adaptive model routing), UI internationalization, and configurable
+> trust rubrics.
 
 ## License
 

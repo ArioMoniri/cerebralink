@@ -40,7 +40,7 @@ from src.backend.api.schemas import (
     DecisionTree, DecisionTreeNode, DecisionTreeEdge,
     PrescriptionData, BrandOption,
 )
-from src.backend.tools.cerebral import auto_fetch_patient
+from src.backend.tools.ehr import auto_fetch_patient  # adapter chosen by EHR_ADAPTER env
 from src.backend.tools.reports import auto_fetch_reports, reports_exist, get_manifest, get_reports_dir
 from src.backend.tools.reports_rag import index_reports, get_report_brief, chunks_indexed
 from src.backend.tools.episodes import (

@@ -86,7 +86,7 @@ which wraps the Anthropic SDK and tracks token usage.
 | ⚡ **Fast Composer** | `composer.py` | Sonnet | Compose a partial answer that streams in ~1–2 s (`max_tokens=3072`) |
 | 📚 **Full Composer** | `composer.py` | Sonnet | Compose the deep, cited answer (`max_tokens=8192`) |
 | ⚖️ **Trust Scorer** | `trust.py` | Haiku | Score evidence quality, guideline alignment, safety, recency |
-| 🌳 **Decision Tree** | `decision_tree.py` | Sonnet | Build the visual reasoning tree |
+| 🌳 **Decision Tree** | `decision_tree.py` | Opus | Build the visual reasoning tree |
 
 Council agents run **concurrently** via `asyncio` with a per-agent 90 s timeout
 (`orchestrator.py → _timed_agent`). Results are collected with
@@ -100,7 +100,7 @@ Models are configurable per agent via environment variables (`core/config.py`):
 |------|-----------------|---------|-----|
 | 🟦 Tier 1 | `claude-haiku-4-5` | Router, PHI Masker, Trust | Cheap, fast, structured |
 | 🟪 Tier 2 | `claude-sonnet-4-6` | Research, Drug, Composers, Prescription | Balanced reasoning |
-| 🟣 Tier 3 | `claude-opus-4-6` | Clinical | Deepest clinical reasoning |
+| 🟣 Tier 3 | `claude-opus-4-6` | Clinical, Decision Tree | Deepest clinical reasoning |
 
 Override any of them in `.env`:
 
@@ -246,13 +246,13 @@ See the dedicated guide → [`EHR_ADAPTER.md`](./EHR_ADAPTER.md).
 cd /path/to/cerebralink
 python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r src/backend/requirements.txt
-export $(grep -v '^#' .env | xargs)        # load env
+set -a; source .env; set +a                # load env (handles quoted values)
 PYTHONPATH=. uvicorn src.backend.api.app:app --reload --port 8000
 
 # ── Frontend ──
 cd src/frontend
 npm install
-BACKEND_URL=http://localhost:8000 npm run dev   # → http://localhost:3000
+BACKEND_URL=http://localhost:8000 npm run dev   # → http://localhost:3100
 ```
 
 You'll still want Redis and Neo4j running (e.g. `docker compose up -d redis neo4j`),
