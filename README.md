@@ -50,6 +50,7 @@ HL7 v2 compatible. PHI is de-identified before any reasoning model sees it.
 
 **Get started**
 - [What It Solves](#what-it-solves)
+- [Product Tour](#product-tour)
 - [Screenshots](#screenshots)
 - [How to Set Up](#how-to-set-up)
 - [Configuration](#configuration)
@@ -89,6 +90,17 @@ HL7 v2 compatible. PHI is de-identified before any reasoning model sees it.
 </td>
 </tr>
 </table>
+
+## Product Tour
+
+<div align="center">
+
+<img src="docs/assets/video/cerebralink-tour.webp" alt="CerebraLink product tour — architecture, streaming pipeline, query metrics, reasoning tree, and roadmap" width="100%"/>
+
+<sub>A 14-second tour: agent architecture → streaming pipeline → query metrics → clinical reasoning tree → roadmap.
+**[▶ HD MP4](docs/assets/video/cerebralink-tour.mp4)** (drag into a GitHub release/PR for an inline player).</sub>
+
+</div>
 
 ## What It Solves
 

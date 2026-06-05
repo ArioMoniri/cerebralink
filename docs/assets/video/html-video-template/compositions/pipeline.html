@@ -1,0 +1,148 @@
+<template id="cerebralink-pipeline-template">
+  <div data-composition-id="cerebralink-pipeline" data-width="1920" data-height="1080" data-duration="10">
+    <style>
+      [data-composition-id="cerebralink-pipeline"] {
+        position: absolute; inset: 0; width: 1920px; height: 1080px;
+        background:
+          radial-gradient(900px 600px at 18% 22%, rgba(99,102,241,0.18), transparent 60%),
+          radial-gradient(800px 520px at 84% 16%, rgba(20,184,166,0.16), transparent 60%),
+          linear-gradient(135deg, #0a0e28 0%, #0d1230 55%, #160a2e 100%);
+        font-family: "Inter", sans-serif; overflow: hidden;
+      }
+      [data-composition-id="cerebralink-pipeline"] .title {
+        position: absolute; top: 120px; left: 0; width: 1920px; text-align: center;
+        font-size: 96px; font-weight: 800; letter-spacing: -1px;
+        background: linear-gradient(90deg, #5eead4 0%, #818cf8 48%, #c084fc 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      [data-composition-id="cerebralink-pipeline"] .subtitle {
+        position: absolute; top: 246px; left: 0; width: 1920px; text-align: center;
+        font-size: 34px; font-weight: 500; color: #cbd5e1;
+      }
+      [data-composition-id="cerebralink-pipeline"] .rail {
+        position: absolute; top: 600px; left: 110px; width: 1700px; height: 4px;
+        background: linear-gradient(90deg, #0e7490, #4f46e5 50%, #9333ea); border-radius: 2px;
+        transform-origin: left center;
+      }
+      [data-composition-id="cerebralink-pipeline"] .card {
+        position: absolute; top: 510px; width: 300px; height: 180px; margin-left: -150px;
+        border-radius: 20px; background: linear-gradient(180deg, #141a38, #10142c);
+        border: 1px solid #2a3568; padding: 24px; color: #e2e8f0;
+      }
+      [data-composition-id="cerebralink-pipeline"] .card .ph { font-size: 20px; font-weight: 800; letter-spacing: 2px; color: #64748b; }
+      [data-composition-id="cerebralink-pipeline"] .card .nm { font-size: 30px; font-weight: 700; margin-top: 10px; }
+      [data-composition-id="cerebralink-pipeline"] .card .ds { font-size: 19px; color: #94a3b8; margin-top: 10px; line-height: 1.35; }
+      [data-composition-id="cerebralink-pipeline"] .card .tier { position: absolute; bottom: 18px; left: 24px; font-size: 16px; font-weight: 700; }
+      [data-composition-id="cerebralink-pipeline"] .dot { position: absolute; top: 596px; width: 14px; height: 14px; border-radius: 50%; }
+      [data-composition-id="cerebralink-pipeline"] .callout {
+        position: absolute; top: 770px; left: 0; width: 1920px; text-align: center;
+        font-size: 46px; font-weight: 800; color: #5eead4;
+      }
+      [data-composition-id="cerebralink-pipeline"] .tagline {
+        position: absolute; top: 900px; left: 0; width: 1920px; text-align: center;
+        font-size: 28px; font-weight: 600; color: #94a3b8;
+      }
+      [data-composition-id="cerebralink-pipeline"] .pill {
+        display: inline-block; margin: 0 10px; padding: 8px 20px; border-radius: 22px;
+        border: 1px solid rgba(148,163,184,0.35); background: rgba(148,163,184,0.06);
+      }
+    </style>
+
+    <div class="title" id="cl-title">CerebraLink</div>
+    <div class="subtitle" id="cl-sub">Multi-Agent Clinical Decision Support</div>
+
+    <div class="rail" id="cl-rail"></div>
+
+    <div class="card" id="cl-c1" style="left: 256px;">
+      <div class="ph">① ROUTE</div><div class="nm">🧭 Router</div>
+      <div class="ds">classify · language · urgency</div>
+      <div class="tier" style="color:#5eead4;">Haiku</div>
+    </div>
+    <div class="card" id="cl-c2" style="left: 608px;">
+      <div class="ph">② FETCH</div><div class="nm">🗂️ Patient</div>
+      <div class="ds">FHIR R4 · HL7 v2 · PHI mask</div>
+      <div class="tier" style="color:#7dd3fc;">adapter</div>
+    </div>
+    <div class="card" id="cl-c3" style="left: 960px;">
+      <div class="ph">③ COUNCIL</div><div class="nm">🔬 Research · 💊 Drug</div>
+      <div class="ds">🩺 Clinical · 📝 Rx — parallel</div>
+      <div class="tier" style="color:#a5b4fc;">Sonnet · Opus</div>
+    </div>
+    <div class="card" id="cl-c4" style="left: 1312px;">
+      <div class="ph">④ COMPOSE</div><div class="nm">⚡ Fast + 📚 Full</div>
+      <div class="ds">streams partial in ~2 s</div>
+      <div class="tier" style="color:#a5b4fc;">Sonnet</div>
+    </div>
+    <div class="card" id="cl-c5" style="left: 1664px;">
+      <div class="ph">⑤ SCORE</div><div class="nm">⚖️ Trust</div>
+      <div class="ds">evidence · safety · recency</div>
+      <div class="tier" style="color:#5eead4;">Haiku</div>
+    </div>
+
+    <div class="dot" id="cl-d1" style="background:#5eead4;"></div>
+    <div class="dot" id="cl-d2" style="background:#818cf8;"></div>
+    <div class="dot" id="cl-d3" style="background:#c084fc;"></div>
+
+    <div class="callout" id="cl-callout">⚡ Fast answer in ~2 seconds — then deep, cited analysis</div>
+    <div class="tagline" id="cl-tag">
+      <span class="pill">🔬 cited evidence</span>
+      <span class="pill">⚖️ trust-scored</span>
+      <span class="pill">🩺 EHR-aware</span>
+      <span class="pill">🔒 PHI-masked</span>
+    </div>
+
+    <script src="gsap.min.js"></script>
+    <script>
+      (function () {
+        const q = (s) => document.querySelector(s);
+        const cards = ["#cl-c1", "#cl-c2", "#cl-c3", "#cl-c4", "#cl-c5"];
+        // initial hidden state
+        gsap.set("#cl-title", { opacity: 0, scale: 0.92, transformOrigin: "50% 50%" });
+        gsap.set("#cl-sub", { opacity: 0, y: 12 });
+        gsap.set("#cl-rail", { scaleX: 0 });
+        cards.forEach((c) => gsap.set(c, { opacity: 0, y: 40, scale: 0.9, transformOrigin: "50% 50%" }));
+        gsap.set(["#cl-d1", "#cl-d2", "#cl-d3"], { opacity: 0, left: 256 });
+        gsap.set("#cl-callout", { opacity: 0, y: 16 });
+        gsap.set("#cl-tag", { opacity: 0, y: 16 });
+
+        const tl = gsap.timeline({ paused: true });
+
+        // 1. Title + subtitle
+        tl.to("#cl-title", { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0.1);
+        tl.to("#cl-sub", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.55);
+
+        // 2. Rail draws
+        tl.to("#cl-rail", { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 1.0);
+
+        // 3. Cards pop in, staggered
+        cards.forEach((c, i) => {
+          tl.to(c, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1.3 + i * 0.32);
+        });
+
+        // 4. Signal dots travel the rail (repeat to feel "live")
+        const dots = ["#cl-d1", "#cl-d2", "#cl-d3"];
+        dots.forEach((d, i) => {
+          const start = 3.2 + i * 0.4;
+          tl.to(d, { opacity: 1, duration: 0.2 }, start);
+          tl.fromTo(d, { left: 256 }, { left: 1664, duration: 1.8, ease: "none", repeat: 1 }, start);
+          tl.to(d, { opacity: 0, duration: 0.2 }, start + 3.8);
+        });
+
+        // 5. Fast-answer callout
+        tl.to("#cl-callout", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.2);
+
+        // 6. Tagline pills
+        tl.to("#cl-tag", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 5.2);
+
+        // 7. Gentle title glow pulse to fill the hold
+        tl.to("#cl-title", { filter: "brightness(1.15)", duration: 1.0, yoyo: true, repeat: 1, ease: "sine.inOut" }, 6.2);
+
+        // hold to 10s
+        tl.to({}, { duration: 1.6 }, 8.4);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["cerebralink-pipeline"] = tl;
+      })();
+    </script>
+  </div>
+</template>

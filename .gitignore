@@ -34,3 +34,6 @@ scripts/ingest_patient.py
 patient_data/
 *.cookies.json
 cerebral_*.json
+
+# Raw, un-redacted screenshots — staging only, never committed
+docs/assets/screenshots/raw/
