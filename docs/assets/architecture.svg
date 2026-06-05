@@ -1,140 +1,267 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 800" width="1240" height="800" role="img" aria-label="CerebraLink agentic architecture">
   <defs>
-    <linearGradient id="abg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0a0e28"/><stop offset="100%" stop-color="#160a2e"/></linearGradient>
-    <linearGradient id="haiku"  x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0e7490"/><stop offset="100%" stop-color="#155e75"/></linearGradient>
-    <linearGradient id="sonnet" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
-    <linearGradient id="opus"   x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9333ea"/><stop offset="100%" stop-color="#7e22ce"/></linearGradient>
-    <linearGradient id="io"     x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d9488"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
-    <linearGradient id="data"   x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
     <style>
-      text{font-family:'Segoe UI',Helvetica,Arial,sans-serif}
-      .ttl{font-weight:800;fill:#e2e8f0}.sub{fill:#cbd5e1}.tag{fill:#94a3b8;font-size:11px}
-      .phase{fill:#64748b;font-size:13px;font-weight:700;letter-spacing:2px}
-      @keyframes flow{to{stroke-dashoffset:-32}}
-      @keyframes glow{0%,100%{opacity:.85}50%{opacity:1}}
-      .edge{stroke-dasharray:7 7;animation:flow 1.4s linear infinite}
-      .edge2{stroke-dasharray:7 7;animation:flow 1.4s linear infinite .3s}
-      .box{animation:glow 3.4s ease-in-out infinite}
-      .b2{animation-delay:.5s}.b3{animation-delay:1s}.b4{animation-delay:1.5s}
+      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+      .ttl{font-weight:700;fill:#1F2328}
+      .sub{fill:#1F2328}
+      .tag{fill:#6B6A66;font-size:11px}
+      .phase{fill:#6B6A66;font-size:13px;font-weight:700;letter-spacing:2px}
+      .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .panel{fill:#FFFFFF;stroke:#E3DDD0;stroke-width:1;vector-effect:non-scaling-stroke}
+      .edge{fill:none;stroke:#1F2328;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .chev{fill:none;stroke:#1F2328;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      @keyframes draw{from{stroke-dashoffset:980}to{stroke-dashoffset:0}}
+      .recommend{stroke:#0E7C86;stroke-width:2.25;stroke-dasharray:980;stroke-dashoffset:0;animation:draw 5.5s ease-in-out infinite}
     </style>
   </defs>
 
-  <rect width="1240" height="800" rx="20" fill="url(#abg)"/>
-  <text x="40" y="48" class="ttl" font-size="26">🧠 Agentic Architecture</text>
-  <text x="40" y="74" class="tag" font-size="14">A specialized multi-agent council streams answers over Server-Sent Events (SSE)</text>
+  <!-- paper card + hairline -->
+  <rect x="0.5" y="0.5" width="1239" height="799" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
 
-  <!-- legend -->
-  <g transform="translate(720,34)" font-size="12">
-    <rect x="0" y="0" width="14" height="14" rx="3" fill="url(#haiku)"/><text x="20" y="11" class="tag">Haiku · fast/cheap</text>
-    <rect x="150" y="0" width="14" height="14" rx="3" fill="url(#sonnet)"/><text x="170" y="11" class="tag">Sonnet · reasoning</text>
-    <rect x="310" y="0" width="14" height="14" rx="3" fill="url(#opus)"/><text x="330" y="11" class="tag">Opus · deep clinical</text>
+  <!-- titles -->
+  <g transform="translate(40,40)">
+    <!-- bespoke brain-network glyph (replaces emoji) -->
+    <g transform="translate(11,3)">
+      <path class="s" stroke-width="2.25" d="M-11,1 C-13,-7 -6,-12 0,-11 C2,-15 10,-14 12,-8 C15,-7 16,0 12,2 C14,6 10,11 5,10 C2,13 -5,13 -8,9 C-13,9 -15,4 -11,1 Z"/>
+      <circle cx="-5" cy="-4" r="1.4" fill="#1F2328"/>
+      <circle cx="6" cy="-3" r="1.4" fill="#1F2328"/>
+      <circle cx="0" cy="5" r="1.4" fill="#1F2328"/>
+    </g>
+    <text x="30" y="9" class="ttl" font-size="26">Agentic Architecture</text>
+  </g>
+  <text x="40" y="74" class="tag" font-size="14">A specialized multi-agent council streams answers over Server-Sent Events (<tspan class="mono">SSE</tspan>)</text>
+
+  <!-- legend: model tiers encoded as line-style (solid / double / triple), NOT color -->
+  <g transform="translate(720,28)" font-size="12">
+    <!-- Haiku = solid -->
+    <line class="s" stroke-width="1.5" x1="0" y1="7" x2="22" y2="7"/>
+    <text x="28" y="11" class="tag">Haiku · fast/cheap</text>
+
+    <!-- Sonnet = double stroke -->
+    <line class="s" stroke-width="1.5" x1="150" y1="4" x2="172" y2="4"/>
+    <line class="s" stroke-width="1.5" x1="150" y1="10" x2="172" y2="10"/>
+    <text x="178" y="11" class="tag">Sonnet · reasoning</text>
+
+    <!-- Opus = triple stroke -->
+    <line class="s" stroke-width="1.5" x1="310" y1="2" x2="332" y2="2"/>
+    <line class="s" stroke-width="1.5" x1="310" y1="7" x2="332" y2="7"/>
+    <line class="s" stroke-width="1.5" x1="310" y1="12" x2="332" y2="12"/>
+    <text x="338" y="11" class="tag">Opus · deep clinical</text>
   </g>
 
-  <!-- phase labels -->
-  <text x="60" y="118" class="phase">① ROUTE</text>
-  <text x="300" y="118" class="phase">② FETCH + MASK</text>
-  <text x="620" y="118" class="phase">③ COUNCIL</text>
-  <text x="900" y="118" class="phase">④ COMPOSE</text>
-  <text x="1108" y="118" class="phase">⑤ SCORE</text>
+  <!-- faint chart-margin rule ~64px from left -->
+  <line x1="64" y1="96" x2="64" y2="700" stroke="#E3DDD0" stroke-width="1" vector-effect="non-scaling-stroke"/>
 
-  <!-- ===== EDGES (defined first, behind nodes) ===== -->
-  <g fill="none" stroke-width="2.5">
-    <path id="f1"  class="edge"  d="M160,395 L210,395" stroke="#5eead4"/>
-    <path id="f2"  class="edge"  d="M360,380 C390,360 390,210 410,200" stroke="#38bdf8"/>
-    <path id="f3"  class="edge"  d="M360,400 C390,440 390,440 410,436" stroke="#38bdf8"/>
-    <path id="f4"  class="edge2" d="M570,436 C600,430 600,300 630,250" stroke="#818cf8"/>
-    <path id="f5"  class="edge2" d="M570,300 C600,300 600,300 630,290" stroke="#818cf8"/>
-    <path id="f6"  class="edge2" d="M810,400 C840,400 850,340 880,332" stroke="#a78bfa"/>
-    <path id="f7"  class="edge2" d="M810,490 C850,470 850,420 880,414" stroke="#a78bfa"/>
-    <path           class="edge"  d="M810,560 C850,540 855,420 880,360" stroke="#5eead4" stroke-opacity=".5"/>
-    <path id="f8"  class="edge"  d="M1050,414 L1090,400" stroke="#c084fc"/>
-    <path id="f9"  class="edge"  d="M1150,432 C1150,490 1150,520 1145,560" stroke="#5eead4"/>
-    <path           class="edge"  d="M965,364 C1000,420 1010,520 1070,575" stroke="#818cf8" stroke-opacity=".5"/>
-  </g>
-  <!-- traveling signal dots on the main flow -->
+  <!-- phase eyebrow tags -->
+  <text x="72" y="118" class="phase">ROUTE</text>
+  <text x="300" y="118" class="phase">FETCH + MASK</text>
+  <text x="620" y="118" class="phase">COUNCIL</text>
+  <text x="900" y="118" class="phase">COMPOSE</text>
+  <text x="1108" y="118" class="phase">SCORE</text>
+
+  <!-- ===== EDGES (ink bezier connectors with open chevrons, behind nodes) ===== -->
   <g>
-    <circle r="4" fill="#5eead4"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#f1"/></animateMotion></circle>
-    <circle r="4" fill="#38bdf8"><animateMotion dur="2s" begin="0.3s" repeatCount="indefinite"><mpath href="#f2"/></animateMotion></circle>
-    <circle r="4" fill="#818cf8"><animateMotion dur="2s" begin="0.7s" repeatCount="indefinite"><mpath href="#f5"/></animateMotion></circle>
-    <circle r="4" fill="#a78bfa"><animateMotion dur="2s" begin="1s" repeatCount="indefinite"><mpath href="#f6"/></animateMotion></circle>
-    <circle r="4" fill="#c084fc"><animateMotion dur="1.6s" begin="1.3s" repeatCount="indefinite"><mpath href="#f8"/></animateMotion></circle>
-    <circle r="4" fill="#5eead4"><animateMotion dur="2s" begin="1.6s" repeatCount="indefinite"><mpath href="#f9"/></animateMotion></circle>
+    <!-- User Query -> Router (this is the start of the recommended teal path) -->
+    <path class="edge" d="M160,395 L204,395"/>
+    <g class="chev"><path d="M198,390 L206,395 L198,400"/></g>
+
+    <!-- Router -> Patient Record -->
+    <path class="edge" d="M360,380 C390,360 390,210 404,200"/>
+    <g class="chev"><path d="M398,195 L406,200 L398,205"/></g>
+    <!-- Router -> PHI Masker -->
+    <path class="edge" d="M360,400 C390,440 390,440 404,436"/>
+    <g class="chev"><path d="M398,431 L406,436 L398,441"/></g>
+
+    <!-- PHI Masker -> Clinical (council) -->
+    <path class="edge" d="M570,436 C600,430 600,300 624,250"/>
+    <g class="chev"><path d="M618,250 L626,249 L625,257"/></g>
+    <!-- Fetch -> Research (council) -->
+    <path class="edge" d="M570,300 C600,300 600,300 624,290"/>
+    <g class="chev"><path d="M618,285 L626,290 L618,295"/></g>
+
+    <!-- Council -> Fast Composer -->
+    <path class="edge" d="M810,400 C840,400 850,340 874,332"/>
+    <g class="chev"><path d="M868,327 L876,332 L868,337"/></g>
+    <!-- Council -> Full Composer -->
+    <path class="edge" d="M810,490 C850,470 850,420 874,414"/>
+    <g class="chev"><path d="M868,409 L876,414 L868,419"/></g>
+
+    <!-- MCP rail -> Council (faint feed) -->
+    <path class="edge" stroke-opacity="0.45" d="M810,560 C850,540 855,420 874,360"/>
+
+    <!-- Compose -> Trust -->
+    <path class="edge" d="M1050,414 L1084,400"/>
+    <g class="chev"><path d="M1078,395 L1086,400 L1078,405"/></g>
+
+    <!-- Trust -> Streamed UI -->
+    <path class="edge" d="M1150,432 C1150,490 1150,520 1146,554"/>
+    <g class="chev"><path d="M1141,548 L1146,556 L1151,548"/></g>
+
+    <!-- Compose -> Streamed UI (faint) -->
+    <path class="edge" stroke-opacity="0.45" d="M965,364 C1000,420 1010,520 1066,575"/>
   </g>
+
+  <!-- ===== RECOMMENDED PATH (single teal, static-visible draw-on) ===== -->
+  <!-- User Query -> Router -> Patient Record/Council -> Fast Composer -> Trust -> Streamed UI -->
+  <path class="s recommend"
+    d="M160,395 L204,395 M210,395 C390,360 420,360 624,290 M816,330 C840,340 855,345 874,332 M1050,414 L1084,400 M1150,432 C1150,500 1150,520 1146,554"/>
 
   <!-- ===== NODES ===== -->
   <!-- user query -->
   <g transform="translate(40,360)">
-    <rect width="120" height="70" rx="14" fill="url(#io)"/>
-    <text x="60" y="32" text-anchor="middle" class="sub" font-size="22">💬</text>
+    <rect class="panel" width="120" height="70" rx="12"/>
+    <!-- chat/query glyph -->
+    <g class="s" stroke-width="2.25" transform="translate(48,22)">
+      <path d="M0,2 a8,7 0 1 1 8,7 l-5,0 -4,4 0,-4 a8,7 0 0 1 1,-11 Z"/>
+    </g>
     <text x="60" y="54" text-anchor="middle" class="sub" font-size="13" font-weight="700">User Query</text>
   </g>
 
   <!-- router -->
-  <g class="box" transform="translate(210,355)">
-    <rect width="150" height="80" rx="14" fill="url(#haiku)"/>
-    <text x="75" y="30" text-anchor="middle" class="ttl" font-size="15">🧭 Router</text>
-    <text x="75" y="50" text-anchor="middle" class="tag" fill="#a5f3fc">classify · language</text>
-    <text x="75" y="66" text-anchor="middle" class="tag" fill="#a5f3fc">urgency · routing</text>
+  <g transform="translate(210,355)">
+    <rect class="panel" width="150" height="80" rx="12"/>
+    <!-- compass glyph + solid tier underline (Haiku) -->
+    <g class="s" stroke-width="2.25" transform="translate(20,22)">
+      <circle cx="0" cy="0" r="8"/>
+      <path d="M-3.5,3.5 L1,1 L3.5,-3.5 L-1,-1 Z"/>
+    </g>
+    <text x="84" y="28" text-anchor="middle" class="ttl" font-size="15">Router</text>
+    <text x="75" y="52" text-anchor="middle" class="tag">classify · language</text>
+    <text x="75" y="68" text-anchor="middle" class="tag">urgency · routing</text>
   </g>
 
-  <!-- fetch -->
+  <!-- fetch group -->
   <g transform="translate(410,150)">
-    <g class="box"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">🗂️ Patient Record</text><text x="80" y="38" text-anchor="middle" class="tag">FHIR R4 · HL7 v2 adapter</text></g>
-    <g class="box b2" transform="translate(0,58)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">📄 Reports (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">labs · radiology</text></g>
-    <g class="box b3" transform="translate(0,116)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">🏥 Episodes (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">admissions</text></g>
-    <g class="box b4" transform="translate(0,174)"><rect width="160" height="46" rx="11" fill="url(#data)" stroke="#334155"/><text x="80" y="22" text-anchor="middle" class="sub" font-size="13">📈 Monitoring (RAG)</text><text x="80" y="38" text-anchor="middle" class="tag">vitals · flowsheets</text></g>
+    <g>
+      <rect class="panel" width="160" height="46" rx="10"/>
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><rect x="-6" y="-5" width="12" height="11" rx="2"/><path d="M-6,-1 L6,-1"/></g>
+      <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Patient Record</text>
+      <text x="86" y="36" text-anchor="middle" class="tag"><tspan class="mono">FHIR R4</tspan> · <tspan class="mono">HL7 v2</tspan> adapter</text>
+    </g>
+    <g transform="translate(0,58)">
+      <rect class="panel" width="160" height="46" rx="10"/>
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-5,-6 L3,-6 L6,-3 L6,6 L-5,6 Z"/><path d="M3,-6 L3,-3 L6,-3"/></g>
+      <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Reports (RAG)</text>
+      <text x="86" y="36" text-anchor="middle" class="tag">labs · radiology</text>
+    </g>
+    <g transform="translate(0,116)">
+      <rect class="panel" width="160" height="46" rx="10"/>
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-6,6 L-6,-2 L0,-6 L6,-2 L6,6"/><path d="M-2,6 L-2,1 L2,1 L2,6"/></g>
+      <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Episodes (RAG)</text>
+      <text x="86" y="36" text-anchor="middle" class="tag">admissions</text>
+    </g>
+    <g transform="translate(0,174)">
+      <rect class="panel" width="160" height="46" rx="10"/>
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-6,4 L-2,-2 L1,2 L6,-5"/></g>
+      <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Monitoring (RAG)</text>
+      <text x="86" y="36" text-anchor="middle" class="tag">vitals · flowsheets</text>
+    </g>
   </g>
 
   <!-- PHI masker -->
-  <g class="box" transform="translate(410,408)">
-    <rect width="160" height="56" rx="12" fill="url(#haiku)"/>
-    <text x="80" y="24" text-anchor="middle" class="ttl" font-size="14">🛡️ PHI Masker</text>
-    <text x="80" y="44" text-anchor="middle" class="tag" fill="#a5f3fc">de-identify before LLM</text>
+  <g transform="translate(410,408)">
+    <rect class="panel" width="160" height="56" rx="11"/>
+    <!-- shield glyph (Haiku = solid tier) -->
+    <g class="s" stroke-width="2.25" transform="translate(20,24)"><path d="M0,-9 L7,-6 L7,1 C7,7 3,10 0,11 C-3,10 -7,7 -7,1 L-7,-6 Z"/></g>
+    <text x="92" y="26" text-anchor="middle" class="ttl" font-size="14">PHI Masker</text>
+    <text x="86" y="46" text-anchor="middle" class="tag">de-identify before LLM</text>
   </g>
 
   <!-- council -->
   <g transform="translate(630,175)">
-    <g class="box"><rect width="180" height="64" rx="13" fill="url(#sonnet)"/><text x="90" y="26" text-anchor="middle" class="ttl" font-size="15">🔬 Research</text><text x="90" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">Exa · PubMed · guidelines</text></g>
-    <g class="box b2" transform="translate(0,80)"><rect width="180" height="64" rx="13" fill="url(#sonnet)"/><text x="90" y="26" text-anchor="middle" class="ttl" font-size="15">💊 Drug</text><text x="90" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">interactions · dosing</text></g>
-    <g class="box b3" transform="translate(0,160)"><rect width="180" height="64" rx="13" fill="url(#opus)"/><text x="90" y="26" text-anchor="middle" class="ttl" font-size="15">🩺 Clinical</text><text x="90" y="46" text-anchor="middle" class="tag" fill="#e9d5ff">reasoning · patient-ctx</text></g>
-    <g class="box b4" transform="translate(0,255)"><rect width="180" height="58" rx="13" fill="url(#sonnet)"/><text x="90" y="24" text-anchor="middle" class="ttl" font-size="15">📝 Prescription</text><text x="90" y="43" text-anchor="middle" class="tag" fill="#c7d2fe">ATC · brand options</text></g>
+    <!-- Research (Sonnet = double-stroke tier) -->
+    <g>
+      <rect class="panel" width="180" height="64" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Research</text>
+      <text x="90" y="48" text-anchor="middle" class="tag"><tspan class="mono">Exa</tspan> · PubMed · guidelines</text>
+    </g>
+    <!-- Drug (Sonnet = double-stroke tier) -->
+    <g transform="translate(0,80)">
+      <rect class="panel" width="180" height="64" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Drug</text>
+      <text x="90" y="48" text-anchor="middle" class="tag">interactions · dosing</text>
+    </g>
+    <!-- Clinical (Opus = triple-stroke tier) -->
+    <g transform="translate(0,160)">
+      <rect class="panel" width="180" height="64" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="12" x2="44" y2="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="17" x2="44" y2="17"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="22" x2="44" y2="22"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Clinical</text>
+      <text x="90" y="48" text-anchor="middle" class="tag">reasoning · patient-ctx</text>
+    </g>
+    <!-- Prescription (Sonnet = double-stroke tier) -->
+    <g transform="translate(0,255)">
+      <rect class="panel" width="180" height="58" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="13" x2="44" y2="13"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="18" x2="44" y2="18"/>
+      <text x="100" y="24" text-anchor="middle" class="ttl" font-size="15">Prescription</text>
+      <text x="90" y="44" text-anchor="middle" class="tag"><tspan class="mono">ATC</tspan> · brand options</text>
+    </g>
   </g>
 
   <!-- MCP rail -->
   <g transform="translate(630,500)">
-    <rect width="180" height="120" rx="13" fill="#0f172a" stroke="#334155"/>
-    <text x="90" y="24" text-anchor="middle" class="tag" fill="#7dd3fc" font-weight="700">🔌 MCP SIDECARS</text>
+    <rect class="panel" width="180" height="120" rx="12"/>
+    <!-- plug glyph -->
+    <g class="s" stroke-width="2.25" transform="translate(18,18)"><path d="M-5,-2 L-5,4 L5,4 L5,-2"/><path d="M-2,-2 L-2,-6 M2,-2 L2,-6 M0,4 L0,8"/></g>
+    <text x="100" y="22" text-anchor="middle" class="tag" font-weight="700" fill="#1F2328">MCP SIDECARS</text>
     <text x="90" y="46" text-anchor="middle" class="tag">Healthcare · Medical-Knowledge</text>
     <text x="90" y="64" text-anchor="middle" class="tag">OMOPHub · Food Data</text>
-    <text x="90" y="82" text-anchor="middle" class="tag">openFDA · RxNorm · ICD-10</text>
-    <text x="90" y="104" text-anchor="middle" class="tag" fill="#5eead4">⬑ feeds Research &amp; Drug</text>
+    <text x="90" y="82" text-anchor="middle" class="tag"><tspan class="mono">openFDA</tspan> · <tspan class="mono">RxNorm</tspan> · <tspan class="mono">ICD-10</tspan></text>
+    <text x="90" y="104" text-anchor="middle" class="tag">feeds Research &amp; Drug</text>
   </g>
 
   <!-- compose -->
   <g transform="translate(880,300)">
-    <g class="box"><rect width="170" height="64" rx="13" fill="url(#sonnet)"/><text x="85" y="26" text-anchor="middle" class="ttl" font-size="15">⚡ Fast Composer</text><text x="85" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">first answer ~10 s</text></g>
-    <g class="box b2" transform="translate(0,82)"><rect width="170" height="64" rx="13" fill="url(#sonnet)"/><text x="85" y="26" text-anchor="middle" class="ttl" font-size="15">📚 Full Composer</text><text x="85" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">deep · cited · 8k tokens</text></g>
+    <!-- Fast Composer (Sonnet = double-stroke tier) -->
+    <g>
+      <rect class="panel" width="170" height="64" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
+      <text x="85" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono" fill="#0E7C86">~10 s</tspan></text>
+    </g>
+    <!-- Full Composer (Sonnet = double-stroke tier) -->
+    <g transform="translate(0,82)">
+      <rect class="panel" width="170" height="64" rx="12"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Full Composer</text>
+      <text x="85" y="48" text-anchor="middle" class="tag">deep · cited · <tspan class="mono">8k</tspan> tokens</text>
+    </g>
   </g>
 
-  <!-- trust -->
-  <g class="box" transform="translate(1090,332)">
-    <rect width="120" height="100" rx="14" fill="url(#haiku)"/>
-    <text x="60" y="28" text-anchor="middle" class="ttl" font-size="14">⚖️ Trust</text>
-    <text x="60" y="46" text-anchor="middle" class="tag" fill="#a5f3fc">6-axis score:</text>
-    <text x="60" y="62" text-anchor="middle" class="tag" fill="#a5f3fc">evidence · align</text>
-    <text x="60" y="76" text-anchor="middle" class="tag" fill="#a5f3fc">relevance · safety</text>
-    <text x="60" y="90" text-anchor="middle" class="tag" fill="#a5f3fc">recency · complete</text>
+  <!-- trust (Haiku = solid tier) -->
+  <g transform="translate(1090,332)">
+    <rect class="panel" width="120" height="100" rx="12"/>
+    <!-- scales glyph -->
+    <g class="s" stroke-width="2.25" transform="translate(60,22)"><path d="M0,-8 L0,8 M-9,-5 L9,-5 M-9,-5 L-12,2 L-6,2 Z M9,-5 L6,2 L12,2 Z M-6,8 L6,8"/></g>
+    <text x="60" y="50" text-anchor="middle" class="ttl" font-size="14">Trust</text>
+    <text x="60" y="66" text-anchor="middle" class="tag"><tspan class="mono" fill="#0E7C86">6-axis</tspan> score:</text>
+    <text x="60" y="80" text-anchor="middle" class="tag">evidence · align</text>
+    <text x="60" y="92" text-anchor="middle" class="tag">relevance · safety</text>
+    <text x="60" y="104" text-anchor="middle" class="tag">recency · complete</text>
   </g>
 
   <!-- output -->
   <g transform="translate(1070,560)">
-    <rect width="150" height="90" rx="14" fill="url(#io)"/>
-    <text x="75" y="32" text-anchor="middle" class="sub" font-size="22">🖥️</text>
-    <text x="75" y="54" text-anchor="middle" class="sub" font-size="13" font-weight="700">Streamed UI</text>
-    <text x="75" y="72" text-anchor="middle" class="tag" fill="#99f6e4">Fast / Full / Trust</text>
+    <rect class="panel" width="150" height="90" rx="12"/>
+    <!-- monitor glyph -->
+    <g class="s" stroke-width="2.25" transform="translate(75,28)"><rect x="-14" y="-10" width="28" height="18" rx="2"/><path d="M-5,8 L-5,12 L5,12 L5,8 M-8,12 L8,12"/></g>
+    <text x="75" y="58" text-anchor="middle" class="sub" font-size="13" font-weight="700">Streamed UI</text>
+    <text x="75" y="76" text-anchor="middle" class="tag">Fast / Full / Trust</text>
   </g>
 
   <!-- footer -->
-  <text x="40" y="730" class="tag" font-size="13">Phases ②–③ run agents concurrently (asyncio); the Fast Composer emits a partial answer before the Full Composer and Trust Scorer finish — all over one SSE connection.</text>
-  <text x="40" y="752" class="tag" font-size="13" fill="#5eead4">● Dots = live data flowing through the pipeline.</text>
+  <text x="40" y="730" class="tag" font-size="13">Phases 2-3 run agents concurrently (asyncio); the Fast Composer emits a partial answer before the Full Composer and Trust Scorer finish — all over one <tspan class="mono">SSE</tspan> connection.</text>
+  <g transform="translate(40,748)">
+    <line class="s" stroke="#0E7C86" stroke-width="2.25" x1="0" y1="0" x2="20" y2="0"/>
+    <text x="28" y="4" class="tag" font-size="13">Teal line = the recommended request path through the pipeline.</text>
+  </g>
 </svg>

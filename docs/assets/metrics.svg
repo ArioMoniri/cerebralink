@@ -1,72 +1,141 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="CerebraLink pipeline metrics — timings and tokens">
   <defs>
-    <linearGradient id="mbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0a0e28"/><stop offset="100%" stop-color="#160a2e"/></linearGradient>
-    <linearGradient id="barT" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0e7490"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
-    <linearGradient id="barS" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4338ca"/><stop offset="100%" stop-color="#818cf8"/></linearGradient>
-    <linearGradient id="barO" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#c084fc"/></linearGradient>
-    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141a38"/><stop offset="100%" stop-color="#10142c"/></linearGradient>
     <style>
-      text{font-family:'Segoe UI',Helvetica,Arial,sans-serif}
-      .h{fill:#e2e8f0;font-weight:800}.l{fill:#cbd5e1;font-size:13px}.t{fill:#94a3b8;font-size:11px}.v{font-size:12px;font-weight:700}
-      /* bars are full-width at rest; only a non-hiding shimmer animates (opacity stays high) */
-      @keyframes shimmer{0%,100%{opacity:.82}50%{opacity:1}}
-      .bar{animation:shimmer 3s ease-in-out infinite}
-      .bar2{animation-delay:.4s}.bar3{animation-delay:.8s}.bar4{animation-delay:1.2s}.bar5{animation-delay:1.6s}.bar6{animation-delay:2s}
+      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace}
+      .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .h{fill:#1F2328;font-weight:700}
+      .l{fill:#1F2328;font-size:13px}
+      .t{fill:#6B6A66;font-size:11px}
+      /* draw-on only on the ONE recommended (token-input) arc; visible at rest */
+      @keyframes draw{from{stroke-dashoffset:239}to{stroke-dashoffset:0}}
+      .arc-active{stroke-dasharray:239 339;stroke-dashoffset:0;animation:draw 4s ease-in-out forwards}
     </style>
+    <!-- hatch pattern for output-token arc (ink, no gradient) -->
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#1F2328" stroke-width="1.2"/>
+    </pattern>
   </defs>
 
-  <rect width="1200" height="440" rx="20" fill="url(#mbg)"/>
-  <text x="40" y="46" class="h" font-size="23">📊 Anatomy of One Query</text>
-  <text x="40" y="70" class="t" font-size="13.5">Representative per-agent timings &amp; token usage. Phases ② Fetch and ③ Council run <tspan fill="#5eead4" font-weight="700">concurrently</tspan> — wall-clock ≠ the sum of bars.</text>
+  <!-- paper card + hairline -->
+  <rect x="0.5" y="0.5" width="1199" height="439" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
 
-  <!-- ── LEFT: latency bars ── -->
-  <g transform="translate(40,96)">
-    <rect width="690" height="312" rx="14" fill="url(#card)" stroke="#2a3568"/>
-    <text x="24" y="34" class="t" fill="#7dd3fc" font-weight="700">⏱  PER-AGENT PROCESSING TIME (s)</text>
+  <!-- eyebrow + title -->
+  <text x="40" y="38" class="t" letter-spacing="1.5" style="text-transform:uppercase">Pipeline Metrics</text>
+  <text x="40" y="64" class="h sans" font-size="23">Anatomy of One Query</text>
+  <text x="40" y="86" class="t" font-size="13.5">Representative per-agent timings &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan fill="#0E7C86" font-weight="700">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
 
-    <!-- gridlines (scale: 8px per second, x0 = 80) -->
-    <g stroke="#1e293b" stroke-width="1">
-      <line x1="200" y1="52" x2="200" y2="290"/><line x1="320" y1="52" x2="320" y2="290"/>
-      <line x1="440" y1="52" x2="440" y2="290"/><line x1="560" y1="52" x2="560" y2="290"/>
+  <!-- ── LEFT: latency bars on ledger rules ── -->
+  <g transform="translate(40,104)">
+    <rect width="690" height="312" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+    <text x="24" y="34" class="t" font-weight="700" letter-spacing="0.8" style="text-transform:uppercase">Per-agent processing time (s)</text>
+
+    <!-- faint ledger gridlines (scale: 8px per second, x0 = 80) -->
+    <g class="s" stroke="#E3DDD0" stroke-width="1">
+      <line x1="200" y1="52" x2="200" y2="290"/>
+      <line x1="320" y1="52" x2="320" y2="290"/>
+      <line x1="440" y1="52" x2="440" y2="290"/>
+      <line x1="560" y1="52" x2="560" y2="290"/>
     </g>
-    <g class="t" fill="#475569" font-size="10"><text x="200" y="306" text-anchor="middle">15s</text><text x="320" y="306" text-anchor="middle">30s</text><text x="440" y="306" text-anchor="middle">45s</text><text x="560" y="306" text-anchor="middle">60s</text></g>
+    <!-- baseline axis -->
+    <line class="s" stroke="#1F2328" stroke-width="1.5" x1="80" y1="52" x2="80" y2="290"/>
+    <g fill="#6B6A66" font-size="10" class="mono" text-anchor="middle">
+      <text x="200" y="306">15s</text>
+      <text x="320" y="306">30s</text>
+      <text x="440" y="306">45s</text>
+      <text x="560" y="306">60s</text>
+    </g>
 
-    <!-- bars: base width = final value (always visible); CSS grow is enhancement -->
+    <!-- bars: flat ink-OUTLINE rectangles; depth by stepped ink opacity. mono values. -->
     <g font-size="12">
-      <g transform="translate(0,64)"><text x="74" y="11" text-anchor="end" class="l">🧭 Router</text><rect class="bar"  x="80" y="0" width="28"  height="16" rx="8" fill="url(#barT)"/><text x="116" y="12" class="v" fill="#67e8f9">3.5</text></g>
-      <g transform="translate(0,96)"><text x="74" y="11" text-anchor="end" class="l">🔬 Research</text><rect class="bar bar2" x="80" y="0" width="416" height="16" rx="8" fill="url(#barS)"/><text x="506" y="12" class="v" fill="#a5b4fc">52</text></g>
-      <g transform="translate(0,128)"><text x="74" y="11" text-anchor="end" class="l">💊 Drug</text><rect class="bar bar3" x="80" y="0" width="480" height="16" rx="8" fill="url(#barS)"/><text x="570" y="12" class="v" fill="#a5b4fc">60</text></g>
-      <g transform="translate(0,160)"><text x="74" y="11" text-anchor="end" class="l">📝 Prescription</text><rect class="bar bar4" x="80" y="0" width="200" height="16" rx="8" fill="url(#barS)"/><text x="290" y="12" class="v" fill="#a5b4fc">25</text></g>
-      <g transform="translate(0,192)"><text x="74" y="11" text-anchor="end" class="l">⚡ Fast Composer</text><rect class="bar bar5" x="80" y="0" width="80"  height="16" rx="8" fill="url(#barO)"/><text x="170" y="12" class="v" fill="#d8b4fe">10</text></g>
-      <g transform="translate(0,224)"><text x="74" y="11" text-anchor="end" class="l">⚖️ Trust</text><rect class="bar bar6" x="80" y="0" width="32"  height="16" rx="8" fill="url(#barT)"/><text x="120" y="12" class="v" fill="#67e8f9">4</text></g>
+      <!-- Router 3.5 -->
+      <g transform="translate(0,64)">
+        <text x="74" y="11" text-anchor="end" class="l">Router</text>
+        <rect class="s" stroke-width="2.25" x="80" y="0" width="28" height="16" rx="3" fill="none"/>
+        <text x="116" y="12" class="mono" fill="#1F2328" font-weight="700">3.5</text>
+      </g>
+      <!-- Research 52 -->
+      <g transform="translate(0,96)">
+        <text x="74" y="11" text-anchor="end" class="l">Research</text>
+        <rect class="s" stroke-width="2.25" x="80" y="0" width="416" height="16" rx="3" fill="#1F2328" fill-opacity="0.10"/>
+        <text x="506" y="12" class="mono" fill="#1F2328" font-weight="700">52</text>
+      </g>
+      <!-- Drug 60 (longest) -->
+      <g transform="translate(0,128)">
+        <text x="74" y="11" text-anchor="end" class="l">Drug</text>
+        <rect class="s" stroke-width="2.25" x="80" y="0" width="480" height="16" rx="3" fill="#1F2328" fill-opacity="0.10"/>
+        <text x="570" y="12" class="mono" fill="#1F2328" font-weight="700">60</text>
+      </g>
+      <!-- Prescription 25 -->
+      <g transform="translate(0,160)">
+        <text x="74" y="11" text-anchor="end" class="l">Prescription</text>
+        <rect class="s" stroke-width="2.25" x="80" y="0" width="200" height="16" rx="3" fill="#1F2328" fill-opacity="0.07"/>
+        <text x="290" y="12" class="mono" fill="#1F2328" font-weight="700">25</text>
+      </g>
+      <!-- Fast Composer 10 — the ONE accent (recommended fast path) -->
+      <g transform="translate(0,192)">
+        <text x="74" y="11" text-anchor="end" class="l">Fast Composer</text>
+        <rect class="s" stroke="#0E7C86" stroke-width="2.25" x="80" y="0" width="80" height="16" rx="3" fill="#D8ECEC"/>
+        <text x="170" y="12" class="mono" fill="#0E7C86" font-weight="700">10</text>
+      </g>
+      <!-- Trust 4 -->
+      <g transform="translate(0,224)">
+        <text x="74" y="11" text-anchor="end" class="l">Trust</text>
+        <rect class="s" stroke-width="2.25" x="80" y="0" width="32" height="16" rx="3" fill="none"/>
+        <text x="120" y="12" class="mono" fill="#1F2328" font-weight="700">4</text>
+      </g>
+    </g>
+
+    <!-- tier legend: line-style encodes model tiers (NOT color) -->
+    <g transform="translate(80,266)">
+      <text x="0" y="0" class="t" font-size="10">Haiku</text>
+      <line class="s" stroke-width="1.5" x1="44" y1="-4" x2="80" y2="-4"/>
+      <text x="98" y="0" class="t" font-size="10">Sonnet</text>
+      <line class="s" stroke-width="1.5" x1="146" y1="-6" x2="182" y2="-6"/>
+      <line class="s" stroke-width="1.5" x1="146" y1="-2" x2="182" y2="-2"/>
+      <text x="200" y="0" class="t" font-size="10">Opus</text>
+      <line class="s" stroke-width="1.5" x1="238" y1="-7" x2="274" y2="-7"/>
+      <line class="s" stroke-width="1.5" x1="238" y1="-4" x2="274" y2="-4"/>
+      <line class="s" stroke-width="1.5" x1="238" y1="-1" x2="274" y2="-1"/>
     </g>
   </g>
 
   <!-- ── RIGHT: token donut + stat ── -->
-  <g transform="translate(750,96)">
-    <rect width="410" height="312" rx="14" fill="url(#card)" stroke="#2a3568"/>
-    <text x="24" y="34" class="t" fill="#7dd3fc" font-weight="700">🎟  TOKEN USAGE</text>
+  <g transform="translate(750,104)">
+    <rect width="410" height="312" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+    <text x="24" y="34" class="t" font-weight="700" letter-spacing="0.8" style="text-transform:uppercase">Token usage</text>
 
-    <!-- donut (base offset = final value; SMIL sweep is enhancement) -->
+    <!-- ink donut: solid input arc (teal, draw-on) vs hatched output arc (ink) -->
     <g transform="translate(120,150)">
-      <circle r="54" fill="none" stroke="#1e293b" stroke-width="18"/>
-      <circle class="bar" r="54" fill="none" stroke="url(#barT)" stroke-width="18" stroke-dasharray="239 339" stroke-dashoffset="0" transform="rotate(-90)"/>
-      <circle class="bar bar3" r="54" fill="none" stroke="url(#barO)" stroke-width="18" stroke-dasharray="100 339" stroke-dashoffset="0" transform="rotate(164)"/>
-      <text y="-2" text-anchor="middle" class="h" font-size="22">≈26k</text>
+      <!-- track -->
+      <circle class="s" r="54" stroke="#E3DDD0" stroke-width="18"/>
+      <!-- input ≈ 18.5k : teal solid arc, the active/recommended path (draw-on, visible at rest) -->
+      <circle class="arc-active" r="54" fill="none" stroke="#0E7C86" stroke-width="18" transform="rotate(-90)"/>
+      <!-- output ≈ 7.7k : hatched ink arc -->
+      <circle r="54" fill="none" stroke="url(#hatch)" stroke-width="18" stroke-dasharray="100 339" stroke-dashoffset="0" transform="rotate(164)"/>
+      <!-- thin ink outline over hatched arc to keep it crisp -->
+      <circle r="54" fill="none" stroke="#1F2328" stroke-width="0" />
+      <text y="-2" text-anchor="middle" class="mono" font-size="22" font-weight="700" fill="#0E7C86">&#8776;26k</text>
       <text y="18" text-anchor="middle" class="t">total tokens</text>
     </g>
-    <!-- legend -->
+
+    <!-- legend: input = solid teal swatch; output = hatched ink swatch -->
     <g transform="translate(210,110)" font-size="12">
-      <rect width="13" height="13" rx="3" fill="#22d3ee"/><text x="20" y="11" class="l">Input ≈ 18.5k</text>
-      <rect y="30" width="13" height="13" rx="3" fill="#c084fc"/><text x="20" y="41" class="l">Output ≈ 7.7k</text>
+      <rect x="0" y="0" width="13" height="13" rx="2" fill="#0E7C86"/>
+      <text x="20" y="11" class="l">Input <tspan class="mono">&#8776; 18.5k</tspan></text>
+      <rect x="0" y="30" width="13" height="13" rx="2" fill="url(#hatch)" stroke="#1F2328" stroke-width="1"/>
+      <text x="20" y="41" class="l">Output <tspan class="mono">&#8776; 7.7k</tspan></text>
     </g>
 
-    <!-- fast-answer stat -->
+    <!-- fast-answer stat (sage = confirmed/ok) -->
     <g transform="translate(24,230)">
-      <rect width="362" height="58" rx="11" fill="#0d9488" fill-opacity="0.12" stroke="#0d9488" stroke-opacity="0.4"/>
-      <text x="16" y="26" class="h" font-size="19" fill="#5eead4">⚡ ~10 s</text>
-      <text x="112" y="22" class="l">to first answer · <tspan fill="#a5b4fc" font-weight="700">~1 min</tspan> full</text>
-      <text x="112" y="42" class="t">first answer streams while the full analysis composes</text>
+      <rect class="s" stroke="#5E7E5A" stroke-width="1.5" width="362" height="58" rx="11" fill="#E0E9DC"/>
+      <!-- bespoke single-line "bolt" glyph (replaces emoji) -->
+      <path class="s" stroke="#5E7E5A" stroke-width="2.25" d="M24,12 L17,30 L25,30 L20,46 L33,26 L25,26 L31,12 Z"/>
+      <text x="44" y="32" class="mono h" font-size="19" fill="#0E7C86">~10 s</text>
+      <text x="124" y="24" class="l">to first answer · <tspan class="mono" fill="#5E7E5A" font-weight="700">~1 min</tspan> full</text>
+      <text x="124" y="44" class="t">first answer streams while the full analysis composes</text>
     </g>
   </g>
 </svg>
