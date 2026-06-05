@@ -700,6 +700,7 @@ _Exploratory R&D — not committed work or dated promises._
 - 🚀 **Pre-visit graph + vector prefetch** — build each patient's knowledge graph and embeddings from EHR data *ahead* of their appointment for instant responses, then purge after the visit to reduce standing system load and PHI footprint.
 - 🩺 **openEHR / DICOM / multimodal ingestion** — imaging + structured EHR records.
 - 🖥️ **On-prem / local LLM backends** — fully self-hosted deployments.
+- 🔐 **HiMAC message integrity** — adapt **Hierarchical Message Authentication Codes** ([Mershad et al., IJCNS 2017](https://doi.org/10.4236/ijcns.2017.1012018)) so data is signed/verified at every hop between pipeline stages, MCP sidecars, and EHR adapters — making PHI and clinical messages tamper- and replay-proof across distributed/on-prem deployments (identity-based crypto + MAC).
 - ⚖️ **Regulatory & compliance pathway** — HIPAA · GDPR · EU AI Act alignment and IEC 62304-style software lifecycle documentation.
 - 📊 **Clinical evaluation benchmarks** — measured accuracy/safety on curated cases.
 
