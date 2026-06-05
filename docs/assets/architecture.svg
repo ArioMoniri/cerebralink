@@ -112,7 +112,7 @@
 
   <!-- compose -->
   <g transform="translate(880,300)">
-    <g class="box"><rect width="170" height="64" rx="13" fill="url(#sonnet)"/><text x="85" y="26" text-anchor="middle" class="ttl" font-size="15">⚡ Fast Composer</text><text x="85" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">streams in ~1–2 s</text></g>
+    <g class="box"><rect width="170" height="64" rx="13" fill="url(#sonnet)"/><text x="85" y="26" text-anchor="middle" class="ttl" font-size="15">⚡ Fast Composer</text><text x="85" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">first answer ~10 s</text></g>
     <g class="box b2" transform="translate(0,82)"><rect width="170" height="64" rx="13" fill="url(#sonnet)"/><text x="85" y="26" text-anchor="middle" class="ttl" font-size="15">📚 Full Composer</text><text x="85" y="46" text-anchor="middle" class="tag" fill="#c7d2fe">deep · cited · 8k tokens</text></g>
   </g>
 

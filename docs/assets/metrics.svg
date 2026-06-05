@@ -64,9 +64,9 @@
     <!-- fast-answer stat -->
     <g transform="translate(24,230)">
       <rect width="362" height="58" rx="11" fill="#0d9488" fill-opacity="0.12" stroke="#0d9488" stroke-opacity="0.4"/>
-      <text x="16" y="26" class="h" font-size="20" fill="#5eead4">⚡ ~2 s</text>
-      <text x="120" y="22" class="l">to first <tspan fill="#a5b4fc" font-weight="700">fast_answer</tspan></text>
-      <text x="120" y="42" class="t">streamed while the full analysis keeps composing</text>
+      <text x="16" y="26" class="h" font-size="19" fill="#5eead4">⚡ ~10 s</text>
+      <text x="112" y="22" class="l">to first answer · <tspan fill="#a5b4fc" font-weight="700">~1 min</tspan> full</text>
+      <text x="112" y="42" class="t">first answer streams while the full analysis composes</text>
     </g>
   </g>
 </svg>

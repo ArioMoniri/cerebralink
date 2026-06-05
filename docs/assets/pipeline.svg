@@ -38,7 +38,7 @@
   <!-- event markers -->
   <g transform="translate(70,150)">  <g class="m m1"><circle r="11" fill="#0e7490"/><circle r="4" fill="#a5f3fc"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#67e8f9">status</text><text y="42" text-anchor="middle" class="tag">router</text></g>
   <g transform="translate(280,150)"> <g class="m m2"><circle r="11" fill="#0e7490"/><circle r="4" fill="#a5f3fc"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#67e8f9">status ×N</text><text y="42" text-anchor="middle" class="tag">fetch + council</text></g>
-  <g transform="translate(520,150)"> <g class="m m3"><circle r="14" fill="#4f46e5"/><circle r="5" fill="#c7d2fe"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#a5b4fc">fast_answer</text><text y="46" text-anchor="middle" class="tag">~1–2 s · partial</text></g>
+  <g transform="translate(520,150)"> <g class="m m3"><circle r="14" fill="#4f46e5"/><circle r="5" fill="#c7d2fe"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#a5b4fc">fast_answer</text><text y="46" text-anchor="middle" class="tag">~10 s · partial</text></g>
   <g transform="translate(740,150)"> <g class="m m4"><circle r="11" fill="#4f46e5"/><circle r="4" fill="#c7d2fe"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#a5b4fc">status</text><text y="42" text-anchor="middle" class="tag">full composer</text></g>
   <g transform="translate(960,150)"> <g class="m m5"><circle r="14" fill="#9333ea"/><circle r="5" fill="#e9d5ff"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#d8b4fe">result</text><text y="46" text-anchor="middle" class="tag">full + trust + citations</text></g>
   <g transform="translate(1130,150)"><g class="m m6"><circle r="11" fill="#0d9488"/><circle r="4" fill="#99f6e4"/></g><text y="-26" text-anchor="middle" class="lbl" fill="#5eead4">done</text><text y="42" text-anchor="middle" class="tag">close</text></g>
@@ -47,7 +47,7 @@
   <g transform="translate(40,250)">
     <rect width="1120" height="92" rx="14" fill="#0f172a" stroke="#334155"/>
     <text x="20" y="30" class="tag" fill="#7dd3fc" font-weight="700">WHY STREAM?</text>
-    <text x="20" y="54" class="tag" font-size="13">• The full multi-agent pipeline can take 1–3 minutes — but the <tspan fill="#a5b4fc">fast_answer</tspan> reaches the clinician in ~1–2 seconds.</text>
+    <text x="20" y="54" class="tag" font-size="13">• The full multi-agent analysis takes about a minute — but the <tspan fill="#a5b4fc">first answer</tspan> reaches the clinician in ~10 seconds.</text>
     <text x="20" y="74" class="tag" font-size="13">• A Next.js route handler proxies the stream and injects <tspan fill="#5eead4">:keepalive</tspan> comments every 15 s so reverse proxies / tunnels don't drop the idle connection.</text>
   </g>
 </svg>

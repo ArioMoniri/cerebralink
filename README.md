@@ -14,9 +14,11 @@
 **A streaming, multi-agent clinical decision-support assistant.**
 
 A clinical question is routed to a set of specialized agents that run in parallel.
-A partial answer streams in seconds; a cited, trust-scored full answer follows.
-EHR access is via a single pluggable adapter, so the system is FHIR R4 and
-HL7 v2 compatible. PHI is de-identified before any reasoning model sees it.
+A **first answer arrives in ~10 seconds**; the **full cited, trust-scored analysis in
+about a minute**. It performs **guideline-based dose calculations** and can **write
+prescriptions** (ATC + per-country brands). EHR access is via a single pluggable
+adapter, so the system is **FHIR R4 and HL7 v2 compatible**. PHI is de-identified
+before any reasoning model sees it.
 
 [What it solves](#what-it-solves) ·
 [Architecture](#agentic-architecture) ·
@@ -113,7 +115,8 @@ identifier is provided.
 | Problem | How CerebraLink handles it |
 |---------|----------------------------|
 | Guidelines, drug data, and patient history live in separate systems | A set of agents queries them in parallel and composes one answer |
-| LLM medical answers are slow and unsourced | A partial answer streams in seconds; the full answer carries source-resolvable citations |
+| LLM medical answers are slow and unsourced | A first answer in **~10 s**; the full answer (**~1 min**) carries source-resolvable citations |
+| Dosing math and prescriptions are error-prone and time-consuming | **Guideline-based dose calculation** (weight/renal/hepatic-adjusted) and **prescription writing** with ATC mapping + per-country brands |
 | Hard to gauge how much to trust an answer | A separate agent scores six axes (evidence, alignment, relevance, safety, completeness, recency) |
 | Generic chatbots ignore the actual patient | Pluggable EHR adapter + RAG over reports, episodes, and monitoring data |
 | Patient data must not leak to LLMs | Regex de-identification runs on ingest, before any reasoning model |
@@ -121,7 +124,8 @@ identifier is provided.
 
 ## Capabilities
 
-- **Three answer modes** — every response is composed as **Fast** (a tight, streamed summary), **Complete** (the full work-up with tables and dosing), and **Highlights** (the key alerts and bottom line). Switch tabs without re-querying.
+- 💊 **Guideline-based dose calculation & prescription writing** — computes weight-, renal-, and hepatic-adjusted doses **directly from the latest guidelines** (showing the working, including the dosing formula), flags contraindications and interactions, and **writes the prescription**: active ingredient → ATC code → per-country brand options with a searchable picker.
+- **Three answer modes** — every response is composed as **Fast** (a first answer in ~10 s), **Complete** (the full ~1-minute work-up with tables and dosing), and **Highlights** (the key alerts and bottom line). Switch tabs without re-querying.
 - **Typed reference categorization** — each citation is tagged by **effect/impact** (high · moderate · contextual · low), by **priority country**, and **WHO / international**, so you see at a glance which sources actually shaped the answer (see the reference legend in the screenshots).
 - **Anti-sycophancy trust scoring** — the six-axis trust score is cross-checked against the model's **token-level probabilities**, so low-confidence or people-pleasing assertions are scored down rather than rubber-stamped.
 - **Deep links & hyperlinks everywhere** — visit dates, lab values, ICD-10 codes, drugs, and report references are clickable, jumping to the source record, the lab-trend chart, or the code definition.
@@ -698,6 +702,7 @@ _Exploratory R&D — not committed work or dated promises._
 - <img src="docs/assets/openehr-logo.svg" alt="openEHR" height="15" valign="middle"/> **openEHR support** — map openEHR compositions / AQL into the patient dict, joining FHIR R4 & HL7 v2 in the adapter layer.
 - 🕸️ **Per-doctor live knowledge graph** — a separate graph per clinician, built in real time and enriched over time to learn preferences (e.g. preferred guidelines, formularies) and personalize answers.
 - 🚀 **Pre-visit graph + vector prefetch** — build each patient's knowledge graph and embeddings from EHR data *ahead* of their appointment for instant responses, then purge after the visit to reduce standing system load and PHI footprint.
+- 🔗 **Native [Vivax](https://github.com/ArioMoniri) pre-visit agent integration** — a first-class data bridge to **Vivax's pre-visit agent**: it gathers and structures patient context before the appointment and streams it straight into CerebraLink (driving the pre-visit prefetch above), so the clinician opens the room with the work-up already done. This is a primary, planned integration.
 - 🩺 **openEHR / DICOM / multimodal ingestion** — imaging + structured EHR records.
 - 🖥️ **On-prem / local LLM backends** — fully self-hosted deployments.
 - 🔐 **HiMAC message integrity** — adapt **Hierarchical Message Authentication Codes** ([Mershad et al., IJCNS 2017](https://doi.org/10.4236/ijcns.2017.1012018)) so data is signed/verified at every hop between pipeline stages, MCP sidecars, and EHR adapters — making PHI and clinical messages tamper- and replay-proof across distributed/on-prem deployments (identity-based crypto + MAC).
