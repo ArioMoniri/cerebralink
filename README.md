@@ -166,7 +166,7 @@ concurrently.
 | Decision Tree | Opus | Builds the visual reasoning tree (React Flow JSON) |
 
 Model tiers are per-agent and configurable via environment variables; see
-[Configuration](#configuration). Defaults: Haiku `claude-haiku-4-5`,
+[Configuration](#configuration). Defaults: Haiku `claude-haiku-4-5-20251001`,
 Sonnet `claude-sonnet-4-6`, Opus `claude-opus-4-6`.
 
 </details>
@@ -335,6 +335,7 @@ richer animation inside the running app.
 | `pipeline.svg` | The SSE event timeline |
 | `trust-gauge.svg` | The six-axis trust radar |
 | `metrics.svg` | Per-agent latency bars and a token donut |
+| `roadmap-board.svg` | The roadmap kanban board |
 
 Essential content is drawn at rest; animation is only an enhancement (so the
 images are correct even in static or cached renders).
@@ -662,11 +663,11 @@ is early-stage R&D — see [Limitations](#status-limitations--known-gaps).
 | Multi-agent SSE pipeline | HL7 v2 segment mapping | First production EHR adapter (Epic/OpenEMR) | **TurboQuant** (codename) — quantized serving (INT8/4-bit) |
 | Six-axis trust scoring | Citation link-liveness checking | AuthN / RBAC + audit logging | **Clinical world model** (research) — patient-state model to inform routing |
 | Lab parser (3 formats) | Docs accuracy & runnable demo patient | Observability (tracing, cost/latency) | On-prem / local LLM backends |
-| File + FHIR adapters (file = default) | | Data governance (PHI retention/TTL, secure delete) | DICOM / multimodal ingestion |
+| File adapter (default) + FHIR code example | | Data governance (PHI retention/TTL, secure delete) | DICOM / multimodal ingestion |
 | Neo4j knowledge graph | | Test suite + lab-accuracy eval slice | Clinical eval benchmarks |
 
 > The **Researching · Coming** column is exploratory research, not committed work or
-> dated promises. Also planned for **Next**: cost & latency controls (prompt caching,
+> dated promises. Also under consideration (not yet on the board): cost & latency controls (prompt caching,
 > token budgets, adaptive model routing), UI internationalization, and configurable
 > trust rubrics.
 

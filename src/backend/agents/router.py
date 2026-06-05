@@ -201,6 +201,11 @@ Set needs_decision_tree=true when the query involves:
                 joined = re.sub(r"[\s\-]+", "", spaced_match.group(1))
                 if 7 <= len(joined) <= 9:
                     detected_protocol = joined
+        # Synthetic demo patient: the default file EHR adapter resolves the id "DEMO"
+        # (examples/patient_DEMO.json), so the patient path works on a fresh clone.
+        # Match the uppercase token only — avoids false positives on the word "demo".
+        if not detected_protocol and re.search(r"\bDEMO\b", message):
+            detected_protocol = "DEMO"
 
         ctx_hint = ""
         if patient_context:
