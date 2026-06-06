@@ -66,7 +66,7 @@ before any reasoning model sees it.
 **Get started**
 - [What It Solves](#what-it-solves)
 - [Product Tour](#product-tour)
-- [Screenshots](#screenshots)
+- [Screens](#screens)
 - [How to Set Up](#how-to-set-up)
 - [Configuration](#configuration)
 
@@ -147,23 +147,66 @@ identifier is provided.
 - **Personalized guideline prioritization** — guidelines are ranked by the **clinician's prior preferences** and by the **language of the question** (e.g. a Turkish query prioritizes Turkish/TR-adapted guidelines), shown as a `Priority: TR guidelines` banner.
 - **Standards-based** — patient data flows through a single adapter, making CerebraLink **FHIR R4 and HL7 v2 compatible** (openEHR on the roadmap).
 
-## Screenshots
+## Screens
 
-Real captures from a running instance. Patient names, protocol IDs, and clinician
-names are redacted; the app's own PHI masker already replaces names with
-`[PATIENT_NAME]` before any model sees them.
+> Real captures from a running instance. PHI is redacted — the app's own masker
+> replaces names with `[PATIENT_NAME]` before any model sees them.
 
-| Three answer modes · Priority-TR guidelines · 6-axis trust | Patient summary · deep-linked dates & ICD codes · trust |
-|:---:|:---:|
-| <img src="docs/assets/screenshots/shot-modes-trust.png" alt="Fast/Complete/Highlights tabs with trust gauges" width="430"/> | <img src="docs/assets/screenshots/shot-summary.png" alt="Patient summary with deep links and trust score" width="430"/> |
-| **Complete mode — mechanism tables, dosing (LaTeX), alternatives** | **Typed reference categorization — impact · country · WHO** |
-| <img src="docs/assets/screenshots/shot-complete.png" alt="Complete answer with tables and dosing" width="430"/> | <img src="docs/assets/screenshots/shot-ref-legend.png" alt="Reference effect-size legend" width="430"/> |
-| **Cited references + embedded resource viewer (EN/TR)** | **Guideline pipeline — step-by-step decision tree** |
-| <img src="docs/assets/screenshots/shot-references.png" alt="References with embedded article viewer" width="430"/> | <img src="docs/assets/screenshots/shot-pipeline.png" alt="Beta-blocker decision flowchart" width="430"/> |
-| **Patient knowledge graph (episodes · departments · diagnoses)** | **Lab value trends with abnormal detection** |
-| <img src="docs/assets/screenshots/shot-graph.png" alt="Patient knowledge graph" width="430"/> | <img src="docs/assets/screenshots/shot-trends.png" alt="Lab value trends" width="430"/> |
-| **Structured assessment with ICD-10 deep links** | |
-| <img src="docs/assets/screenshots/shot-assessment.png" alt="Structured assessment with ICD-10 deep links" width="430"/> | |
+### Three answer modes — every claim trust-scored
+
+**Fast** streams in ~10 s · **Complete** adds mechanism tables, guideline dosing (LaTeX) and alternatives · **Highlights** is the TL;DR. Each answer carries a six-axis trust gauge.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/screenshots/framed/shot-modes-trust.png" alt="Fast / Complete / Highlights tabs with trust gauges" width="100%"/></td>
+<td width="50%"><img src="docs/assets/screenshots/framed/shot-complete.png" alt="Complete answer with mechanism tables and guideline dosing" width="100%"/></td>
+</tr>
+<tr>
+<td align="center"><sub><b>Answer modes + 6-axis trust</b></sub></td>
+<td align="center"><sub><b>Complete mode — tables, LaTeX dosing, alternatives</b></sub></td>
+</tr>
+</table>
+
+### Evidence you can audit
+
+Typed reference cards (impact · country · WHO), an embedded article viewer (EN/TR), and the guideline pipeline rendered as a step-by-step decision tree.
+
+<div align="center">
+<img src="docs/assets/screenshots/framed/shot-references.png" alt="Cited references with embedded article viewer" width="88%"/>
+</div>
+
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/screenshots/framed/shot-ref-legend.png" alt="Typed reference effect-size legend" width="100%"/></td>
+<td width="50%"><img src="docs/assets/screenshots/framed/shot-pipeline.png" alt="Guideline decision pipeline" width="100%"/></td>
+</tr>
+<tr>
+<td align="center"><sub><b>Typed reference legend — impact · country · WHO</b></sub></td>
+<td align="center"><sub><b>Guideline pipeline — level-by-level</b></sub></td>
+</tr>
+</table>
+
+### The patient, structured
+
+A live knowledge graph (episodes · departments · diagnoses · drugs), lab-value trends with abnormal detection, a deep-linked summary, and a structured assessment with ICD-10 links.
+
+<div align="center">
+<img src="docs/assets/screenshots/framed/shot-graph.png" alt="Patient knowledge graph" width="92%"/>
+<br/><sub><b>Patient knowledge graph</b> — patient ↔ report ↔ episode ↔ drug</sub>
+</div>
+
+<table>
+<tr>
+<td width="33%"><img src="docs/assets/screenshots/framed/shot-summary.png" alt="Patient summary with deep links and trust score" width="100%"/></td>
+<td width="33%"><img src="docs/assets/screenshots/framed/shot-trends.png" alt="Lab value trends with abnormal detection" width="100%"/></td>
+<td width="33%"><img src="docs/assets/screenshots/framed/shot-assessment.png" alt="Structured assessment with ICD-10 deep links" width="100%"/></td>
+</tr>
+<tr>
+<td align="center"><sub><b>Deep-linked summary</b></sub></td>
+<td align="center"><sub><b>Lab trends + abnormal flags</b></sub></td>
+<td align="center"><sub><b>Assessment + ICD-10 links</b></sub></td>
+</tr>
+</table>
 
 ## Agentic Architecture
 
