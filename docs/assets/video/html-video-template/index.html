@@ -8,64 +8,92 @@
     <style>
       :root{
         --paper:#FBF8F1; --ink:#1F2328; --muted:#6B6A66;
-        --hair:#E3DDD0; --teal:#0E7C86; --sage:#5E7E5A; --clay:#B5562B;
+        --hair:#E3DDD0; --hair2:#CFC7B6; --teal:#0E7C86; --sage:#5E7E5A; --clay:#B5562B;
         --serif:Georgia,'Times New Roman',serif;
         --sans:'Segoe UI',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
         --mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
       }
       *{margin:0;padding:0;box-sizing:border-box}
       html,body{width:1920px;height:1080px;overflow:hidden;background:var(--paper);font-family:var(--sans);color:var(--ink)}
-      .wrap{position:absolute;inset:28px;border:1px solid var(--hair);border-radius:26px}
+      /* paper grain */
+      body::before{content:"";position:absolute;inset:0;pointer-events:none;
+        background-image:radial-gradient(rgba(31,35,40,.05) 0.5px, transparent 0.6px);background-size:4px 4px;}
+      .frame{position:absolute;inset:26px;border:1px solid var(--hair);border-radius:24px}
+      .frame2{position:absolute;inset:33px;border:1px solid #E8E2D5;border-radius:20px}
       .center{position:absolute;left:0;width:1920px;text-align:center}
-      .title{top:120px;font-family:var(--serif);font-weight:700;font-size:104px;letter-spacing:-1px;color:var(--ink)}
-      .tick{position:absolute;top:244px;left:50%;margin-left:-78px;width:156px;height:5px;background:var(--teal);border-radius:3px}
-      .sub{top:284px;font-size:37px;font-weight:600;color:var(--muted)}
-      .what{top:348px;font-size:25px;color:var(--muted)}
-      .mono{font-family:var(--mono)}
-      .teal{color:var(--teal)}
+      .mono{font-family:var(--mono)} .teal{color:var(--teal)}
 
-      .card{position:absolute;top:462px;width:296px;height:188px;margin-left:-148px;
-        border:1.5px solid var(--ink);border-radius:16px;background:#FFFFFF;padding:24px 26px}
-      .card .ph{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--muted)}
-      .card .nm{font-size:34px;font-weight:700;margin-top:14px;color:var(--ink);font-family:var(--serif)}
-      .card .ds{font-size:19px;color:var(--muted);margin-top:14px}
-      .card .pin{position:absolute;bottom:20px;left:26px;font-size:15px;font-weight:700;color:var(--muted)}
+      .eyebrow{top:86px;font-size:22px;letter-spacing:9px;color:var(--muted);font-weight:600}
+      .rule{position:absolute;top:130px;height:1px;background:var(--hair2)}
+      .rule.l{left:560px;width:300px} .rule.r{right:560px;width:300px}
+      .title{top:150px;font-family:var(--serif);font-weight:700;font-size:104px;letter-spacing:-1px;color:var(--ink)}
+      .tick{position:absolute;top:280px;left:50%;margin-left:-80px;width:160px;height:5px;background:var(--teal);border-radius:3px}
+      .lede{top:318px;font-family:var(--serif);font-style:italic;font-size:38px;color:var(--ink)}
+      .what{top:380px;font-size:24px;color:var(--muted)}
 
-      .callout{top:806px;font-size:46px;font-weight:700;color:var(--ink);font-family:var(--serif)}
-      .tagline{top:918px}
-      .pill{display:inline-block;margin:0 10px;padding:12px 26px;border-radius:26px;
-        border:1.5px solid var(--ink);font-size:27px;font-weight:600;color:var(--ink)}
-      .foot{top:1006px;font-size:18px;color:var(--muted);letter-spacing:.3px}
+      .card{position:absolute;top:472px;width:300px;height:196px;margin-left:-150px;
+        border:1px solid var(--hair);border-radius:18px;background:#FFFFFF;padding:26px 28px;
+        box-shadow:0 22px 44px -22px rgba(31,35,40,.30), 0 4px 12px -6px rgba(31,35,40,.12)}
+      .card .ph{font-size:17px;font-weight:700;letter-spacing:2px;color:var(--muted)}
+      .card .nm{font-size:34px;font-weight:700;margin-top:12px;color:var(--ink);font-family:var(--serif)}
+      .card .ds{font-size:18px;color:var(--muted);margin-top:12px}
+      .card .pin{position:absolute;bottom:20px;left:28px;font-size:14px;font-weight:700;color:var(--muted)}
+      .card .ico{position:absolute;top:24px;right:26px}
+
+      .callout{top:818px;font-size:46px;font-weight:700;color:var(--ink);font-family:var(--serif)}
+      .tagline{top:930px}
+      .pill{display:inline-block;margin:0 10px;padding:12px 28px;border-radius:26px;background:#fff;
+        border:1px solid var(--hair);font-size:26px;font-weight:600;color:var(--ink);
+        box-shadow:0 10px 22px -14px rgba(31,35,40,.25)}
+      .foot{top:1012px;font-size:18px;color:var(--muted);letter-spacing:.4px}
     </style>
   </head>
   <body>
-    <div class="wrap"></div>
+    <div class="frame"></div>
+    <div class="frame2"></div>
 
+    <div class="center eyebrow" id="eb">OPEN&#8201;SOURCE&nbsp;&nbsp;·&nbsp;&nbsp;MULTI-AGENT&nbsp;&nbsp;·&nbsp;&nbsp;CLINICAL DECISION SUPPORT</div>
+    <div class="rule l" id="rl"></div><div class="rule r" id="rr"></div>
     <div class="center title" id="t">CerebraLink</div>
     <div class="tick" id="tick"></div>
-    <div class="center sub" id="s">Multi-Agent Clinical Decision Support</div>
-    <div class="center what" id="w">Reads the EHR&nbsp;&nbsp;·&nbsp;&nbsp;calculates guideline doses&nbsp;&nbsp;·&nbsp;&nbsp;writes prescriptions&nbsp;&nbsp;·&nbsp;&nbsp;cites every claim</div>
+    <div class="center lede" id="ld">Reads the chart. Cites the guideline. Calculates the dose.</div>
+    <div class="center what" id="w">first answer in <span class="mono teal">~10 s</span>&nbsp;&nbsp;·&nbsp;&nbsp;full cited, trust-scored analysis in <span class="mono">~1 min</span></div>
 
-    <!-- 5 phase cards -->
-    <div class="card" id="c1" style="left:256px;"><div class="ph">① ROUTE</div><div class="nm">Router</div><div class="ds">classify · language</div><div class="pin">Haiku</div></div>
-    <div class="card" id="c2" style="left:608px;"><div class="ph">② FETCH</div><div class="nm">Patient</div><div class="ds"><span class="mono">FHIR · HL7</span> · masked</div><div class="pin">adapter</div></div>
-    <div class="card" id="c3" style="left:960px;"><div class="ph">③ COUNCIL</div><div class="nm">Council</div><div class="ds">4 agents · parallel</div><div class="pin">Sonnet · Opus</div></div>
-    <div class="card" id="c4" style="left:1312px;"><div class="ph">④ COMPOSE</div><div class="nm">Compose</div><div class="ds">first answer <span class="mono teal">~10 s</span></div><div class="pin">Sonnet</div></div>
-    <div class="card" id="c5" style="left:1664px;"><div class="ph">⑤ SCORE</div><div class="nm">Trust</div><div class="ds">evidence · safety</div><div class="pin">Haiku</div></div>
+    <!-- 5 phase cards, each with a real clinical glyph -->
+    <div class="card" id="c1" style="left:256px;">
+      <div class="ph">① ROUTE</div><div class="nm">Router</div><div class="ds">classify · language</div><div class="pin">Haiku</div>
+      <svg class="ico" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="20" r="3"/><path d="M11 20h9m0 0l9-9m-9 9l9 9"/><circle cx="31" cy="11" r="3"/><circle cx="31" cy="29" r="3"/></svg>
+    </div>
+    <div class="card" id="c2" style="left:608px;">
+      <div class="ph">② FETCH</div><div class="nm">Patient</div><div class="ds"><span class="mono">FHIR · HL7</span> · masked</div><div class="pin">adapter</div>
+      <svg class="ico" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="7" width="22" height="28" rx="3"/><rect x="15" y="4" width="10" height="6" rx="2"/><path d="M14 17h12M14 23h12M14 29h7"/></svg>
+    </div>
+    <div class="card" id="c3" style="left:960px;">
+      <div class="ph">③ COUNCIL</div><div class="nm">Council</div><div class="ds">4 agents · parallel</div><div class="pin">Sonnet · Opus</div>
+      <svg class="ico" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6a8 9 0 00-7 13 7 7 0 003 10 6 6 0 0010 1V6z"/><path d="M20 12a6 6 0 016 5M20 22a6 6 0 007 4"/><circle cx="20" cy="6" r="0"/></svg>
+    </div>
+    <div class="card" id="c4" style="left:1312px;">
+      <div class="ph">④ COMPOSE</div><div class="nm">Compose</div><div class="ds">first answer <span class="mono teal">~10 s</span></div><div class="pin">Sonnet</div>
+      <svg class="ico" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M26 6l8 8-18 18-9 2 2-9z"/><path d="M23 9l8 8"/></svg>
+    </div>
+    <div class="card" id="c5" style="left:1664px;">
+      <div class="ph">⑤ SCORE</div><div class="nm">Trust</div><div class="ds">evidence · safety</div><div class="pin">Haiku</div>
+      <svg class="ico" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5l13 5v9c0 9-7 14-13 16-6-2-13-7-13-16v-9z"/><path d="M11 20h4l3-6 4 11 3-5h4" stroke="#0E7C86"/></svg>
+    </div>
 
-    <!-- ECG through-line rail, running BELOW the cards -->
+    <!-- ECG through-line rail below the cards -->
     <svg width="1920" height="1080" style="position:absolute;inset:0;pointer-events:none" fill="none">
-      <line x1="150" y1="716" x2="1770" y2="716" stroke="#E3DDD0" stroke-width="1.5"/>
+      <line x1="150" y1="726" x2="1770" y2="726" stroke="#CFC7B6" stroke-width="1.5"/>
       <path id="ecg"
-        d="M150,716 H244 L250,726 L256,672 L262,740 L268,716
-                   H596 L602,726 L608,672 L614,740 L620,716
-                   H948 L954,726 L960,672 L966,740 L972,716
-                   H1300 L1306,726 L1312,672 L1318,740 L1324,716
-                   H1652 L1658,726 L1664,672 L1670,740 L1676,716 H1770"
+        d="M150,726 H244 L250,736 L256,682 L262,750 L268,726
+                   H596 L602,736 L608,682 L614,750 L620,726
+                   H948 L954,736 L960,682 L966,750 L972,726
+                   H1300 L1306,736 L1312,682 L1318,750 L1324,726
+                   H1652 L1658,736 L1664,682 L1670,750 L1676,726 H1770"
         stroke="#1F2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       <g id="beats" fill="#0E7C86">
-        <circle cx="256" cy="672" r="0"/><circle cx="608" cy="672" r="0"/><circle cx="960" cy="672" r="0"/>
-        <circle cx="1312" cy="672" r="0"/><circle cx="1664" cy="672" r="0"/>
+        <circle cx="256" cy="682" r="0"/><circle cx="608" cy="682" r="0"/><circle cx="960" cy="682" r="0"/>
+        <circle cx="1312" cy="682" r="0"/><circle cx="1664" cy="682" r="0"/>
       </g>
     </svg>
 
@@ -82,31 +110,31 @@
       const ecg = document.querySelector("#ecg");
       const L = ecg.getTotalLength();
       gsap.set(ecg, { strokeDasharray: L, strokeDashoffset: L });
+      gsap.set(["#eb", "#rl", "#rr"], { opacity: 0 });
       gsap.set("#t", { opacity: 0, y: 18 });
-      gsap.set(["#tick", "#s", "#w"], { opacity: 0 });
-      gsap.set(".card", { opacity: 0, y: 40 });
+      gsap.set(["#tick", "#ld", "#w"], { opacity: 0 });
+      gsap.set(".card", { opacity: 0, y: 42 });
       gsap.set(["#co", "#tg", "#ft"], { opacity: 0, y: 16 });
       const beats = gsap.utils.toArray("#beats circle");
       const cards = ["#c1", "#c2", "#c3", "#c4", "#c5"];
 
       const tl = gsap.timeline();
-      tl.to("#t", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.2);
-      tl.to("#tick", { opacity: 1, duration: 0.4 }, 0.7);
-      tl.to("#s", { opacity: 1, duration: 0.5 }, 0.9);
-      tl.to("#w", { opacity: 1, duration: 0.5 }, 1.2);
+      tl.to(["#eb", "#rl", "#rr"], { opacity: 1, duration: 0.6 }, 0.15);
+      tl.to("#t", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.4);
+      tl.to("#tick", { opacity: 1, duration: 0.4 }, 0.9);
+      tl.to("#ld", { opacity: 1, duration: 0.5 }, 1.1);
+      tl.to("#w", { opacity: 1, duration: 0.5 }, 1.4);
       // the clinical signal draws across as the single through-line
-      tl.to(ecg, { strokeDashoffset: 0, duration: 5.0, ease: "none" }, 1.8);
-      // each phase card reveals just before the trace reaches its beat
-      cards.forEach((c, i) => tl.to(c, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 2.0 + i * 0.78));
-      // QRS beats pulse as the line passes under each card
+      tl.to(ecg, { strokeDashoffset: 0, duration: 5.0, ease: "none" }, 2.0);
+      cards.forEach((c, i) => tl.to(c, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 2.2 + i * 0.78));
       beats.forEach((b, i) => {
-        tl.to(b, { attr: { r: 14 }, duration: 0.18, ease: "power2.out" }, 2.7 + i * 0.78)
+        tl.to(b, { attr: { r: 14 }, duration: 0.18, ease: "power2.out" }, 2.9 + i * 0.78)
           .to(b, { attr: { r: 6 }, duration: 0.5, ease: "power2.in" }, ">");
       });
-      tl.to("#co", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 6.8);
-      tl.to("#tg", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 7.6);
-      tl.to("#ft", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 8.2);
-      tl.to({}, { duration: 1.4 }, 8.8);
+      tl.to("#co", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 7.0);
+      tl.to("#tg", { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 7.7);
+      tl.to("#ft", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 8.3);
+      tl.to({}, { duration: 1.3 }, 8.9);
 
       window.__timelines = { main: tl };
     </script>
