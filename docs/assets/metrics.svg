@@ -1,141 +1,127 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="CerebraLink pipeline metrics — timings and tokens">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-label="CerebraLink pipeline metrics — per-agent timings and token usage">
   <defs>
     <style>
-      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .serif{font-family:Georgia,'Times New Roman',serif}
       .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
-      .mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace}
+      .mono{font-family:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
+      .ink{fill:#1F2328}.muted{fill:#6B6A66}
       .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-      .h{fill:#1F2328;font-weight:700}
-      .l{fill:#1F2328;font-size:13px}
-      .t{fill:#6B6A66;font-size:11px}
-      /* draw-on only on the ONE recommended (token-input) arc; visible at rest */
-      @keyframes draw{from{stroke-dashoffset:239}to{stroke-dashoffset:0}}
-      .arc-active{stroke-dasharray:239 339;stroke-dashoffset:0;animation:draw 4s ease-in-out forwards}
+      .hair{fill:none;stroke:#CFC7B6;stroke-width:1;vector-effect:non-scaling-stroke}
+      @keyframes trace{from{stroke-dashoffset:96}to{stroke-dashoffset:0}}
+      .arc{stroke-dasharray:96 320;stroke-dashoffset:0;animation:trace 4s ease-in-out forwards}
     </style>
-    <!-- hatch pattern for output-token arc (ink, no gradient) -->
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <circle cx="0.6" cy="0.6" r="0.32" fill="#1F2328" fill-opacity="0.05"/>
+    </pattern>
     <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="6" stroke="#1F2328" stroke-width="1.2"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#1F2328" stroke-width="1.1"/>
     </pattern>
   </defs>
 
-  <!-- paper card + hairline -->
-  <rect x="0.5" y="0.5" width="1199" height="439" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
+  <!-- paper + grain + editorial double frame -->
+  <rect width="1200" height="470" fill="#FBF8F1"/>
+  <rect width="1200" height="470" fill="url(#grain)"/>
+  <rect x="12.5" y="12.5" width="1175" height="445" fill="none" stroke="#E3DDD0"/>
+  <rect x="18.5" y="18.5" width="1163" height="433" fill="none" stroke="#E8E2D5"/>
 
-  <!-- eyebrow + title -->
-  <text x="40" y="38" class="t" letter-spacing="1.5" style="text-transform:uppercase">Pipeline Metrics</text>
-  <text x="40" y="64" class="h sans" font-size="23">Anatomy of One Query</text>
-  <text x="40" y="86" class="t" font-size="13.5">Representative per-agent timings &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan fill="#1F2328" font-weight="700">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
+  <!-- masthead -->
+  <text x="44" y="50" class="sans muted" font-size="11.5" letter-spacing="3">PIPELINE METRICS</text>
+  <text x="44" y="80" class="serif ink" font-size="27" font-weight="700">Anatomy of One Query</text>
+  <text x="44" y="104" class="sans muted" font-size="13">Representative per-agent timing &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan class="ink" font-weight="700" font-style="italic">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
+  <line class="hair" x1="44" y1="120" x2="1156" y2="120"/>
 
-  <!-- ── LEFT: latency bars on ledger rules ── -->
-  <g transform="translate(40,104)">
-    <rect width="690" height="312" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
-    <text x="24" y="34" class="t" font-weight="700" letter-spacing="0.8" style="text-transform:uppercase">Per-agent processing time (s)</text>
+  <!-- ===== LEFT PANEL: per-agent timing (soft layered shadow → white) ===== -->
+  <rect x="46" y="148" width="700" height="296" rx="14" fill="#1F2328" opacity="0.04"/>
+  <rect x="45" y="145" width="700" height="296" rx="14" fill="#1F2328" opacity="0.05"/>
+  <rect x="44" y="142" width="700" height="296" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+  <g transform="translate(44,142)">
+    <text x="24" y="32" class="sans muted" font-size="11" letter-spacing="1.5" font-weight="700">PER-AGENT PROCESSING TIME (s)</text>
+    <!-- ledger gridlines (scale 7px/s from x0=150) -->
+    <g class="hair"><line x1="255" y1="52" x2="255" y2="262"/><line x1="360" y1="52" x2="360" y2="262"/><line x1="465" y1="52" x2="465" y2="262"/><line x1="570" y1="52" x2="570" y2="262"/></g>
+    <line class="s" stroke="#1F2328" stroke-width="1.5" x1="150" y1="52" x2="150" y2="262"/>
+    <g class="mono muted" font-size="10" text-anchor="middle"><text x="255" y="278">15s</text><text x="360" y="278">30s</text><text x="465" y="278">45s</text><text x="570" y="278">60s</text></g>
 
-    <!-- faint ledger gridlines (scale: 8px per second, x0 = 80) -->
-    <g class="s" stroke="#E3DDD0" stroke-width="1">
-      <line x1="200" y1="52" x2="200" y2="290"/>
-      <line x1="320" y1="52" x2="320" y2="290"/>
-      <line x1="440" y1="52" x2="440" y2="290"/>
-      <line x1="560" y1="52" x2="560" y2="290"/>
+    <!-- rows: medical glyph · name · bar · mono value -->
+    <g font-size="12.5">
+      <!-- Router 3.5 — triage/branch glyph -->
+      <g transform="translate(0,66)">
+        <g class="s" stroke-width="1.7" transform="translate(24,-4)"><circle cx="0" cy="0" r="2.3"/><path d="M2,0 H8 M8,0 L13,-5 M8,0 L13,5"/><circle cx="14" cy="-5" r="2"/><circle cx="14" cy="5" r="2"/></g>
+        <text x="48" y="2" class="ink sans">Router</text>
+        <rect class="s" stroke-width="2" x="150" y="-9" width="25" height="16" rx="3" fill="none"/>
+        <text x="185" y="3" class="mono ink" font-weight="700">3.5</text>
+      </g>
+      <!-- Research 52 — microscope -->
+      <g transform="translate(0,98)">
+        <g class="s" stroke-width="1.7" transform="translate(20,-7)"><path d="M2,16 H16"/><path d="M5,16 V10"/><path d="M5,10 C5,3 11,1 13,3 L9,9 C9,11 7,12 5,10 Z"/><path d="M11,5 L15,1"/></g>
+        <text x="48" y="2" class="ink sans">Research</text>
+        <rect class="s" stroke-width="2" x="150" y="-9" width="364" height="16" rx="3" fill="#1F2328" fill-opacity="0.09"/>
+        <text x="524" y="3" class="mono ink" font-weight="700">52</text>
+      </g>
+      <!-- Drug 60 — capsule -->
+      <g transform="translate(0,130)">
+        <g class="s" stroke-width="1.7" transform="translate(18,-4)"><rect x="0" y="-5" width="22" height="10" rx="5"/><line x1="11" y1="-5" x2="11" y2="5"/></g>
+        <text x="48" y="2" class="ink sans">Drug</text>
+        <rect class="s" stroke-width="2" x="150" y="-9" width="420" height="16" rx="3" fill="#1F2328" fill-opacity="0.09"/>
+        <text x="580" y="3" class="mono ink" font-weight="700">60</text>
+      </g>
+      <!-- Prescription 25 — Rx -->
+      <g transform="translate(0,162)">
+        <text x="18" y="4" class="serif ink" font-size="19" font-weight="700">&#8478;</text>
+        <text x="48" y="2" class="ink sans">Prescription</text>
+        <rect class="s" stroke-width="2" x="150" y="-9" width="175" height="16" rx="3" fill="#1F2328" fill-opacity="0.06"/>
+        <text x="335" y="3" class="mono ink" font-weight="700">25</text>
+      </g>
+      <!-- Fast Composer 10 — the ONE teal accent (bolt) -->
+      <g transform="translate(0,194)">
+        <path class="s" style="stroke:#0E7C86" stroke-width="1.9" transform="translate(20,-4)" d="M6,-7 L-1,2 H4 L0,9 L9,-2 H4 L8,-7 Z"/>
+        <text x="48" y="2" class="sans" style="fill:#0E7C86" font-weight="700">Fast Composer</text>
+        <rect class="s" style="stroke:#0E7C86" stroke-width="2.2" x="150" y="-9" width="70" height="16" rx="3" fill="#D8ECEC"/>
+        <text x="230" y="3" class="mono" style="fill:#0E7C86" font-weight="700">10</text>
+      </g>
+      <!-- Trust 4 — shield + pulse -->
+      <g transform="translate(0,226)">
+        <g class="s" stroke-width="1.6" transform="translate(20,-4)"><path d="M0,-7 L7,-4.5 L7,1 C7,6 3,8.5 0,9.5 C-3,8.5 -7,6 -7,1 L-7,-4.5 Z"/><path style="stroke:#0E7C86" d="M-4,1 H-1.5 l1.5,-3 2,5.5 1.5,-2.5 H4"/></g>
+        <text x="48" y="2" class="ink sans">Trust</text>
+        <rect class="s" stroke-width="2" x="150" y="-9" width="28" height="16" rx="3" fill="none"/>
+        <text x="188" y="3" class="mono ink" font-weight="700">4</text>
+      </g>
     </g>
-    <!-- baseline axis -->
-    <line class="s" stroke="#1F2328" stroke-width="1.5" x1="80" y1="52" x2="80" y2="290"/>
-    <g fill="#6B6A66" font-size="10" class="mono" text-anchor="middle">
-      <text x="200" y="306">15s</text>
-      <text x="320" y="306">30s</text>
-      <text x="440" y="306">45s</text>
-      <text x="560" y="306">60s</text>
-    </g>
 
-    <!-- bars: flat ink-OUTLINE rectangles; depth by stepped ink opacity. mono values. -->
-    <g font-size="12">
-      <!-- Router 3.5 -->
-      <g transform="translate(0,64)">
-        <text x="74" y="11" text-anchor="end" class="l">Router</text>
-        <rect class="s" stroke-width="2.25" x="80" y="0" width="28" height="16" rx="3" fill="none"/>
-        <text x="116" y="12" class="mono" fill="#1F2328" font-weight="700">3.5</text>
-      </g>
-      <!-- Research 52 -->
-      <g transform="translate(0,96)">
-        <text x="74" y="11" text-anchor="end" class="l">Research</text>
-        <rect class="s" stroke-width="2.25" x="80" y="0" width="416" height="16" rx="3" fill="#1F2328" fill-opacity="0.10"/>
-        <text x="506" y="12" class="mono" fill="#1F2328" font-weight="700">52</text>
-      </g>
-      <!-- Drug 60 (longest) -->
-      <g transform="translate(0,128)">
-        <text x="74" y="11" text-anchor="end" class="l">Drug</text>
-        <rect class="s" stroke-width="2.25" x="80" y="0" width="480" height="16" rx="3" fill="#1F2328" fill-opacity="0.10"/>
-        <text x="570" y="12" class="mono" fill="#1F2328" font-weight="700">60</text>
-      </g>
-      <!-- Prescription 25 -->
-      <g transform="translate(0,160)">
-        <text x="74" y="11" text-anchor="end" class="l">Prescription</text>
-        <rect class="s" stroke-width="2.25" x="80" y="0" width="200" height="16" rx="3" fill="#1F2328" fill-opacity="0.07"/>
-        <text x="290" y="12" class="mono" fill="#1F2328" font-weight="700">25</text>
-      </g>
-      <!-- Fast Composer 10 — the ONE accent (recommended fast path) -->
-      <g transform="translate(0,192)">
-        <text x="74" y="11" text-anchor="end" class="l">Fast Composer</text>
-        <rect class="s" style="stroke:#0E7C86" stroke-width="2.25" x="80" y="0" width="80" height="16" rx="3" fill="#D8ECEC"/>
-        <text x="170" y="12" class="mono" fill="#0E7C86" font-weight="700">10</text>
-      </g>
-      <!-- Trust 4 -->
-      <g transform="translate(0,224)">
-        <text x="74" y="11" text-anchor="end" class="l">Trust</text>
-        <rect class="s" stroke-width="2.25" x="80" y="0" width="32" height="16" rx="3" fill="none"/>
-        <text x="120" y="12" class="mono" fill="#1F2328" font-weight="700">4</text>
-      </g>
-    </g>
-
-    <!-- tier legend: line-style encodes model tiers (NOT color) -->
-    <g transform="translate(80,266)">
-      <text x="0" y="0" class="t" font-size="10">Haiku</text>
-      <line class="s" stroke-width="1.5" x1="44" y1="-4" x2="80" y2="-4"/>
-      <text x="98" y="0" class="t" font-size="10">Sonnet</text>
-      <line class="s" stroke-width="1.5" x1="146" y1="-6" x2="182" y2="-6"/>
-      <line class="s" stroke-width="1.5" x1="146" y1="-2" x2="182" y2="-2"/>
-      <text x="200" y="0" class="t" font-size="10">Opus</text>
-      <line class="s" stroke-width="1.5" x1="238" y1="-7" x2="274" y2="-7"/>
-      <line class="s" stroke-width="1.5" x1="238" y1="-4" x2="274" y2="-4"/>
-      <line class="s" stroke-width="1.5" x1="238" y1="-1" x2="274" y2="-1"/>
+    <!-- tier legend: line-style (not color) -->
+    <g transform="translate(150,254)" class="muted" font-size="10">
+      <text x="0" y="0">Haiku</text><line class="s" stroke-width="1.5" x1="42" y1="-4" x2="74" y2="-4"/>
+      <text x="92" y="0">Sonnet</text><line class="s" stroke-width="1.5" x1="140" y1="-6" x2="172" y2="-6"/><line class="s" stroke-width="1.5" x1="140" y1="-2" x2="172" y2="-2"/>
+      <text x="190" y="0">Opus</text><line class="s" stroke-width="1.5" x1="226" y1="-7" x2="258" y2="-7"/><line class="s" stroke-width="1.5" x1="226" y1="-4" x2="258" y2="-4"/><line class="s" stroke-width="1.5" x1="226" y1="-1" x2="258" y2="-1"/>
     </g>
   </g>
 
-  <!-- ── RIGHT: token donut + stat ── -->
-  <g transform="translate(750,104)">
-    <rect width="410" height="312" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
-    <text x="24" y="34" class="t" font-weight="700" letter-spacing="0.8" style="text-transform:uppercase">Token usage</text>
-
-    <!-- ink donut: solid input arc (teal, draw-on) vs hatched output arc (ink) -->
-    <g transform="translate(120,150)">
-      <!-- track -->
-      <circle class="s" r="54" stroke="#E3DDD0" stroke-width="18"/>
-      <!-- input ≈ 18.5k : teal solid arc, the active/recommended path (draw-on, visible at rest) -->
-      <circle class="arc-active" style="stroke:#1F2328" r="54" fill="none" stroke-width="18" transform="rotate(-90)"/>
-      <!-- output ≈ 7.7k : hatched ink arc -->
-      <circle r="54" fill="none" stroke="url(#hatch)" stroke-width="18" stroke-dasharray="100 339" stroke-dashoffset="0" transform="rotate(164)"/>
-      <!-- thin ink outline over hatched arc to keep it crisp -->
-      <circle r="54" fill="none" stroke="#1F2328" stroke-width="0" />
-      <text y="-2" text-anchor="middle" class="mono" font-size="22" font-weight="700" fill="#1F2328">&#8776;26k</text>
-      <text y="18" text-anchor="middle" class="t">total tokens</text>
+  <!-- ===== RIGHT PANEL: token usage (soft shadow → white) ===== -->
+  <rect x="768" y="148" width="388" height="296" rx="14" fill="#1F2328" opacity="0.04"/>
+  <rect x="767" y="145" width="388" height="296" rx="14" fill="#1F2328" opacity="0.05"/>
+  <rect x="766" y="142" width="388" height="296" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+  <g transform="translate(766,142)">
+    <text x="24" y="32" class="sans muted" font-size="11" letter-spacing="1.5" font-weight="700">TOKEN USAGE</text>
+    <!-- ink donut: hatched output + faint track; input arc is NOT teal (teal reserved for Fast Composer) -->
+    <g transform="translate(96,128)">
+      <circle class="s" r="50" stroke="#E3DDD0" stroke-width="17"/>
+      <circle r="50" fill="none" stroke="url(#hatch)" stroke-width="17" stroke-dasharray="93 320" stroke-dashoffset="0" transform="rotate(167)"/>
+      <circle class="arc" r="50" fill="none" stroke="#1F2328" stroke-width="17" transform="rotate(-90)"/>
+      <text y="-2" text-anchor="middle" class="serif ink" font-size="23" font-weight="700">&#8776;26k</text>
+      <text y="17" text-anchor="middle" class="sans muted" font-size="11">total tokens</text>
     </g>
-
-    <!-- legend: input = solid teal swatch; output = hatched ink swatch -->
-    <g transform="translate(210,110)" font-size="12">
+    <g transform="translate(186,96)" font-size="12">
       <rect x="0" y="0" width="13" height="13" rx="2" fill="#1F2328"/>
-      <text x="20" y="11" class="l">Input <tspan class="mono">&#8776; 18.5k</tspan></text>
+      <text x="20" y="11" class="ink sans">Input <tspan class="mono">&#8776; 18.5k</tspan></text>
       <rect x="0" y="30" width="13" height="13" rx="2" fill="url(#hatch)" stroke="#1F2328" stroke-width="1"/>
-      <text x="20" y="41" class="l">Output <tspan class="mono">&#8776; 7.7k</tspan></text>
+      <text x="20" y="41" class="ink sans">Output <tspan class="mono">&#8776; 7.7k</tspan></text>
     </g>
-
     <!-- fast-answer stat (sage = confirmed/ok) -->
-    <g transform="translate(24,230)">
-      <rect class="s" style="stroke:#5E7E5A" stroke-width="1.5" width="362" height="58" rx="11" fill="#E0E9DC"/>
-      <!-- bespoke single-line "bolt" glyph (replaces emoji) -->
-      <path class="s" style="stroke:#5E7E5A" stroke-width="2.25" d="M24,12 L17,30 L25,30 L20,46 L33,26 L25,26 L31,12 Z"/>
-      <text x="44" y="32" class="mono h" font-size="19" style="fill:#5E7E5A">~10 s</text>
-      <text x="124" y="24" class="l">to first answer · <tspan class="mono" fill="#5E7E5A" font-weight="700">~1 min</tspan> full</text>
-      <text x="124" y="44" class="t">first answer streams while the full analysis composes</text>
+    <g transform="translate(24,212)">
+      <rect class="s" style="stroke:#5E7E5A" stroke-width="1.5" width="340" height="56" rx="11" fill="#E0E9DC"/>
+      <g class="s" style="stroke:#5E7E5A" stroke-width="1.9" transform="translate(28,28)"><path d="M5,-9 L-2,1 H3 L-1,10 L9,-2 H3 L7,-9 Z"/></g>
+      <text x="52" y="26" class="mono" style="fill:#5E7E5A" font-size="18" font-weight="700">~10 s</text>
+      <text x="134" y="22" class="ink sans" font-size="12.5">to first answer · <tspan class="mono" style="fill:#5E7E5A" font-weight="700">~1 min</tspan> full</text>
+      <text x="134" y="40" class="muted sans" font-size="11">first answer streams while the full analysis composes</text>
     </g>
   </g>
 </svg>
