@@ -1,5 +1,18 @@
 <div align="center">
 
+<!-- Link — a new face every session. These are LIVE DiceBear lorelei-neutral avatars,
+     the exact same API the app calls (resetAvatarSeed) to give the assistant a fresh face per chat. -->
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=aria&backgroundColor=b6e3f4&radius=50&size=160" width="74" height="74" alt="Link"/>&nbsp;
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=kai&backgroundColor=c0aede&radius=50&size=160" width="74" height="74" alt="Link"/>&nbsp;
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=sage&backgroundColor=d1f4d9&radius=50&size=160" width="74" height="74" alt="Link"/>&nbsp;
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=noor&backgroundColor=ffd5dc&radius=50&size=160" width="74" height="74" alt="Link"/>&nbsp;
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=remy&backgroundColor=b6e3f4&radius=50&size=160" width="74" height="74" alt="Link"/>&nbsp;
+<img src="https://api.dicebear.com/8.x/lorelei-neutral/png?seed=juno&backgroundColor=ffdfbf&radius=50&size=160" width="74" height="74" alt="Link"/>
+
+<sub>Meet **Link**, your multi-agent clinical colleague — a **new face every session**, generated live by the <a href="https://www.dicebear.com/styles/lorelei-neutral/">same avatar API</a> the app calls on each chat.</sub>
+
+<br/>
+
 <img src="docs/assets/hero.svg" alt="CerebraLink — Multi-Agent Clinical Decision Support" width="100%"/>
 
 <br/>
