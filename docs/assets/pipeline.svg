@@ -1,87 +1,111 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="CerebraLink SSE streaming timeline">
   <defs>
     <style>
-      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .serif{font-family:Georgia,'Times New Roman',serif}
       .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
-      .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+      .mono{font-family:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
+      .ink{fill:#1F2328}.muted{fill:#6B6A66}
       .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-      .ttl{font-weight:700;fill:#1F2328}
+      .hair{fill:none;stroke:#CFC7B6;stroke-width:1;vector-effect:non-scaling-stroke}
       .tag{fill:#6B6A66;font-size:12px}
       .lbl{font-size:13px;font-weight:700;fill:#1F2328}
+      @keyframes ecg{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+      .trace{stroke-dasharray:1400;stroke-dashoffset:0;animation:ecg 6s ease-in-out infinite}
+      @keyframes beat{0%,100%{opacity:1}50%{opacity:.45}}
+      .beat{animation:beat 2.4s ease-in-out infinite}
     </style>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <circle cx="0.6" cy="0.6" r="0.32" fill="#1F2328" fill-opacity="0.05"/>
+    </pattern>
   </defs>
 
-  <!-- paper card + hairline -->
-  <rect x="0.5" y="0.5" width="1199" height="399" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
+  <!-- warm paper ground + grain + editorial double frame -->
+  <rect x="0" y="0" width="1200" height="400" fill="#FBF8F1"/>
+  <rect x="0" y="0" width="1200" height="400" fill="url(#grain)"/>
+  <rect x="12.5" y="12.5" width="1175" height="375" fill="none" stroke="#E3DDD0"/>
+  <rect x="18.5" y="18.5" width="1163" height="363" fill="none" stroke="#E8E2D5"/>
 
-  <!-- eyebrow phase tag + title (bespoke single-line bolt glyph replaces emoji) -->
-  <g transform="translate(40,40)">
-    <path class="s" stroke-width="2.25" d="M6,-12 L-3,2 L3,2 L-2,12 L9,-3 L2,-3 Z"/>
-  </g>
-  <text x="62" y="48" class="ttl sans" font-size="24">One Question &#8594; A Live Stream of Events</text>
-  <text x="40" y="74" class="tag sans" font-size="14">The browser opens a single POST to <tspan class="mono" fill="#1F2328">/api/chat/stream</tspan> and receives Server-Sent Events as each agent finishes.</text>
+  <!-- ===== MASTHEAD ===== -->
+  <text x="44" y="50" class="sans muted" font-size="11" letter-spacing="3">SERVER-SENT EVENTS</text>
+  <text x="44" y="80" class="serif ink" font-size="26" font-weight="700">One Question &#8594; A Live Stream of Events</text>
+  <text x="44" y="104" class="sans muted" font-size="13">The browser opens a single POST to <tspan class="mono ink">/api/chat/stream</tspan> and receives Server-Sent Events as each agent finishes.</text>
+  <line class="hair" x1="44" y1="120" x2="1156" y2="120"/>
 
-  <!-- single faint baseline rule under the timeline (kept clear of the event labels) -->
-  <line class="s" stroke="#E3DDD0" stroke-width="1" x1="40" y1="206" x2="1160" y2="206"/>
-
-  <!-- timeline as a single continuous ink EKG line on the ledger -->
   <!-- model tier legend encoded as line-style: solid / double / triple stroke (top-right) -->
-  <g transform="translate(900,98)">
+  <g transform="translate(880,98)" class="muted" font-size="11">
     <line class="s" stroke-width="1.5" x1="0" y1="0" x2="34" y2="0"/>
-    <text x="40" y="4" class="tag sans" font-size="11">Haiku</text>
+    <text x="40" y="4" class="sans">Haiku</text>
     <line class="s" stroke-width="1.5" x1="100" y1="-2" x2="134" y2="-2"/>
     <line class="s" stroke-width="1.5" x1="100" y1="2" x2="134" y2="2"/>
-    <text x="140" y="4" class="tag sans" font-size="11">Sonnet</text>
+    <text x="140" y="4" class="sans">Sonnet</text>
     <line class="s" stroke-width="1.5" x1="206" y1="-3" x2="240" y2="-3"/>
     <line class="s" stroke-width="1.5" x1="206" y1="0" x2="240" y2="0"/>
     <line class="s" stroke-width="1.5" x1="206" y1="3" x2="240" y2="3"/>
-    <text x="246" y="4" class="tag sans" font-size="11">Opus</text>
+    <text x="246" y="4" class="sans">Opus</text>
   </g>
 
-  <!-- timeline as a single static-visible ink EKG line -->
-  <path class="s" stroke-width="1.5"
-    d="M70,150 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
+  <!-- single faint baseline rule under the timeline (kept clear of the event labels) -->
+  <line class="s" stroke="#E3DDD0" stroke-width="1" x1="44" y1="218" x2="1156" y2="218"/>
 
-  <!-- event markers: ink dots with sans label + mono/sans sublabel -->
-  <g transform="translate(70,150)">
+  <!-- timeline as a single static-visible ink EKG line on the ledger -->
+  <path class="s" stroke-width="1.6"
+    d="M70,162 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
+  <!-- animated draw-on highlight (static base above is the at-rest copy) -->
+  <path class="s trace" stroke="#1F2328" stroke-opacity="0.55" stroke-width="1.6"
+    d="M70,162 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
+
+  <!-- event markers: clinical-vitals dots with sans label + mono/sans sublabel -->
+  <g transform="translate(70,162)">
     <circle cx="0" cy="0" r="5" fill="#1F2328"/>
+    <circle cx="0" cy="0" r="9" class="s" stroke="#1F2328" stroke-opacity="0.25" stroke-width="1"/>
     <text y="-26" text-anchor="middle" class="lbl sans">status</text>
     <text y="42" text-anchor="middle" class="tag sans">router</text>
   </g>
-  <g transform="translate(280,150)">
+  <g transform="translate(280,162)">
     <circle cx="0" cy="0" r="5" fill="#1F2328"/>
+    <circle cx="0" cy="0" r="9" class="s" stroke="#1F2328" stroke-opacity="0.25" stroke-width="1"/>
     <text y="-26" text-anchor="middle" class="lbl sans">status <tspan class="mono">&#215;N</tspan></text>
     <text y="42" text-anchor="middle" class="tag sans">fetch + council</text>
   </g>
-  <!-- fast_answer = the ONE accent: teal node + the ONE key number in mono teal -->
-  <g transform="translate(520,150)">
+  <!-- fast_answer = the ONE accent: teal node + ring + the ONE key number in mono teal -->
+  <g transform="translate(520,162)">
+    <circle cx="0" cy="0" r="11.5" class="s beat" style="stroke:#0E7C86" stroke-width="1.5"/>
     <circle cx="0" cy="0" r="7" fill="#0E7C86"/>
-    <circle cx="0" cy="0" r="11.5" class="s" style="stroke:#0E7C86" stroke-width="1.5"/>
-    <text y="-28" text-anchor="middle" class="lbl sans" fill="#0E7C86">fast_answer</text>
-    <text y="48" text-anchor="middle" class="sans" font-size="13"><tspan class="mono" fill="#0E7C86" font-weight="700">~10 s</tspan> <tspan class="tag">&#183; partial</tspan></text>
+    <text y="-28" text-anchor="middle" class="lbl sans" style="fill:#0E7C86">fast_answer</text>
+    <text y="48" text-anchor="middle" class="sans" font-size="13"><tspan class="mono" style="fill:#0E7C86" font-weight="700">~10 s</tspan> <tspan class="tag">&#183; partial</tspan></text>
   </g>
-  <g transform="translate(740,150)">
+  <g transform="translate(740,162)">
     <circle cx="0" cy="0" r="5" fill="#1F2328"/>
+    <circle cx="0" cy="0" r="9" class="s" stroke="#1F2328" stroke-opacity="0.25" stroke-width="1"/>
     <text y="-26" text-anchor="middle" class="lbl sans">status</text>
     <text y="42" text-anchor="middle" class="tag sans">full composer</text>
   </g>
-  <!-- result = confirmed/ok → sage outline node -->
-  <g transform="translate(960,150)">
+  <!-- result = confirmed/ok -> sage node -->
+  <g transform="translate(960,162)">
     <circle cx="0" cy="0" r="7" fill="#5E7E5A"/>
-    <text y="-28" text-anchor="middle" class="lbl sans" fill="#5E7E5A">result</text>
+    <circle cx="0" cy="0" r="11.5" class="s" style="stroke:#5E7E5A" stroke-width="1.5"/>
+    <text y="-28" text-anchor="middle" class="lbl sans" style="fill:#5E7E5A">result</text>
     <text y="48" text-anchor="middle" class="tag sans">full + trust + citations</text>
   </g>
-  <g transform="translate(1130,150)">
+  <g transform="translate(1130,162)">
     <circle cx="0" cy="0" r="5" fill="#1F2328"/>
+    <circle cx="0" cy="0" r="9" class="s" stroke="#1F2328" stroke-opacity="0.25" stroke-width="1"/>
     <text y="-26" text-anchor="middle" class="lbl sans">done</text>
     <text y="42" text-anchor="middle" class="tag sans">close</text>
   </g>
 
-  <!-- info panel: white surface, hairline border -->
-  <g transform="translate(40,250)">
-    <rect width="1120" height="92" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
-    <text x="20" y="30" class="tag sans" fill="#6B6A66" font-weight="700" letter-spacing="0.5">WHY STREAM?</text>
-    <text x="20" y="54" class="tag sans" font-size="13" fill="#6B6A66">&#8226; The full multi-agent analysis takes about a minute &#8212; but the <tspan fill="#1F2328" font-weight="700">first answer</tspan> reaches the clinician in <tspan class="mono" fill="#0E7C86" font-weight="700">~10 s</tspan>.</text>
-    <text x="20" y="74" class="tag sans" font-size="13" fill="#6B6A66">&#8226; A Next.js route handler proxies the stream and injects <tspan class="mono" fill="#1F2328">:keepalive</tspan> comments every <tspan class="mono" fill="#1F2328">15 s</tspan> so reverse proxies / tunnels don't drop the idle connection.</text>
+  <!-- info panel: floats via soft layered shadow -> white surface -->
+  <rect x="46" y="266" width="1108" height="96" rx="14" fill="#1F2328" opacity="0.04"/>
+  <rect x="45" y="263" width="1108" height="96" rx="14" fill="#1F2328" opacity="0.05"/>
+  <rect x="44" y="260" width="1108" height="96" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+  <g transform="translate(44,260)">
+    <!-- ECG/vitals-monitor glyph anchoring the panel -->
+    <g class="s" stroke-width="1.7" transform="translate(34,30)">
+      <rect x="-16" y="-13" width="32" height="26" rx="4"/>
+      <path d="M-11,2 h4 l2,-7 3,12 2,-9 2,4 h5"/>
+    </g>
+    <text x="64" y="30" class="sans muted" font-size="11" letter-spacing="1.5" font-weight="700">WHY STREAM?</text>
+    <text x="20" y="58" class="sans" font-size="13" fill="#6B6A66">&#8226; The full multi-agent analysis takes about a minute &#8212; but the <tspan fill="#1F2328" font-weight="700">first answer</tspan> reaches the clinician in <tspan class="mono" style="fill:#0E7C86" font-weight="700">~10 s</tspan>.</text>
+    <text x="20" y="80" class="sans" font-size="13" fill="#6B6A66">&#8226; A Next.js route handler proxies the stream and injects <tspan class="mono ink">:keepalive</tspan> comments every <tspan class="mono ink">15 s</tspan> so reverse proxies / tunnels don't drop the idle connection.</text>
   </g>
 </svg>

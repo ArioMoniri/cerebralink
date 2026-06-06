@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="CerebraLink roadmap board">
   <defs>
     <style>
-      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .serif{font-family:Georgia,'Times New Roman',serif}
       .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
-      .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+      .mono{font-family:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
+      .ink{fill:#1F2328}.muted{fill:#6B6A66}
       .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-      .h{fill:#1F2328;font-weight:700}
-      .sub{fill:#6B6A66}
+      .hair{fill:none;stroke:#CFC7B6;stroke-width:1;vector-effect:non-scaling-stroke}
       .col{font-weight:700;font-size:12px;letter-spacing:1.5px;fill:#6B6A66}
       .ct{fill:#1F2328;font-weight:600}
       .cd{fill:#6B6A66}
@@ -14,61 +14,96 @@
       @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
       .progress{animation:pulse 3s ease-in-out infinite}
     </style>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <circle cx="0.6" cy="0.6" r="0.32" fill="#1F2328" fill-opacity="0.05"/>
+    </pattern>
   </defs>
 
-  <!-- paper card + hairline -->
-  <rect x="0.5" y="0.5" width="1199" height="719" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
+  <!-- warm paper ground + grain + editorial double frame -->
+  <rect x="0" y="0" width="1200" height="720" fill="#FBF8F1"/>
+  <rect x="0" y="0" width="1200" height="720" fill="url(#grain)"/>
+  <rect x="12.5" y="12.5" width="1175" height="695" fill="none" stroke="#E3DDD0"/>
+  <rect x="18.5" y="18.5" width="1163" height="683" fill="none" stroke="#E8E2D5"/>
 
-  <!-- title -->
-  <text x="40" y="46" class="h sans" font-size="23">Roadmap Board</text>
-  <text x="40" y="70" class="sub sans" font-size="13.5">What is shipped, in flight, and on the research bench. Columns reflect intent, not committed dates; the &#8220;Coming&#8221; column is exploratory R&amp;D.</text>
+  <!-- ===== MASTHEAD ===== -->
+  <text x="44" y="52" class="sans muted" font-size="11.5" letter-spacing="3">PRODUCT ROADMAP</text>
+  <text x="44" y="84" class="serif ink" font-size="27" font-weight="700">The Bench &amp; The Board</text>
+  <text x="44" y="108" class="sub sans muted" font-size="13.5">What is shipped, in flight, and on the research bench. Columns reflect intent, not committed dates; the &#8220;Coming&#8221; column is exploratory R&amp;D.</text>
+  <line class="hair" x1="44" y1="124" x2="1156" y2="124"/>
 
-  <!-- inner panel (paper -> panel -> ink) -->
-  <rect x="32" y="88" width="1136" height="608" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+  <!-- inner panel (soft layered shadow -> white) -->
+  <rect x="34" y="150" width="1132" height="540" rx="14" fill="#1F2328" opacity="0.04"/>
+  <rect x="33" y="147" width="1132" height="540" rx="14" fill="#1F2328" opacity="0.05"/>
+  <rect x="32" y="144" width="1132" height="540" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
 
-  <!-- column header eyebrows -->
+  <!-- column header eyebrows with refined clinical glyphs -->
   <g>
-    <g transform="translate(56,118)">
+    <!-- SHIPPED · clipboard-with-check -->
+    <g transform="translate(56,170)">
       <text x="0" y="20" class="col">SHIPPED</text>
-      <!-- ink check glyph -->
-      <path class="s" stroke-width="2.25" d="M236,11 l5,6 9,-12"/>
-      <line class="s" stroke-width="1" x1="0" y1="30" x2="258" y2="30"/>
+      <g class="s" stroke-width="1.7" transform="translate(228,3)">
+        <rect x="0" y="-9" width="17" height="22" rx="2.5"/>
+        <path d="M5,-9 v-3 h7 v3"/>
+        <path d="M4,2 l3,3 6,-8" style="stroke:#5E7E5A"/>
+      </g>
+      <line class="s" stroke-width="1" x1="0" y1="34" x2="258" y2="34"/>
     </g>
-    <g transform="translate(330,118)">
+    <!-- IN PROGRESS · vitals/ECG monitor -->
+    <g transform="translate(330,170)">
       <text x="0" y="20" class="col">IN PROGRESS</text>
-      <line class="s" stroke-width="1" x1="0" y1="30" x2="258" y2="30"/>
+      <g class="s" stroke-width="1.7" transform="translate(228,2)">
+        <rect x="0" y="-8" width="20" height="15" rx="2"/>
+        <path d="M3,0 h4 l2,-5 3,9 2,-4 h3"/>
+      </g>
+      <line class="s" stroke-width="1" x1="0" y1="34" x2="258" y2="34"/>
     </g>
-    <g transform="translate(604,118)">
+    <!-- NEXT · arrow into tray -->
+    <g transform="translate(604,170)">
       <text x="0" y="20" class="col">NEXT</text>
-      <line class="s" stroke-width="1" x1="0" y1="30" x2="258" y2="30"/>
+      <g class="s" stroke-width="1.7" transform="translate(232,3)">
+        <circle cx="8" cy="0" r="9"/>
+        <path d="M4,0 h8 M8,-4 l4,4 -4,4"/>
+      </g>
+      <line class="s" stroke-width="1" x1="0" y1="34" x2="258" y2="34"/>
     </g>
-    <g transform="translate(878,118)">
+    <!-- RESEARCHING · microscope -->
+    <g transform="translate(878,170)">
       <text x="0" y="20" class="col">RESEARCHING &#183; COMING</text>
-      <line class="s" stroke-width="1" x1="0" y1="30" x2="258" y2="30"/>
+      <g class="s" stroke-width="1.7" transform="translate(232,-8)">
+        <path d="M2,20 H18"/>
+        <path d="M5,20 V14"/>
+        <path d="M5,14 C5,7 11,5 13,7 L9,13 C9,15 7,16 5,14 Z"/>
+        <path d="M11,9 L15,5"/>
+      </g>
+      <line class="s" stroke-width="1" x1="0" y1="34" x2="258" y2="34"/>
     </g>
   </g>
 
   <!-- ============================================================ -->
-  <!-- glyph definitions used inline:                               -->
-  <!--  pin: small ink push-pin                                     -->
-  <!--  ink check = done/shipped (with accent dot)                  -->
-  <!--  half-filled half-circle = in-progress (with accent dot)     -->
-  <!--  dashed outline status ring = todo (ink dot)                 -->
+  <!-- card depth: each card carries TWO offset shadow rects + white -->
+  <!-- status glyphs:                                                -->
+  <!--  sage dot + ink check = done/shipped                          -->
+  <!--  ink-muted dot + half-filled circle = in-progress            -->
+  <!--  ink dot + dashed status ring = todo                          -->
   <!-- ============================================================ -->
 
-  <!-- SHIPPED column: ink card + check glyph + accent dot -->
+  <!-- SHIPPED column: white card + sage dot + ink check -->
   <g>
-    <g transform="translate(185,210) rotate(-2,0,0)">
+    <g transform="translate(185,258) rotate(-2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <!-- push-pin -->
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <!-- status: accent dot + ink check -->
+      <!-- status: sage dot + ink check -->
       <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
       <path class="s" stroke-width="2.25" d="M-99,18 l4,5 8,-10"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Multi-agent SSE pipeline</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">router &#8594; council &#8594; compose &#8594; score</text>
     </g>
-    <g transform="translate(185,308) rotate(1.5,0,0)">
+    <g transform="translate(185,356) rotate(1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
@@ -76,7 +111,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Six-axis trust scoring</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">per-answer confidence + rationale</text>
     </g>
-    <g transform="translate(185,406) rotate(-1,0,0)">
+    <g transform="translate(185,454) rotate(-1,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
@@ -84,7 +121,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Lab parser &#8212; 3 formats</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">horizontal &#183; vertical &#183; serology</text>
     </g>
-    <g transform="translate(185,504) rotate(2,0,0)">
+    <g transform="translate(185,552) rotate(2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
@@ -92,7 +131,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">File adapter (default)</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">synthetic JSON &#183; <tspan class="mono">FHIR</tspan> code example</text>
     </g>
-    <g transform="translate(185,602) rotate(-1.5,0,0)">
+    <g transform="translate(185,650) rotate(-1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#5E7E5A"/>
@@ -102,12 +143,14 @@
     </g>
   </g>
 
-  <!-- IN PROGRESS column: half-filled half-circle + accent dot; one card carries the draw-on path -->
+  <!-- IN PROGRESS column: ink-muted dot + half-filled circle; one card carries the teal active border -->
   <g>
-    <g transform="translate(459,210) rotate(1.5,0,0)">
+    <g transform="translate(459,258) rotate(1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
-      <!-- in-progress: accent dot + half-filled half-circle glyph -->
+      <!-- in-progress: ink-muted dot + half-filled half-circle glyph -->
       <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
       <g transform="translate(-92,21)">
         <circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/>
@@ -116,9 +159,11 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13"><tspan class="mono">HL7 v2</tspan> segment mapping</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10"><tspan class="mono">PID</tspan> / <tspan class="mono">PV1</tspan> / <tspan class="mono">OBX</tspan> &#8594; patient dict</text>
     </g>
-    <g transform="translate(459,308) rotate(-2,0,0)">
-      <!-- ONE active/recommended card: teal outline + draw-on stroke -->
-      <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" stroke="#0E7C86" stroke-width="2.25" class="s progress" style="stroke:#0E7C86"/>
+    <g transform="translate(459,356) rotate(-2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
+      <!-- ONE active/recommended card: teal outline (inline style beats .s selector) + gentle pulse -->
+      <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s progress" style="stroke:#0E7C86" stroke-width="2.25"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
       <g transform="translate(-92,21)">
@@ -128,7 +173,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Citation link-liveness</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">verify URLs resolve pre-display</text>
     </g>
-    <g transform="translate(459,406) rotate(1,0,0)">
+    <g transform="translate(459,454) rotate(1,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.6" fill="#6B6A66"/>
@@ -141,9 +188,11 @@
     </g>
   </g>
 
-  <!-- NEXT column: todo = dashed status ring + ink dot -->
+  <!-- NEXT column: todo = ink dot + dashed status ring -->
   <g>
-    <g transform="translate(733,210) rotate(-1.5,0,0)">
+    <g transform="translate(733,258) rotate(-1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -151,7 +200,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">First production EHR adapter</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">Epic or OpenEMR (<tspan class="mono">FHIR</tspan>/<tspan class="mono">HL7</tspan>)</text>
     </g>
-    <g transform="translate(733,308) rotate(2,0,0)">
+    <g transform="translate(733,356) rotate(2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -159,7 +210,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">AuthN / RBAC + audit log</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">SSO/OIDC, role scoping, access trail</text>
     </g>
-    <g transform="translate(733,406) rotate(-1,0,0)">
+    <g transform="translate(733,454) rotate(-1,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -167,7 +220,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Observability</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">tracing, cost/latency, alerting</text>
     </g>
-    <g transform="translate(733,504) rotate(1.5,0,0)">
+    <g transform="translate(733,552) rotate(1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -175,7 +230,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Data governance</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">PHI retention/TTL, secure delete</text>
     </g>
-    <g transform="translate(733,602) rotate(-1.5,0,0)">
+    <g transform="translate(733,650) rotate(-1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -185,19 +242,23 @@
     </g>
   </g>
 
-  <!-- RESEARCHING / COMING column: todo = dashed status ring + ink dot; bolt emoji replaced with bespoke ink bolt glyph -->
+  <!-- RESEARCHING / COMING column: todo = ink dot + dashed status ring; bespoke ink bolt glyph -->
   <g>
-    <g transform="translate(1007,210) rotate(2,0,0)">
+    <g transform="translate(1007,258) rotate(2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
       <circle class="s" stroke-width="1.5" stroke-dasharray="2.5 3" cx="-92" cy="21" r="6"/>
-      <!-- bespoke ink bolt glyph (replaces former lightning emoji) -->
+      <!-- bespoke ink bolt glyph -->
       <path class="s" stroke-width="2.25" d="M-66,-12 l-7,9 h5 l-4,8 8,-10 h-5 z"/>
       <text x="3" y="-2" text-anchor="middle" class="ct sans" font-size="13">TurboQuant</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">Google Research compression</text>
     </g>
-    <g transform="translate(1007,308) rotate(-2,0,0)">
+    <g transform="translate(1007,356) rotate(-2,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -205,7 +266,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Clinical world model</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">patient-state model (research)</text>
     </g>
-    <g transform="translate(1007,406) rotate(1.5,0,0)">
+    <g transform="translate(1007,454) rotate(1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -213,7 +276,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">On-prem / local LLM</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">self-hosted model backends</text>
     </g>
-    <g transform="translate(1007,504) rotate(-1,0,0)">
+    <g transform="translate(1007,552) rotate(-1,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -221,7 +286,9 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13"><tspan class="mono">DICOM</tspan> / multimodal</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">imaging + report ingestion</text>
     </g>
-    <g transform="translate(1007,602) rotate(1.5,0,0)">
+    <g transform="translate(1007,650) rotate(1.5,0,0)">
+      <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
+      <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
@@ -232,15 +299,15 @@
   </g>
 
   <!-- legend: status glyphs -->
-  <g transform="translate(40,672)">
+  <g transform="translate(56,704)">
     <circle cx="6" cy="-4" r="3.6" fill="#5E7E5A"/>
     <path class="s" stroke-width="2.25" d="M16,-4 l3,4 6,-8"/>
-    <text x="32" y="0" class="sub sans" font-size="11">shipped</text>
+    <text x="32" y="0" class="muted sans" font-size="11">shipped</text>
     <g transform="translate(110,-4)"><circle class="s" stroke-width="1.5" cx="0" cy="0" r="6"/><path d="M0,-6 A6,6 0 0,1 0,6 Z" fill="#6B6A66"/></g>
-    <text x="124" y="0" class="sub sans" font-size="11">in progress</text>
+    <text x="124" y="0" class="muted sans" font-size="11">in progress</text>
     <circle class="s" stroke-width="1.5" stroke-dasharray="2.5 3" cx="205" cy="-4" r="6"/>
-    <text x="218" y="0" class="sub sans" font-size="11">todo</text>
+    <text x="218" y="0" class="muted sans" font-size="11">todo</text>
   </g>
 
-  <text x="660" y="672" class="sub sans" font-size="11.5">Board reflects intent, not guarantees. &#8220;Coming&#8221; items are early research; see Limitations in the README.</text>
+  <text x="676" y="704" class="muted sans" font-size="11.5">Board reflects intent, not guarantees. &#8220;Coming&#8221; items are early research; see Limitations in the README.</text>
 </svg>

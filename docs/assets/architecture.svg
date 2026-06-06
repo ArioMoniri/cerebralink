@@ -1,39 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 800" width="1240" height="800" role="img" aria-label="CerebraLink agentic architecture">
   <defs>
     <style>
+      .serif{font-family:Georgia,'Times New Roman',serif}
+      .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .mono{font-family:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
       text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
-      .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+      .ink{fill:#1F2328}.muted{fill:#6B6A66}
       .ttl{font-weight:700;fill:#1F2328}
       .sub{fill:#1F2328}
       .tag{fill:#6B6A66;font-size:11px}
       .phase{fill:#6B6A66;font-size:13px;font-weight:700;letter-spacing:2px}
       .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .hair{fill:none;stroke:#CFC7B6;stroke-width:1;vector-effect:non-scaling-stroke}
       .panel{fill:#FFFFFF;stroke:#E3DDD0;stroke-width:1;vector-effect:non-scaling-stroke}
       .edge{fill:none;stroke:#1F2328;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
       .chev{fill:none;stroke:#1F2328;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
       @keyframes draw{from{stroke-dashoffset:980}to{stroke-dashoffset:0}}
       .recommend{stroke:#0E7C86;stroke-width:2.25;stroke-dasharray:980;stroke-dashoffset:0;animation:draw 5.5s ease-in-out infinite}
     </style>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <circle cx="0.6" cy="0.6" r="0.32" fill="#1F2328" fill-opacity="0.05"/>
+    </pattern>
   </defs>
 
-  <!-- paper card + hairline -->
-  <rect x="0.5" y="0.5" width="1239" height="799" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
+  <!-- warm paper ground + grain + editorial double frame -->
+  <rect x="0" y="0" width="1240" height="800" fill="#FBF8F1"/>
+  <rect x="0" y="0" width="1240" height="800" fill="url(#grain)"/>
+  <rect x="12.5" y="12.5" width="1215" height="775" fill="none" stroke="#E3DDD0"/>
+  <rect x="18.5" y="18.5" width="1203" height="763" fill="none" stroke="#E8E2D5"/>
 
-  <!-- titles -->
-  <g transform="translate(40,40)">
-    <!-- bespoke brain-network glyph (replaces emoji) -->
-    <g transform="translate(11,3)">
+  <!-- ===== MASTHEAD ===== -->
+  <g transform="translate(44,40)">
+    <!-- bespoke brain-network glyph -->
+    <g transform="translate(11,17)">
       <path class="s" stroke-width="2.25" d="M-11,1 C-13,-7 -6,-12 0,-11 C2,-15 10,-14 12,-8 C15,-7 16,0 12,2 C14,6 10,11 5,10 C2,13 -5,13 -8,9 C-13,9 -15,4 -11,1 Z"/>
       <circle cx="-5" cy="-4" r="1.4" fill="#1F2328"/>
       <circle cx="6" cy="-3" r="1.4" fill="#1F2328"/>
       <circle cx="0" cy="5" r="1.4" fill="#1F2328"/>
     </g>
-    <text x="30" y="9" class="ttl" font-size="26">Agentic Architecture</text>
+    <text x="34" y="2" class="sans muted" font-size="11" letter-spacing="2.8">SYSTEM ARCHITECTURE</text>
+    <text x="34" y="28" class="serif ink" font-size="26" font-weight="700">Agentic Architecture</text>
   </g>
-  <text x="40" y="74" class="tag" font-size="14">A specialized multi-agent council streams answers over Server-Sent Events (<tspan class="mono">SSE</tspan>)</text>
+  <text x="44" y="88" class="sans muted" font-size="14">A specialized multi-agent council streams answers over Server-Sent Events (<tspan class="mono">SSE</tspan>)</text>
+  <line class="hair" x1="44" y1="100" x2="1196" y2="100"/>
 
   <!-- legend: model tiers encoded as line-style (solid / double / triple), NOT color -->
-  <g transform="translate(720,28)" font-size="12">
+  <g transform="translate(724,46)" font-size="12">
     <!-- Haiku = solid -->
     <line class="s" stroke-width="1.5" x1="0" y1="7" x2="22" y2="7"/>
     <text x="28" y="11" class="tag">Haiku · fast/cheap</text>
@@ -51,14 +63,14 @@
   </g>
 
   <!-- faint chart-margin rule ~64px from left -->
-  <line x1="64" y1="96" x2="64" y2="700" stroke="#E3DDD0" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <line x1="64" y1="118" x2="64" y2="700" stroke="#E3DDD0" stroke-width="1" vector-effect="non-scaling-stroke"/>
 
   <!-- phase eyebrow tags -->
-  <text x="72" y="118" class="phase">ROUTE</text>
-  <text x="300" y="118" class="phase">FETCH + MASK</text>
-  <text x="620" y="118" class="phase">COUNCIL</text>
-  <text x="900" y="118" class="phase">COMPOSE</text>
-  <text x="1108" y="118" class="phase">SCORE</text>
+  <text x="72" y="140" class="phase">ROUTE</text>
+  <text x="300" y="140" class="phase">FETCH + MASK</text>
+  <text x="620" y="140" class="phase">COUNCIL</text>
+  <text x="900" y="140" class="phase">COMPOSE</text>
+  <text x="1108" y="140" class="phase">SCORE</text>
 
   <!-- ===== EDGES (ink bezier connectors with open chevrons, behind nodes) ===== -->
   <g>
@@ -109,9 +121,11 @@
   <path class="s recommend"
     d="M160,395 L204,395 M210,395 C390,360 420,360 624,290 M816,330 C840,340 855,345 874,332 M1050,414 L1084,400 M1150,432 C1150,500 1150,520 1146,554"/>
 
-  <!-- ===== NODES ===== -->
+  <!-- ===== NODES (each card floats: two offset shadow rects → white panel) ===== -->
   <!-- user query -->
   <g transform="translate(40,360)">
+    <rect x="2" y="6" width="120" height="70" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="120" height="70" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="120" height="70" rx="12"/>
     <!-- chat/query glyph -->
     <g class="s" stroke-width="2.25" transform="translate(48,22)">
@@ -122,11 +136,15 @@
 
   <!-- router -->
   <g transform="translate(210,355)">
+    <rect x="2" y="6" width="150" height="80" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="150" height="80" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="150" height="80" rx="12"/>
-    <!-- compass glyph + solid tier underline (Haiku) -->
-    <g class="s" stroke-width="2.25" transform="translate(20,22)">
-      <circle cx="0" cy="0" r="8"/>
-      <path d="M-3.5,3.5 L1,1 L3.5,-3.5 L-1,-1 Z"/>
+    <!-- triage/branch glyph + solid tier (Haiku) -->
+    <g class="s" stroke-width="2.25" transform="translate(20,24)">
+      <circle cx="-3" cy="0" r="2.6"/>
+      <path d="M-0.4,0 H6 M6,0 L12,-7 M6,0 L12,7"/>
+      <circle cx="13.5" cy="-7" r="2.3"/>
+      <circle cx="13.5" cy="7" r="2.3"/>
     </g>
     <text x="84" y="28" text-anchor="middle" class="ttl" font-size="15">Router</text>
     <text x="75" y="52" text-anchor="middle" class="tag">classify · language</text>
@@ -136,26 +154,38 @@
   <!-- fetch group -->
   <g transform="translate(410,150)">
     <g>
+      <rect x="2" y="6" width="160" height="46" rx="10" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="160" height="46" rx="10" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="160" height="46" rx="10"/>
-      <g class="s" stroke-width="2.25" transform="translate(16,16)"><rect x="-6" y="-5" width="12" height="11" rx="2"/><path d="M-6,-1 L6,-1"/></g>
+      <!-- clipboard/chart glyph -->
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><rect x="-7" y="-8" width="14" height="16" rx="2"/><path d="M-3,-8 L-3,-10 L3,-10 L3,-8"/><path d="M-4,3 L-1,0 L2,2 L5,-3"/></g>
       <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Patient Record</text>
       <text x="86" y="36" text-anchor="middle" class="tag"><tspan class="mono">FHIR R4</tspan> · <tspan class="mono">HL7 v2</tspan> adapter</text>
     </g>
     <g transform="translate(0,58)">
+      <rect x="2" y="6" width="160" height="46" rx="10" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="160" height="46" rx="10" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="160" height="46" rx="10"/>
-      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-5,-6 L3,-6 L6,-3 L6,6 L-5,6 Z"/><path d="M3,-6 L3,-3 L6,-3"/></g>
+      <!-- lab vial / test-tube glyph -->
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-3,-9 L-3,5 a3,3 0 0 0 6,0 L3,-9"/><path d="M-5,-9 L5,-9"/><path d="M-3,0 L3,0"/></g>
       <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Reports (RAG)</text>
       <text x="86" y="36" text-anchor="middle" class="tag">labs · radiology</text>
     </g>
     <g transform="translate(0,116)">
+      <rect x="2" y="6" width="160" height="46" rx="10" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="160" height="46" rx="10" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="160" height="46" rx="10"/>
-      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-6,6 L-6,-2 L0,-6 L6,-2 L6,6"/><path d="M-2,6 L-2,1 L2,1 L2,6"/></g>
+      <!-- hospital bed glyph -->
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-8,-1 L-8,6 M-8,2 L8,2 L8,6 M8,-1 L8,2"/><path d="M-8,2 L-8,-3 L-1,-3 a3,3 0 0 1 3,3"/><circle cx="-5" cy="-2.5" r="2"/></g>
       <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Episodes (RAG)</text>
       <text x="86" y="36" text-anchor="middle" class="tag">admissions</text>
     </g>
     <g transform="translate(0,174)">
+      <rect x="2" y="6" width="160" height="46" rx="10" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="160" height="46" rx="10" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="160" height="46" rx="10"/>
-      <g class="s" stroke-width="2.25" transform="translate(16,16)"><path d="M-6,4 L-2,-2 L1,2 L6,-5"/></g>
+      <!-- ECG / vitals monitor glyph -->
+      <g class="s" stroke-width="2.25" transform="translate(16,16)"><rect x="-9" y="-8" width="18" height="13" rx="2"/><path d="M-7,-1 L-3,-1 L-1,-5 L2,3 L4,-1 L7,-1"/><path d="M-4,8 L4,8 M0,5 L0,8"/></g>
       <text x="86" y="20" text-anchor="middle" class="sub" font-size="13">Monitoring (RAG)</text>
       <text x="86" y="36" text-anchor="middle" class="tag">vitals · flowsheets</text>
     </g>
@@ -163,6 +193,8 @@
 
   <!-- PHI masker -->
   <g transform="translate(410,408)">
+    <rect x="2" y="6" width="160" height="56" rx="11" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="160" height="56" rx="11" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="160" height="56" rx="11"/>
     <!-- shield glyph (Haiku = solid tier) -->
     <g class="s" stroke-width="2.25" transform="translate(20,24)"><path d="M0,-9 L7,-6 L7,1 C7,7 3,10 0,11 C-3,10 -7,7 -7,1 L-7,-6 Z"/></g>
@@ -172,43 +204,57 @@
 
   <!-- council -->
   <g transform="translate(630,175)">
-    <!-- Research (Sonnet = double-stroke tier) -->
+    <!-- Research (Sonnet = double-stroke tier) — microscope -->
     <g>
+      <rect x="2" y="6" width="180" height="64" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
-      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Research</text>
-      <text x="90" y="48" text-anchor="middle" class="tag"><tspan class="mono">Exa</tspan> · PubMed · guidelines</text>
+      <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-6,12 H10"/><path d="M-2,12 V6"/><path d="M-2,6 C-2,-1 4,-3 6,-1 L2,5 C2,7 0,8 -2,6 Z"/><path d="M4,0 L8,-4"/></g>
+      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
+      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Research</text>
+      <text x="96" y="48" text-anchor="middle" class="tag"><tspan class="mono">Exa</tspan> · PubMed · guidelines</text>
     </g>
-    <!-- Drug (Sonnet = double-stroke tier) -->
+    <!-- Drug (Sonnet = double-stroke tier) — capsule -->
     <g transform="translate(0,80)">
+      <rect x="2" y="6" width="180" height="64" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
-      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Drug</text>
-      <text x="90" y="48" text-anchor="middle" class="tag">interactions · dosing</text>
+      <g class="s" stroke-width="2.25" transform="translate(22,30)"><rect x="-10" y="-5" width="20" height="10" rx="5" transform="rotate(-25)"/><line x1="-4.5" y1="-2.1" x2="4.5" y2="2.1" transform="rotate(-25)"/></g>
+      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
+      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Drug</text>
+      <text x="96" y="48" text-anchor="middle" class="tag">interactions · dosing</text>
     </g>
-    <!-- Clinical (Opus = triple-stroke tier) -->
+    <!-- Clinical (Opus = triple-stroke tier) — stethoscope -->
     <g transform="translate(0,160)">
+      <rect x="2" y="6" width="180" height="64" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="12" x2="44" y2="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="17" x2="44" y2="17"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="22" x2="44" y2="22"/>
-      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Clinical</text>
-      <text x="90" y="48" text-anchor="middle" class="tag">reasoning · patient-ctx</text>
+      <g class="s" stroke-width="2" transform="translate(24,30)"><path d="M-9,-9 C-9,1 -3,5 0,5 C3,5 9,1 9,-9"/><circle cx="-9" cy="-10" r="1.5" fill="#1F2328" stroke="none"/><circle cx="9" cy="-10" r="1.5" fill="#1F2328" stroke="none"/><path d="M0,5 C0,11 7,12 7,7"/><circle cx="7" cy="5" r="2.6"/></g>
+      <line class="s" stroke-width="1.5" x1="44" y1="12" x2="72" y2="12"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="17" x2="72" y2="17"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="22" x2="72" y2="22"/>
+      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Clinical</text>
+      <text x="96" y="48" text-anchor="middle" class="tag">reasoning · patient-ctx</text>
     </g>
-    <!-- Prescription (Sonnet = double-stroke tier) -->
+    <!-- Prescription (Sonnet = double-stroke tier) — Rx -->
     <g transform="translate(0,255)">
+      <rect x="2" y="6" width="180" height="58" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="180" height="58" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="58" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="13" x2="44" y2="13"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="18" x2="44" y2="18"/>
-      <text x="100" y="24" text-anchor="middle" class="ttl" font-size="15">Prescription</text>
-      <text x="90" y="44" text-anchor="middle" class="tag"><tspan class="mono">ATC</tspan> · brand options</text>
+      <text x="14" y="34" class="serif ink" font-size="22" font-weight="700">&#8478;</text>
+      <line class="s" stroke-width="1.5" x1="44" y1="13" x2="72" y2="13"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="18" x2="72" y2="18"/>
+      <text x="106" y="24" text-anchor="middle" class="ttl" font-size="15">Prescription</text>
+      <text x="96" y="44" text-anchor="middle" class="tag"><tspan class="mono">ATC</tspan> · brand options</text>
     </g>
   </g>
 
   <!-- MCP rail -->
   <g transform="translate(630,500)">
+    <rect x="2" y="6" width="180" height="120" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="180" height="120" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="180" height="120" rx="12"/>
     <!-- plug glyph -->
     <g class="s" stroke-width="2.25" transform="translate(18,18)"><path d="M-5,-2 L-5,4 L5,4 L5,-2"/><path d="M-2,-2 L-2,-6 M2,-2 L2,-6 M0,4 L0,8"/></g>
@@ -221,29 +267,37 @@
 
   <!-- compose -->
   <g transform="translate(880,300)">
-    <!-- Fast Composer (Sonnet = double-stroke tier) -->
+    <!-- Fast Composer (Sonnet = double-stroke tier) — document/pen -->
     <g>
+      <rect x="2" y="6" width="170" height="64" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="170" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="170" height="64" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
-      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
-      <text x="85" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono">~10 s</tspan></text>
+      <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-7,-10 L4,-10 L7,-7 L7,11 L-7,11 Z"/><path d="M4,-10 L4,-7 L7,-7"/><path d="M-4,-2 L1,-2 M-4,3 L3,3"/></g>
+      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
+      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
+      <text x="91" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono">~10 s</tspan></text>
     </g>
-    <!-- Full Composer (Sonnet = double-stroke tier) -->
+    <!-- Full Composer (Sonnet = double-stroke tier) — document/pen -->
     <g transform="translate(0,82)">
+      <rect x="2" y="6" width="170" height="64" rx="12" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="170" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="170" height="64" rx="12"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="14" x2="44" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="16" y1="19" x2="44" y2="19"/>
-      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Full Composer</text>
-      <text x="85" y="48" text-anchor="middle" class="tag">deep · cited · <tspan class="mono">8k</tspan> tokens</text>
+      <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-7,-10 L4,-10 L7,-7 L7,11 L-7,11 Z"/><path d="M4,-10 L4,-7 L7,-7"/><path d="M-4,-2 L1,-2 M-4,3 L3,3"/></g>
+      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
+      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
+      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Full Composer</text>
+      <text x="91" y="48" text-anchor="middle" class="tag">deep · cited · <tspan class="mono">8k</tspan> tokens</text>
     </g>
   </g>
 
   <!-- trust (Haiku = solid tier) -->
   <g transform="translate(1090,332)">
+    <rect x="2" y="6" width="120" height="100" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="120" height="100" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="120" height="100" rx="12"/>
-    <!-- scales glyph -->
-    <g class="s" stroke-width="2.25" transform="translate(60,22)"><path d="M0,-8 L0,8 M-9,-5 L9,-5 M-9,-5 L-12,2 L-6,2 Z M9,-5 L6,2 L12,2 Z M-6,8 L6,8"/></g>
+    <!-- shield-with-pulse glyph -->
+    <g class="s" stroke-width="2.25" transform="translate(60,24)"><path d="M0,-11 L9,-7.5 L9,-0.5 C9,6 4,9.5 0,11 C-4,9.5 -9,6 -9,-0.5 L-9,-7.5 Z"/><path d="M-6,-1 H-2.5 l1.5,-4 2.5,8 1.5,-4 H6"/></g>
     <text x="60" y="50" text-anchor="middle" class="ttl" font-size="14">Trust</text>
     <text x="60" y="66" text-anchor="middle" class="tag"><tspan class="mono">6-axis</tspan> score:</text>
     <text x="60" y="80" text-anchor="middle" class="tag">evidence · align</text>
@@ -253,6 +307,8 @@
 
   <!-- output -->
   <g transform="translate(1070,560)">
+    <rect x="2" y="6" width="150" height="90" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="150" height="90" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="150" height="90" rx="12"/>
     <!-- monitor glyph -->
     <g class="s" stroke-width="2.25" transform="translate(75,28)"><rect x="-14" y="-10" width="28" height="18" rx="2"/><path d="M-5,8 L-5,12 L5,12 L5,8 M-8,12 L8,12"/></g>
@@ -261,8 +317,9 @@
   </g>
 
   <!-- footer -->
-  <text x="40" y="730" class="tag" font-size="13">Phases 2-3 run agents concurrently (asyncio); the Fast Composer emits a partial answer before the Full Composer and Trust Scorer finish — all over one <tspan class="mono">SSE</tspan> connection.</text>
-  <g transform="translate(40,748)">
+  <line class="hair" x1="44" y1="712" x2="1196" y2="712"/>
+  <text x="44" y="734" class="tag" font-size="13">Phases 2-3 run agents concurrently (asyncio); the Fast Composer emits a partial answer before the Full Composer and Trust Scorer finish — all over one <tspan class="mono">SSE</tspan> connection.</text>
+  <g transform="translate(44,752)">
     <line class="s" style="stroke:#0E7C86" stroke-width="2.25" x1="0" y1="0" x2="20" y2="0"/>
     <text x="28" y="4" class="tag" font-size="13">Teal line = the recommended request path through the pipeline.</text>
   </g>

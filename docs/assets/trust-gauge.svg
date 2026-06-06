@@ -1,26 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="CerebraLink trust and confidence scoring">
   <defs>
     <style>
-      text{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif;fill:#1F2328}
-      .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
-      .muted{fill:#6B6A66}
-      .eyebrow{fill:#6B6A66;letter-spacing:0.12em}
+      .serif{font-family:Georgia,'Times New Roman',serif}
+      .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif}
+      .mono{font-family:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
+      .ink{fill:#1F2328}.muted{fill:#6B6A66}
       .s{fill:none;stroke:#1F2328;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .hair{fill:none;stroke:#CFC7B6;stroke-width:1;vector-effect:non-scaling-stroke}
       .grid{fill:none;stroke:#E3DDD0;stroke-width:1;vector-effect:non-scaling-stroke}
       /* the data polygon outline draws on; visible at rest (dashoffset:0) */
       @keyframes draw{from{stroke-dashoffset:880}to{stroke-dashoffset:0}}
       .poly{stroke-dasharray:880;stroke-dashoffset:0;animation:draw 4.5s ease-in-out forwards}
     </style>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <circle cx="0.6" cy="0.6" r="0.32" fill="#1F2328" fill-opacity="0.05"/>
+    </pattern>
   </defs>
 
-  <!-- paper card + hairline -->
-  <rect x="0.5" y="0.5" width="1199" height="559" rx="20" fill="#FBF8F1" stroke="#E3DDD0"/>
+  <!-- warm paper ground + grain + editorial double frame -->
+  <rect width="1200" height="560" fill="#FBF8F1"/>
+  <rect width="1200" height="560" fill="url(#grain)"/>
+  <rect x="12.5" y="12.5" width="1175" height="535" fill="none" stroke="#E3DDD0"/>
+  <rect x="18.5" y="18.5" width="1163" height="523" fill="none" stroke="#E8E2D5"/>
 
-  <!-- header -->
-  <text x="40" y="44" font-size="23" font-weight="700">Trust &amp; Confidence Scoring</text>
-  <text x="40" y="70" class="muted" font-size="13.5">A separate Trust agent scores every answer on six axes. Scores below threshold raise a caution banner in the UI before the answer is shown.</text>
+  <!-- ===== MASTHEAD ===== -->
+  <text x="44" y="50" class="sans muted" font-size="11.5" letter-spacing="3">CONFIDENCE &amp; SAFETY</text>
+  <text x="44" y="80" class="serif ink" font-size="26" font-weight="700">Trust &amp; Confidence Scoring</text>
+  <text x="44" y="104" class="sans muted" font-size="13">A separate Trust agent scores every answer on six axes. Scores below threshold raise a caution banner in the UI before the answer is shown.</text>
+  <line class="hair" x1="44" y1="120" x2="1156" y2="120"/>
 
   <!-- ===== RADAR (left) ===== -->
+  <g transform="translate(0,16)">
   <!-- faint grid rings (hairline) -->
   <g class="grid">
     <polygon points="320,240 354.6,260 354.6,300 320,320 285.4,300 285.4,260"/>
@@ -45,7 +55,7 @@
 
   <!-- data polygon: teal flood ~15% + 1.5px teal outline (draw-on, visible at rest) -->
   <polygon points="320,139.2 448.9,205.6 436.4,347.2 320,433.6 209.1,344 196.6,208.8" fill="#0E7C86" fill-opacity="0.15" stroke="none"/>
-  <polygon class="poly s" points="320,139.2 448.9,205.6 436.4,347.2 320,433.6 209.1,344 196.6,208.8" stroke="#0E7C86" stroke-width="1.5"/>
+  <polygon class="poly s" style="stroke:#0E7C86" points="320,139.2 448.9,205.6 436.4,347.2 320,433.6 209.1,344 196.6,208.8" stroke-width="1.5"/>
   <!-- vertices: ink dots; below-threshold (Source recency, 80) flips to flat alert clay -->
   <g fill="#1F2328">
     <circle cx="320" cy="139.2" r="3.2"/>
@@ -58,82 +68,89 @@
   <circle cx="209.1" cy="344" r="3.6" fill="#B5562B"/>
 
   <!-- axis labels -->
-  <text x="320" y="106" text-anchor="middle" font-size="12" font-weight="600">Evidence quality</text>
-  <text x="470" y="198" font-size="12" font-weight="600">Guideline align.</text>
-  <text x="470" y="372" font-size="12" font-weight="600">Clinical relevance</text>
-  <text x="320" y="464" text-anchor="middle" font-size="12" font-weight="600">Safety check</text>
-  <text x="170" y="372" text-anchor="end" font-size="12" font-weight="600" fill="#B5562B">Source recency</text>
-  <text x="170" y="198" text-anchor="end" font-size="12" font-weight="600">Completeness</text>
+  <text x="320" y="106" text-anchor="middle" class="sans ink" font-size="12" font-weight="600">Evidence quality</text>
+  <text x="470" y="198" class="sans ink" font-size="12" font-weight="600">Guideline align.</text>
+  <text x="470" y="372" class="sans ink" font-size="12" font-weight="600">Clinical relevance</text>
+  <text x="320" y="464" text-anchor="middle" class="sans ink" font-size="12" font-weight="600">Safety check</text>
+  <text x="170" y="372" text-anchor="end" class="sans" font-size="12" font-weight="600" fill="#B5562B">Source recency</text>
+  <text x="170" y="198" text-anchor="end" class="sans ink" font-size="12" font-weight="600">Completeness</text>
 
   <!-- apothecary-balance scale line glyph (single ink contour) -->
-  <g class="s" transform="translate(320,506)">
+  <g class="s" transform="translate(320,503)">
     <!-- central column + base -->
     <line x1="0" y1="-30" x2="0" y2="14" stroke-width="2.25"/>
-    <path d="M-12,18 C-6,14 6,14 12,18" stroke-width="2.25"/>
+    <path d="M-14,18 C-7,13 7,13 14,18" stroke-width="2.25"/>
     <!-- beam -->
-    <line x1="-44" y1="-30" x2="44" y2="-30" stroke-width="2.25"/>
+    <line x1="-46" y1="-30" x2="46" y2="-30" stroke-width="2.25"/>
     <circle cx="0" cy="-30" r="2.4" fill="#1F2328" stroke="none"/>
-    <!-- left pan + hangers -->
-    <line x1="-44" y1="-30" x2="-54" y2="-10" stroke-width="1.5"/>
-    <line x1="-44" y1="-30" x2="-34" y2="-10" stroke-width="1.5"/>
-    <path d="M-56,-10 C-50,-1 -38,-1 -32,-10" stroke-width="2.25"/>
-    <!-- right pan + hangers -->
-    <line x1="44" y1="-30" x2="34" y2="-10" stroke-width="1.5"/>
-    <line x1="44" y1="-30" x2="54" y2="-10" stroke-width="1.5"/>
-    <path d="M32,-10 C38,-1 50,-1 56,-10" stroke-width="2.25"/>
+    <!-- left pan: chains converge to pan -->
+    <line x1="-46" y1="-30" x2="-56" y2="-12" stroke-width="1.4"/>
+    <line x1="-46" y1="-30" x2="-36" y2="-12" stroke-width="1.4"/>
+    <path d="M-58,-12 C-51,-2 -41,-2 -34,-12" stroke-width="2.25"/>
+    <!-- right pan: chains converge to pan -->
+    <line x1="46" y1="-30" x2="36" y2="-12" stroke-width="1.4"/>
+    <line x1="46" y1="-30" x2="56" y2="-12" stroke-width="1.4"/>
+    <path d="M34,-12 C41,-2 51,-2 58,-12" stroke-width="2.25"/>
+  </g>
   </g>
 
-  <!-- ===== RIGHT PANEL (white inner panel) ===== -->
-  <g transform="translate(610,96)">
-    <rect x="0.5" y="0.5" width="549" height="383" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
-    <text x="26" y="36" class="eyebrow" font-size="12" font-weight="700">SCORE BREAKDOWN&#160;&#160;(0&#8211;100)</text>
+  <!-- ===== RIGHT PANEL (white inner panel — soft layered shadow → white) ===== -->
+  <rect x="612" y="150" width="549" height="384" rx="14" fill="#1F2328" opacity="0.04"/>
+  <rect x="611" y="147" width="549" height="384" rx="14" fill="#1F2328" opacity="0.05"/>
+  <rect x="610" y="144" width="549" height="384" rx="14" fill="#FFFFFF" stroke="#E3DDD0"/>
+  <g transform="translate(610,144)">
+    <text x="26" y="36" class="sans muted" font-size="12" letter-spacing="1.5" font-weight="700">SCORE BREAKDOWN&#160;&#160;(0&#8211;100)</text>
 
     <!-- bars: flat ink fill on hairline track; numerals mono ink -->
     <g transform="translate(26,58)" font-size="13">
       <g>
-        <text y="12">Evidence quality</text>
-        <text x="498" y="12" text-anchor="end" class="mono" font-weight="700">88</text>
+        <text y="12" class="sans ink">Evidence quality</text>
+        <text x="498" y="12" text-anchor="end" class="mono ink" font-weight="700">88</text>
         <rect y="20" width="498" height="6" rx="3" fill="#FBF8F1" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="438" height="6" rx="3" fill="#1F2328"/>
       </g>
       <g transform="translate(0,40)">
-        <text y="12">Guideline alignment</text>
-        <text x="498" y="12" text-anchor="end" class="mono" font-weight="700">93</text>
+        <text y="12" class="sans ink">Guideline alignment</text>
+        <text x="498" y="12" text-anchor="end" class="mono ink" font-weight="700">93</text>
         <rect y="20" width="498" height="6" rx="3" fill="#FBF8F1" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="463" height="6" rx="3" fill="#1F2328"/>
       </g>
       <g transform="translate(0,80)">
-        <text y="12">Clinical relevance</text>
-        <text x="498" y="12" text-anchor="end" class="mono" font-weight="700">84</text>
+        <text y="12" class="sans ink">Clinical relevance</text>
+        <text x="498" y="12" text-anchor="end" class="mono ink" font-weight="700">84</text>
         <rect y="20" width="498" height="6" rx="3" fill="#FBF8F1" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="418" height="6" rx="3" fill="#1F2328"/>
       </g>
       <g transform="translate(0,120)">
-        <text y="12">Safety check</text>
-        <text x="498" y="12" text-anchor="end" class="mono" font-weight="700">96</text>
+        <text y="12" class="sans ink">Safety check</text>
+        <text x="498" y="12" text-anchor="end" class="mono ink" font-weight="700">96</text>
         <rect y="20" width="498" height="6" rx="3" fill="#FBF8F1" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="478" height="6" rx="3" fill="#1F2328"/>
       </g>
       <g transform="translate(0,160)">
-        <text y="12" fill="#B5562B">Source recency</text>
+        <text y="12" class="sans" fill="#B5562B">Source recency</text>
         <text x="498" y="12" text-anchor="end" class="mono" font-weight="700" fill="#B5562B">80</text>
         <rect y="20" width="498" height="6" rx="3" fill="#F2DED2" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="398" height="6" rx="3" fill="#B5562B"/>
       </g>
       <g transform="translate(0,200)">
-        <text y="12">Completeness</text>
-        <text x="498" y="12" text-anchor="end" class="mono" font-weight="700">89</text>
+        <text y="12" class="sans ink">Completeness</text>
+        <text x="498" y="12" text-anchor="end" class="mono ink" font-weight="700">89</text>
         <rect y="20" width="498" height="6" rx="3" fill="#FBF8F1" stroke="#E3DDD0" stroke-width="1"/>
         <rect y="20" width="443" height="6" rx="3" fill="#1F2328"/>
       </g>
     </g>
 
-    <!-- overall: the ONE accent number (teal, mono) -->
+    <!-- overall: the ONE accent number (teal) — soft layered shadow chip -->
     <g transform="translate(26,318)">
-      <rect x="0.5" y="0.5" width="497" height="47" rx="11" fill="#D8ECEC" fill-opacity="0.5" stroke="#0E7C86"/>
-      <text x="16" y="30" font-size="17" font-weight="700" fill="#0E7C86">Overall <tspan class="mono">88</tspan> <tspan class="mono">/</tspan> <tspan class="mono">100</tspan></text>
-      <text x="180" y="22" font-size="13">High confidence — shown without a caution banner.</text>
-      <text x="180" y="38" class="muted" font-size="12">Each score carries a one-line rationale in the API response.</text>
+      <rect x="2" y="6" width="497" height="47" rx="11" fill="#1F2328" opacity="0.04"/>
+      <rect x="1" y="3" width="497" height="47" rx="11" fill="#1F2328" opacity="0.05"/>
+      <rect x="0.5" y="0.5" width="497" height="47" rx="11" fill="#D8ECEC" stroke="#0E7C86"/>
+      <!-- shield + pulse glyph (trust mark, teal) -->
+      <g class="s" style="stroke:#0E7C86" stroke-width="1.7" transform="translate(28,24)"><path d="M0,-12 L9.5,-8 L9.5,0.5 C9.5,7.5 4.5,10.5 0,12.5 C-4.5,10.5 -9.5,7.5 -9.5,0.5 L-9.5,-8 Z"/><path d="M-5.5,0.5 H-2 l1.5,-4 2.5,7.5 1.5,-3.5 H6"/></g>
+      <text x="50" y="30" class="sans" font-size="17" font-weight="700" fill="#0E7C86">Overall <tspan class="mono">88</tspan> <tspan class="mono">/</tspan> <tspan class="mono">100</tspan></text>
+      <text x="214" y="22" class="sans ink" font-size="13">High confidence — shown without a caution banner.</text>
+      <text x="214" y="38" class="muted sans" font-size="12">Each score carries a one-line rationale in the API response.</text>
     </g>
   </g>
 </svg>
