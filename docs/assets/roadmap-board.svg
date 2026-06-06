@@ -89,7 +89,7 @@
 
   <!-- SHIPPED column: white card + sage dot + ink check -->
   <g>
-    <g transform="translate(185,258) rotate(-2,0,0)">
+    <g transform="translate(185,254) rotate(-2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -101,7 +101,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Multi-agent SSE pipeline</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">router &#8594; council &#8594; compose &#8594; score</text>
     </g>
-    <g transform="translate(185,356) rotate(1.5,0,0)">
+    <g transform="translate(185,345) rotate(1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -111,7 +111,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Six-axis trust scoring</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">per-answer confidence + rationale</text>
     </g>
-    <g transform="translate(185,454) rotate(-1,0,0)">
+    <g transform="translate(185,436) rotate(-1,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -121,7 +121,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Lab parser &#8212; 3 formats</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">horizontal &#183; vertical &#183; serology</text>
     </g>
-    <g transform="translate(185,552) rotate(2,0,0)">
+    <g transform="translate(185,527) rotate(2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -131,7 +131,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">File adapter (default)</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">synthetic JSON &#183; <tspan class="mono">FHIR</tspan> code example</text>
     </g>
-    <g transform="translate(185,650) rotate(-1.5,0,0)">
+    <g transform="translate(185,618) rotate(-1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -145,7 +145,7 @@
 
   <!-- IN PROGRESS column: ink-muted dot + half-filled circle; one card carries the teal active border -->
   <g>
-    <g transform="translate(459,258) rotate(1.5,0,0)">
+    <g transform="translate(459,254) rotate(1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -159,7 +159,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13"><tspan class="mono">HL7 v2</tspan> segment mapping</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10"><tspan class="mono">PID</tspan> / <tspan class="mono">PV1</tspan> / <tspan class="mono">OBX</tspan> &#8594; patient dict</text>
     </g>
-    <g transform="translate(459,356) rotate(-2,0,0)">
+    <g transform="translate(459,345) rotate(-2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <!-- ONE active/recommended card: teal outline (inline style beats .s selector) + gentle pulse -->
@@ -173,7 +173,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Citation link-liveness</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">verify URLs resolve pre-display</text>
     </g>
-    <g transform="translate(459,454) rotate(1,0,0)">
+    <g transform="translate(459,436) rotate(1,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -190,7 +190,7 @@
 
   <!-- NEXT column: todo = ink dot + dashed status ring -->
   <g>
-    <g transform="translate(733,258) rotate(-1.5,0,0)">
+    <g transform="translate(733,254) rotate(-1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -200,7 +200,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">First production EHR adapter</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">Epic or OpenEMR (<tspan class="mono">FHIR</tspan>/<tspan class="mono">HL7</tspan>)</text>
     </g>
-    <g transform="translate(733,356) rotate(2,0,0)">
+    <g transform="translate(733,345) rotate(2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -210,7 +210,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">AuthN / RBAC + audit log</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">SSO/OIDC, role scoping, access trail</text>
     </g>
-    <g transform="translate(733,454) rotate(-1,0,0)">
+    <g transform="translate(733,436) rotate(-1,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -220,7 +220,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Observability</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">tracing, cost/latency, alerting</text>
     </g>
-    <g transform="translate(733,552) rotate(1.5,0,0)">
+    <g transform="translate(733,527) rotate(1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -230,7 +230,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Data governance</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">PHI retention/TTL, secure delete</text>
     </g>
-    <g transform="translate(733,650) rotate(-1.5,0,0)">
+    <g transform="translate(733,618) rotate(-1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -238,13 +238,13 @@
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
       <circle class="s" stroke-width="1.5" stroke-dasharray="2.5 3" cx="-92" cy="21" r="6"/>
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Test suite + eval slice</text>
-      <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">parser/pipeline fixtures, lab-accuracy eval</text>
+      <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="9">parser/pipeline fixtures, lab-accuracy eval</text>
     </g>
   </g>
 
   <!-- RESEARCHING / COMING column: todo = ink dot + dashed status ring; bespoke ink bolt glyph -->
   <g>
-    <g transform="translate(1007,258) rotate(2,0,0)">
+    <g transform="translate(1007,254) rotate(2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -256,7 +256,7 @@
       <text x="3" y="-2" text-anchor="middle" class="ct sans" font-size="13">TurboQuant</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">Google Research compression</text>
     </g>
-    <g transform="translate(1007,356) rotate(-2,0,0)">
+    <g transform="translate(1007,345) rotate(-2,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -266,7 +266,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Clinical world model</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">patient-state model (research)</text>
     </g>
-    <g transform="translate(1007,454) rotate(1.5,0,0)">
+    <g transform="translate(1007,436) rotate(1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -276,7 +276,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">On-prem / local LLM</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">self-hosted model backends</text>
     </g>
-    <g transform="translate(1007,552) rotate(-1,0,0)">
+    <g transform="translate(1007,527) rotate(-1,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -286,7 +286,7 @@
       <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13"><tspan class="mono">DICOM</tspan> / multimodal</text>
       <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">imaging + report ingestion</text>
     </g>
-    <g transform="translate(1007,650) rotate(1.5,0,0)">
+    <g transform="translate(1007,618) rotate(1.5,0,0)">
       <rect x="-108" y="-32" width="220" height="76" rx="8" fill="#1F2328" opacity="0.04"/>
       <rect x="-109" y="-35" width="220" height="76" rx="8" fill="#1F2328" opacity="0.05"/>
       <rect x="-110" y="-38" width="220" height="76" rx="8" fill="#FFFFFF" class="s" stroke-width="1.5"/>
@@ -299,7 +299,7 @@
   </g>
 
   <!-- legend: status glyphs -->
-  <g transform="translate(56,704)">
+  <g transform="translate(56,690)">
     <circle cx="6" cy="-4" r="3.6" fill="#5E7E5A"/>
     <path class="s" stroke-width="2.25" d="M16,-4 l3,4 6,-8"/>
     <text x="32" y="0" class="muted sans" font-size="11">shipped</text>
@@ -309,5 +309,5 @@
     <text x="218" y="0" class="muted sans" font-size="11">todo</text>
   </g>
 
-  <text x="676" y="704" class="muted sans" font-size="11.5">Board reflects intent, not guarantees. &#8220;Coming&#8221; items are early research; see Limitations in the README.</text>
+  <text x="1156" y="690" text-anchor="end" class="muted sans" font-size="11">Board reflects intent, not guarantees. &#8220;Coming&#8221; items are early research; see Limitations in the README.</text>
 </svg>

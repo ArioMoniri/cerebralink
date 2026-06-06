@@ -27,7 +27,7 @@
   <!-- masthead -->
   <text x="44" y="50" class="sans muted" font-size="11.5" letter-spacing="3">PIPELINE METRICS</text>
   <text x="44" y="80" class="serif ink" font-size="27" font-weight="700">Anatomy of One Query</text>
-  <text x="44" y="104" class="sans muted" font-size="13">Representative per-agent timing &amp; token usage. Phases <tspan class="mono">②</tspan> Fetch and <tspan class="mono">③</tspan> Council run <tspan class="ink" font-weight="700" font-style="italic">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
+  <text x="44" y="104" class="sans muted" font-size="13">Representative per-agent timing &amp; token usage. Phases <tspan class="ink mono" font-weight="700">2</tspan> Fetch and <tspan class="ink mono" font-weight="700">3</tspan> Council run <tspan class="ink" font-weight="700" font-style="italic">concurrently</tspan> — wall-clock &#8800; the sum of bars.</text>
   <line class="hair" x1="44" y1="120" x2="1156" y2="120"/>
 
   <!-- ===== LEFT PANEL: per-agent timing (soft layered shadow → white) ===== -->
@@ -88,7 +88,7 @@
     </g>
 
     <!-- tier legend: line-style (not color) -->
-    <g transform="translate(150,254)" class="muted" font-size="10">
+    <g transform="translate(162,254)" class="muted" font-size="10">
       <text x="0" y="0">Haiku</text><line class="s" stroke-width="1.5" x1="42" y1="-4" x2="74" y2="-4"/>
       <text x="92" y="0">Sonnet</text><line class="s" stroke-width="1.5" x1="140" y1="-6" x2="172" y2="-6"/><line class="s" stroke-width="1.5" x1="140" y1="-2" x2="172" y2="-2"/>
       <text x="190" y="0">Opus</text><line class="s" stroke-width="1.5" x1="226" y1="-7" x2="258" y2="-7"/><line class="s" stroke-width="1.5" x1="226" y1="-4" x2="258" y2="-4"/><line class="s" stroke-width="1.5" x1="226" y1="-1" x2="258" y2="-1"/>
@@ -121,7 +121,7 @@
       <g class="s" style="stroke:#5E7E5A" stroke-width="1.9" transform="translate(28,28)"><path d="M5,-9 L-2,1 H3 L-1,10 L9,-2 H3 L7,-9 Z"/></g>
       <text x="52" y="26" class="mono" style="fill:#5E7E5A" font-size="18" font-weight="700">~10 s</text>
       <text x="134" y="22" class="ink sans" font-size="12.5">to first answer · <tspan class="mono" style="fill:#5E7E5A" font-weight="700">~1 min</tspan> full</text>
-      <text x="134" y="40" class="muted sans" font-size="11">first answer streams while the full analysis composes</text>
+      <text x="52" y="41" class="muted sans" font-size="10">first answer streams while the full analysis composes</text>
     </g>
   </g>
 </svg>

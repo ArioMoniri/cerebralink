@@ -49,10 +49,10 @@
 
   <!-- timeline as a single static-visible ink EKG line on the ledger -->
   <path class="s" stroke-width="1.6"
-    d="M70,162 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
+    d="M70,162 H162 L168,162 L172,150 L178,178 L183,150 L188,162 H387 L393,162 L397,150 L403,178 L408,150 L413,162 H617 L623,162 L627,150 L633,178 L638,150 L643,162 H837 L843,162 L847,150 L853,178 L858,150 L863,162 H1032 L1038,162 L1042,150 L1048,178 L1053,150 L1058,162 H1130"/>
   <!-- animated draw-on highlight (static base above is the at-rest copy) -->
   <path class="s trace" stroke="#1F2328" stroke-opacity="0.55" stroke-width="1.6"
-    d="M70,162 H250 l8,0 l6,-12 8,24 6,-12 H300 q20,0 30,0 l8,0 l6,-22 9,40 6,-30 5,12 H520 l8,0 l6,-10 7,18 5,-8 H760 q20,0 30,0 H960 l8,0 l5,-14 8,26 6,-12 H1130"/>
+    d="M70,162 H162 L168,162 L172,150 L178,178 L183,150 L188,162 H387 L393,162 L397,150 L403,178 L408,150 L413,162 H617 L623,162 L627,150 L633,178 L638,150 L643,162 H837 L843,162 L847,150 L853,178 L858,150 L863,162 H1032 L1038,162 L1042,150 L1048,178 L1053,150 L1058,162 H1130"/>
 
   <!-- event markers: clinical-vitals dots with sans label + mono/sans sublabel -->
   <g transform="translate(70,162)">

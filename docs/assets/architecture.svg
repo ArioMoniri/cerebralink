@@ -210,10 +210,10 @@
       <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
       <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-6,12 H10"/><path d="M-2,12 V6"/><path d="M-2,6 C-2,-1 4,-3 6,-1 L2,5 C2,7 0,8 -2,6 Z"/><path d="M4,0 L8,-4"/></g>
-      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
-      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Research</text>
-      <text x="96" y="48" text-anchor="middle" class="tag"><tspan class="mono">Exa</tspan> · PubMed · guidelines</text>
+      <line class="s" stroke-width="1.5" x1="100" y1="34" x2="124" y2="34"/>
+      <line class="s" stroke-width="1.5" x1="100" y1="38" x2="124" y2="38"/>
+      <text x="112" y="26" text-anchor="middle" class="ttl" font-size="15">Research</text>
+      <text x="112" y="52" text-anchor="middle" class="tag"><tspan class="mono">Exa</tspan> · PubMed · guidelines</text>
     </g>
     <!-- Drug (Sonnet = double-stroke tier) — capsule -->
     <g transform="translate(0,80)">
@@ -221,10 +221,10 @@
       <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
       <g class="s" stroke-width="2.25" transform="translate(22,30)"><rect x="-10" y="-5" width="20" height="10" rx="5" transform="rotate(-25)"/><line x1="-4.5" y1="-2.1" x2="4.5" y2="2.1" transform="rotate(-25)"/></g>
-      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
-      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Drug</text>
-      <text x="96" y="48" text-anchor="middle" class="tag">interactions · dosing</text>
+      <line class="s" stroke-width="1.5" x1="100" y1="34" x2="124" y2="34"/>
+      <line class="s" stroke-width="1.5" x1="100" y1="38" x2="124" y2="38"/>
+      <text x="112" y="26" text-anchor="middle" class="ttl" font-size="15">Drug</text>
+      <text x="112" y="52" text-anchor="middle" class="tag">interactions · dosing</text>
     </g>
     <!-- Clinical (Opus = triple-stroke tier) — stethoscope -->
     <g transform="translate(0,160)">
@@ -232,11 +232,11 @@
       <rect x="1" y="3" width="180" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="64" rx="12"/>
       <g class="s" stroke-width="2" transform="translate(24,30)"><path d="M-9,-9 C-9,1 -3,5 0,5 C3,5 9,1 9,-9"/><circle cx="-9" cy="-10" r="1.5" fill="#1F2328" stroke="none"/><circle cx="9" cy="-10" r="1.5" fill="#1F2328" stroke="none"/><path d="M0,5 C0,11 7,12 7,7"/><circle cx="7" cy="5" r="2.6"/></g>
-      <line class="s" stroke-width="1.5" x1="44" y1="12" x2="72" y2="12"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="17" x2="72" y2="17"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="22" x2="72" y2="22"/>
-      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Clinical</text>
-      <text x="96" y="48" text-anchor="middle" class="tag">reasoning · patient-ctx</text>
+      <line class="s" stroke-width="1.5" x1="100" y1="33" x2="124" y2="33"/>
+      <line class="s" stroke-width="1.5" x1="100" y1="37" x2="124" y2="37"/>
+      <line class="s" stroke-width="1.5" x1="100" y1="41" x2="124" y2="41"/>
+      <text x="112" y="26" text-anchor="middle" class="ttl" font-size="15">Clinical</text>
+      <text x="112" y="54" text-anchor="middle" class="tag">reasoning · patient-ctx</text>
     </g>
     <!-- Prescription (Sonnet = double-stroke tier) — Rx -->
     <g transform="translate(0,255)">
@@ -244,10 +244,10 @@
       <rect x="1" y="3" width="180" height="58" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="180" height="58" rx="12"/>
       <text x="14" y="34" class="serif ink" font-size="22" font-weight="700">&#8478;</text>
-      <line class="s" stroke-width="1.5" x1="44" y1="13" x2="72" y2="13"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="18" x2="72" y2="18"/>
-      <text x="106" y="24" text-anchor="middle" class="ttl" font-size="15">Prescription</text>
-      <text x="96" y="44" text-anchor="middle" class="tag"><tspan class="mono">ATC</tspan> · brand options</text>
+      <line class="s" stroke-width="1.5" x1="100" y1="32" x2="124" y2="32"/>
+      <line class="s" stroke-width="1.5" x1="100" y1="36" x2="124" y2="36"/>
+      <text x="112" y="24" text-anchor="middle" class="ttl" font-size="15">Prescription</text>
+      <text x="112" y="50" text-anchor="middle" class="tag"><tspan class="mono">ATC</tspan> · brand options</text>
     </g>
   </g>
 
@@ -273,10 +273,10 @@
       <rect x="1" y="3" width="170" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="170" height="64" rx="12"/>
       <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-7,-10 L4,-10 L7,-7 L7,11 L-7,11 Z"/><path d="M4,-10 L4,-7 L7,-7"/><path d="M-4,-2 L1,-2 M-4,3 L3,3"/></g>
-      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
-      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
-      <text x="91" y="48" text-anchor="middle" class="tag">first answer <tspan class="mono">~10 s</tspan></text>
+      <line class="s" stroke-width="1.5" x1="88" y1="34" x2="112" y2="34"/>
+      <line class="s" stroke-width="1.5" x1="88" y1="38" x2="112" y2="38"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Fast Composer</text>
+      <text x="98" y="52" text-anchor="middle" class="tag">first answer <tspan class="mono">~10</tspan> s</text>
     </g>
     <!-- Full Composer (Sonnet = double-stroke tier) — document/pen -->
     <g transform="translate(0,82)">
@@ -284,29 +284,29 @@
       <rect x="1" y="3" width="170" height="64" rx="12" fill="#1F2328" opacity="0.05"/>
       <rect class="panel" width="170" height="64" rx="12"/>
       <g class="s" stroke-width="2" transform="translate(24,32)"><path d="M-7,-10 L4,-10 L7,-7 L7,11 L-7,11 Z"/><path d="M4,-10 L4,-7 L7,-7"/><path d="M-4,-2 L1,-2 M-4,3 L3,3"/></g>
-      <line class="s" stroke-width="1.5" x1="44" y1="14" x2="72" y2="14"/>
-      <line class="s" stroke-width="1.5" x1="44" y1="19" x2="72" y2="19"/>
-      <text x="106" y="26" text-anchor="middle" class="ttl" font-size="15">Full Composer</text>
-      <text x="91" y="48" text-anchor="middle" class="tag">deep · cited · <tspan class="mono">8k</tspan> tokens</text>
+      <line class="s" stroke-width="1.5" x1="88" y1="34" x2="112" y2="34"/>
+      <line class="s" stroke-width="1.5" x1="88" y1="38" x2="112" y2="38"/>
+      <text x="100" y="26" text-anchor="middle" class="ttl" font-size="15">Full Composer</text>
+      <text x="98" y="52" text-anchor="middle" class="tag">deep · cited · <tspan class="mono">8k</tspan> tokens</text>
     </g>
   </g>
 
   <!-- trust (Haiku = solid tier) -->
-  <g transform="translate(1090,332)">
-    <rect x="2" y="6" width="120" height="100" rx="12" fill="#1F2328" opacity="0.04"/>
-    <rect x="1" y="3" width="120" height="100" rx="12" fill="#1F2328" opacity="0.05"/>
-    <rect class="panel" width="120" height="100" rx="12"/>
+  <g transform="translate(1090,326)">
+    <rect x="2" y="6" width="120" height="116" rx="12" fill="#1F2328" opacity="0.04"/>
+    <rect x="1" y="3" width="120" height="116" rx="12" fill="#1F2328" opacity="0.05"/>
+    <rect class="panel" width="120" height="116" rx="12"/>
     <!-- shield-with-pulse glyph -->
     <g class="s" stroke-width="2.25" transform="translate(60,24)"><path d="M0,-11 L9,-7.5 L9,-0.5 C9,6 4,9.5 0,11 C-4,9.5 -9,6 -9,-0.5 L-9,-7.5 Z"/><path d="M-6,-1 H-2.5 l1.5,-4 2.5,8 1.5,-4 H6"/></g>
     <text x="60" y="50" text-anchor="middle" class="ttl" font-size="14">Trust</text>
-    <text x="60" y="66" text-anchor="middle" class="tag"><tspan class="mono">6-axis</tspan> score:</text>
-    <text x="60" y="80" text-anchor="middle" class="tag">evidence · align</text>
-    <text x="60" y="92" text-anchor="middle" class="tag">relevance · safety</text>
-    <text x="60" y="104" text-anchor="middle" class="tag">recency · complete</text>
+    <text x="60" y="68" text-anchor="middle" class="tag"><tspan class="mono">6-axis</tspan> score:</text>
+    <text x="60" y="83" text-anchor="middle" class="tag">evidence · align</text>
+    <text x="60" y="96" text-anchor="middle" class="tag">relevance · safety</text>
+    <text x="60" y="109" text-anchor="middle" class="tag">recency · complete</text>
   </g>
 
   <!-- output -->
-  <g transform="translate(1070,560)">
+  <g transform="translate(1058,560)">
     <rect x="2" y="6" width="150" height="90" rx="12" fill="#1F2328" opacity="0.04"/>
     <rect x="1" y="3" width="150" height="90" rx="12" fill="#1F2328" opacity="0.05"/>
     <rect class="panel" width="150" height="90" rx="12"/>

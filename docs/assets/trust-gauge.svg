@@ -39,7 +39,7 @@
     <polygon points="320,120 458.6,200 458.6,360 320,440 181.4,360 181.4,200"/>
   </g>
   <!-- axes (1.5 connectors, hairline tone) -->
-  <g class="s" stroke="#E3DDD0" stroke-width="1.5">
+  <g class="s" style="stroke:#E3DDD0" stroke-width="1.5">
     <line x1="320" y1="280" x2="320" y2="120"/>
     <line x1="320" y1="280" x2="458.6" y2="200"/>
     <line x1="320" y1="280" x2="458.6" y2="360"/>
@@ -71,12 +71,12 @@
   <text x="320" y="106" text-anchor="middle" class="sans ink" font-size="12" font-weight="600">Evidence quality</text>
   <text x="470" y="198" class="sans ink" font-size="12" font-weight="600">Guideline align.</text>
   <text x="470" y="372" class="sans ink" font-size="12" font-weight="600">Clinical relevance</text>
-  <text x="320" y="464" text-anchor="middle" class="sans ink" font-size="12" font-weight="600">Safety check</text>
+  <text x="320" y="452" text-anchor="middle" class="sans ink" font-size="12" font-weight="600">Safety check</text>
   <text x="170" y="372" text-anchor="end" class="sans" font-size="12" font-weight="600" fill="#B5562B">Source recency</text>
   <text x="170" y="198" text-anchor="end" class="sans ink" font-size="12" font-weight="600">Completeness</text>
 
   <!-- apothecary-balance scale line glyph (single ink contour) -->
-  <g class="s" transform="translate(320,503)">
+  <g class="s" transform="translate(320,495)">
     <!-- central column + base -->
     <line x1="0" y1="-30" x2="0" y2="14" stroke-width="2.25"/>
     <path d="M-14,18 C-7,13 7,13 14,18" stroke-width="2.25"/>
@@ -148,9 +148,9 @@
       <rect x="0.5" y="0.5" width="497" height="47" rx="11" fill="#D8ECEC" stroke="#0E7C86"/>
       <!-- shield + pulse glyph (trust mark, teal) -->
       <g class="s" style="stroke:#0E7C86" stroke-width="1.7" transform="translate(28,24)"><path d="M0,-12 L9.5,-8 L9.5,0.5 C9.5,7.5 4.5,10.5 0,12.5 C-4.5,10.5 -9.5,7.5 -9.5,0.5 L-9.5,-8 Z"/><path d="M-5.5,0.5 H-2 l1.5,-4 2.5,7.5 1.5,-3.5 H6"/></g>
-      <text x="50" y="30" class="sans" font-size="17" font-weight="700" fill="#0E7C86">Overall <tspan class="mono">88</tspan> <tspan class="mono">/</tspan> <tspan class="mono">100</tspan></text>
-      <text x="214" y="22" class="sans ink" font-size="13">High confidence — shown without a caution banner.</text>
-      <text x="214" y="38" class="muted sans" font-size="12">Each score carries a one-line rationale in the API response.</text>
+      <text x="48" y="30" class="sans" font-size="16.5" font-weight="700" fill="#0E7C86">Overall <tspan class="mono">88</tspan> <tspan class="mono">/</tspan> <tspan class="mono">100</tspan></text>
+      <text x="204" y="22" class="sans ink" font-size="11">High confidence — shown without a caution banner.</text>
+      <text x="204" y="38" class="muted sans" font-size="10.5">Each score carries a one-line rationale in the API response.</text>
     </g>
   </g>
 </svg>
