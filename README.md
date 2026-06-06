@@ -100,6 +100,7 @@ before any reasoning model sees it.
 - [Security](#security)
 - [Contributing](#contributing)
 - [Roadmap](#roadmap)
+- [Researching & Coming](#-researching--coming)
 - [License](#license)
 
 </td>
@@ -749,18 +750,42 @@ is early-stage R&D — see [Limitations](#status-limitations--known-gaps).
 | File adapter (default) + FHIR code example | | Data governance (PHI retention/TTL, secure delete) |
 | Neo4j knowledge graph · 3 answer modes | | Test suite + lab-accuracy eval slice |
 
-### 🔬 Researching · Coming
+## 🔭 Researching & Coming
 
-_Exploratory R&D — not committed work or dated promises._
+> **Exploratory R&D** — directions we're actively exploring. Not committed work, not dated promises. This is where CerebraLink is headed.
+
+### ✦ Flagship — the pre-visit loop
+
+Three of these compose into CerebraLink's headline vision: the clinician **walks into the room with the work-up already done.**
+
+<table>
+<tr><td>
+
+🔗&nbsp;&nbsp;**Native [Vivax](https://github.com/ArioMoniri) pre-visit agent integration** &nbsp;·&nbsp; _primary, planned_
+A first-class data bridge to **Vivax's** (our company) pre-visit agent — it gathers and structures patient context before the appointment and streams it straight into CerebraLink.
+
+🚀&nbsp;&nbsp;**Pre-visit graph + vector prefetch**
+Build each patient's knowledge graph and embeddings from EHR data *ahead* of their appointment for instant responses — then **purge after the visit** to shrink standing load and PHI footprint.
+
+🕸️&nbsp;&nbsp;**Per-doctor live knowledge graph**
+A separate graph per clinician, built in real time and enriched to learn preferences (preferred guidelines, formularies) and personalize answers.
+
+</td></tr>
+</table>
+
+### ⚙️ Performance & intelligence
 
 - ⚡ **[TurboQuant](https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/)** — Google Research extreme compression (data-oblivious quantization) for faster, cheaper inference on the routing/scoring path.
 - 🧠 **Clinical world model** — a learned patient-state model to simulate trajectories and inform agent routing (would augment, not replace, today's orchestration).
+
+### 🔌 Interoperability & data
+
 - <img src="docs/assets/openehr-logo.svg" alt="openEHR" height="15" valign="middle"/> **openEHR support** — map openEHR compositions / AQL into the patient dict, joining FHIR R4 & HL7 v2 in the adapter layer.
-- 🕸️ **Per-doctor live knowledge graph** — a separate graph per clinician, built in real time and enriched over time to learn preferences (e.g. preferred guidelines, formularies) and personalize answers.
-- 🚀 **Pre-visit graph + vector prefetch** — build each patient's knowledge graph and embeddings from EHR data *ahead* of their appointment for instant responses, then purge after the visit to reduce standing system load and PHI footprint.
-- 🔗 **Native [Vivax](https://github.com/ArioMoniri) pre-visit agent integration** — a first-class data bridge to **Vivax's pre-visit agent**: it gathers and structures patient context before the appointment and streams it straight into CerebraLink (driving the pre-visit prefetch above), so the clinician opens the room with the work-up already done. This is a primary, planned integration.
 - 🩺 **openEHR / DICOM / multimodal ingestion** — imaging + structured EHR records.
 - 🖥️ **On-prem / local LLM backends** — fully self-hosted deployments.
+
+### 🔐 Security, safety & compliance
+
 - 🔐 **HiMAC message integrity** — adapt **Hierarchical Message Authentication Codes** ([Mershad et al., IJCNS 2017](https://doi.org/10.4236/ijcns.2017.1012018)) so data is signed/verified at every hop between pipeline stages, MCP sidecars, and EHR adapters — making PHI and clinical messages tamper- and replay-proof across distributed/on-prem deployments (identity-based crypto + MAC).
 - ⚖️ **Regulatory & compliance pathway** — HIPAA · GDPR · EU AI Act alignment and IEC 62304-style software lifecycle documentation.
 - 📊 **Clinical evaluation benchmarks** — measured accuracy/safety on curated cases.
