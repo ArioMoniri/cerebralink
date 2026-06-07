@@ -773,6 +773,16 @@ A separate graph per clinician, built in real time and enriched to learn prefere
 </td></tr>
 </table>
 
+### 📎 Evidence & references
+
+> [!NOTE]
+> **📎 Paperclip — the full source paper, clipped to every reference.** Today each
+> citation is a typed, link-checked reference card; **Paperclip** goes one step
+> further and **attaches & archives the underlying full-text paper / PDF behind
+> each cited claim** — so the evidence travels *with* the answer: offline-readable,
+> audit-ready, and one click from the reference card. A first-class upgrade to the
+> existing typed-reference + embedded-viewer stack. **(coming)**
+
 ### ⚙️ Performance & intelligence
 
 - ⚡ **[TurboQuant](https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/)** — Google Research extreme compression (data-oblivious quantization) for faster, cheaper inference on the routing/scoring path.
