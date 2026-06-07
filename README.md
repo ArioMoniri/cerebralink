@@ -172,6 +172,8 @@ identifier is provided.
 
 Typed reference cards (impact · country · WHO), an embedded article viewer (EN/TR), and the guideline pipeline rendered as a step-by-step decision tree.
 
+> 📎 **Coming — Paperclip:** the full-text source paper / PDF behind each citation, **clipped and archived to the reference itself** so the evidence travels with the answer (offline-readable, audit-ready). See [Researching & Coming](#-researching--coming).
+
 <div align="center">
 <img src="docs/assets/screenshots/framed/shot-references.png" alt="Cited references with embedded article viewer" width="88%"/>
 </div>

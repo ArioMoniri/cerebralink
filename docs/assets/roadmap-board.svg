@@ -293,8 +293,10 @@
       <g class="s" stroke-width="2.25"><path d="M0,-44 v6"/><path d="M-6,-38 h12 l-2,7 h-8 z"/><path d="M0,-31 v8"/></g>
       <circle cx="-92" cy="-22" r="3.2" fill="#1F2328"/>
       <circle class="s" stroke-width="1.5" stroke-dasharray="2.5 3" cx="-92" cy="21" r="6"/>
-      <text x="0" y="-2" text-anchor="middle" class="ct sans" font-size="13">Clinical eval benchmarks</text>
-      <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">end-to-end accuracy &amp; safety</text>
+      <!-- bespoke ink paperclip glyph -->
+      <path class="s" stroke-width="2.25" transform="translate(-74,-11) scale(0.62)" d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+      <text x="6" y="-2" text-anchor="middle" class="ct sans" font-size="13">Paperclip</text>
+      <text x="0" y="16" text-anchor="middle" class="cd sans" font-size="10">source papers clipped to refs</text>
     </g>
   </g>
 
